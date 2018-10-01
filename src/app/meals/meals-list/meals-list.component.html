@@ -1,0 +1,10 @@
+<div>
+  <ul>
+    <li *ngFor="let meal of meals">
+      <span>{{meal.name}}</span>
+      <button (click)="deleteMeal(meal)">Delete</button>
+      <button routerLink="meal/{{meal._id}}">Edit</button>
+    </li>
+  </ul>
+</div>
+
