@@ -7,22 +7,24 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
 
 // Angular Material
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {FormsModule} from '@angular/forms';
 import {MealsModule} from './meals/meals.module';
 import {AppRoutingModule} from './app-routing.module';
-
+import {FoodsModule} from './foods/foods.module';
+import { NavigationComponent } from './navigation/navigation.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavigationComponent,
   ],
   imports: [
       BrowserModule,
       BrowserAnimationsModule,
       HttpClientModule,
-      NgbModule.forRoot(),
+      MealsModule,
+      FoodsModule,
       AppRoutingModule
   ],
   providers: [],

@@ -1,4 +1,26 @@
-<form class="example-form">
-  <input placeholder="Meal Name" name="meal-name" [(ngModel)]="meal.name">
-  <button (click)="saveMeal(meal)" value="submit" color="primary">Submit</button>
-</form>
+<div class="side-pane meal-side-pane">
+  <form (keyup.enter)="saveMeal(meal)" *ngIf="(meal)" autocomplete="off">
+    <div *ngIf="meal.hasOwnProperty('name') && meal.name">
+      <label for="meal-name">Name</label><input [(ngModel)]="meal.name" id="meal-name" name="meal-name">
+    </div>
+  </form>
+  <form>
+    <label for="available-foods">Select A Food To Add</label>
+    <div>
+      <select name="available-foods" id="available-foods" [(ngModel)]="selectedFoodId" (change)="logSelectedFood()">
+        <option *ngFor="let food of availableFoods" [value]="food._id">{{food.name}}</option>
+      </select>
+      <!--<div *ngFor="let food of availableFoods">-->
+         <!--{{food | json}}-->
+      <!--</div>-->
+
+      <label *ngIf="selectedFoodId" for="selected-food-measurement"></label>
+        <div>
+          <input *ngIf="selectedFoodId" value="0" name="selected-food-measurement" id="selected-food-measurement" [(ngModel)]="mealFoodQty">
+        </div>
+        <div>
+          {{selectedFoodId && getAvailableFood(selectedFoodId).name}}
+        </div>
+    </div>
+  </form>
+</div>

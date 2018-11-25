@@ -1,7 +1,12 @@
-<div class="container">
-  <div class="row">
-    <div class="col-12">
-      <router-outlet></router-outlet>
+<div class="app-root d-flex">
+  <app-navigation></app-navigation>
+  <div class="main">
+    <div class="container-fluid">
+      <section class="header">
+      </section>
+      <section class="main">
+        <router-outlet></router-outlet>
+      </section>
     </div>
   </div>
 </div>

@@ -1,0 +1,17 @@
+<ngx-smart-modal #addFoodModal identifier="addFoodModal" [customClass]="'nsm-dialog-animation-btt'">
+  <form (ngSubmit)="addFood()" class="form">
+    <div class="modal-header">
+      <h5 class="modal-title">Add Food</h5>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <input class="form-control" name="food-name" id="food-name" placeholder="Food name." [(ngModel)]="foodName">
+        <input class="form-control" name="food-measurement" id="food-measurement" placeholder="Food measurement." [(ngModel)]="foodMeasurement">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <input  type="submit" class="btn btn-primary form-control" value="Yes">
+      <button (click)="addFoodModal.close()" type="button" class="btn btn-secondary form-control" data-dismiss="modal">No</button>
+    </div>
+  </form>
+</ngx-smart-modal>

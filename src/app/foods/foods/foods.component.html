@@ -1,0 +1,7 @@
+<div>
+  <app-food-actions></app-food-actions>
+  <app-foods-list (currentFood)="setCurrentFood($event)"></app-foods-list>
+  <app-add-food></app-add-food>
+  <app-edit-food [currentFood]="currentFood"></app-edit-food>
+  <app-delete-food></app-delete-food>
+</div>

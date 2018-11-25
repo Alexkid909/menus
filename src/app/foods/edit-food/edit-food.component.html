@@ -1,0 +1,10 @@
+<div class="side-pane food-side-pane">
+  <form (keyup.enter)="saveFood(food)" *ngIf="(food)" autocomplete="off">
+    <div *ngIf="food.hasOwnProperty('name') && food.name">
+      <label for="food-name">Name</label><input [(ngModel)]="food.name" id="food-name" name="food-name">
+    </div>
+    <div *ngIf="food.hasOwnProperty('name') && food.measurement">
+      <label for="food-measurement">Measurement</label><input [(ngModel)]="food.measurement" name="food-measurement"  id="food-measurement">
+    </div>
+  </form>
+</div>

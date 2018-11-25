@@ -1,0 +1,23 @@
+div.side-nav {
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgba(41, 41, 41, 0.5);
+  padding: 1rem 2rem;
+
+
+  ul.side-nav-list {
+    padding: 0;
+
+    li.side-nav-item {
+      list-style-type: none;
+      display: block;
+      padding: 0.25rem 0;
+      color: #fff;
+        a {
+          color: inherit;
+        }
+    }
+  }
+}

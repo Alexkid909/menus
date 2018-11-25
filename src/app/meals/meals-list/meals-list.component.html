@@ -1,10 +1,29 @@
-<div>
-  <ul>
-    <li *ngFor="let meal of meals">
-      <span>{{meal.name}}</span>
-      <button (click)="deleteMeal(meal)">Delete</button>
-      <button routerLink="meal/{{meal._id}}">Edit</button>
-    </li>
-  </ul>
+<div class="grid grid-meals">
+    <div *ngFor="let meal of meals" class="grid-item meal">
+        <div class="meal-element meal-actions">
+            <i class="fas fa-trash-alt mx-1 text-light" (click)="showDeleteModal(meal)"></i>
+            <i class="fas fa-edit text-light" (click)="setCurrentFood(meal)"></i>
+        </div>
+        <div class="meal-element meal-info">
+          <span class="meal-name">{{meal.name}}</span>
+        </div>
+    </div>
+
+
+  <ngx-smart-modal #deleteMealModal identifier="deleteMealModal" [customClass]="'nsm-dialog-animation-btt'">
+    <div class="">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Meal?</h5>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete {{deleteMealModal.getData()?.name}}?</p>
+      </div>
+      <div class="modal-footer">
+        <button (click)="deleteMeal()" type="button" class="btn btn-primary">Yes</button>
+        <button (click)="deleteMealModal.close()" type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+      </div>
+    </div>
+  </ngx-smart-modal>
 </div>
+
 

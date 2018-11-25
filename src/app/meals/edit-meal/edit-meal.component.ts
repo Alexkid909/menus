@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Meal} from '../classes/meal';
-import {ActivatedRoute} from '@angular/router';
 import {MealsService} from '../meals.service';
-import {Observable} from 'rxjs/Observable';
-import {mergeMap} from 'rxjs/operator/mergeMap';
+import {FoodsService} from '../../foods/foods.service';
+import {Food} from '../../foods/classes/food';
+import {MealFood} from '../interfaces/meal-food';
 
 
 @Component({
@@ -11,33 +11,54 @@ import {mergeMap} from 'rxjs/operator/mergeMap';
   templateUrl: './edit-meal.component.html',
   styleUrls: ['./edit-meal.component.scss']
 })
-export class EditMealComponent implements OnInit {
+export class EditMealComponent implements OnInit, OnChanges {
 
-  meal: Meal;
+    @Input() currentMeal: Meal;
+    meal: Meal;
+    availableFoods: Array<MealFood>;
+    selectedFoodId: string;
+    mealFoodQty: number;
+    foodsList: Array<Food>;
 
-  constructor(
-      private activatedRoute: ActivatedRoute,
-      private mealsService: MealsService
+    constructor(private mealsService: MealsService,
+                private foodsService: FoodsService) {}
 
-  ) {}
+    ngOnInit() {
+        this.foodsService.foodsSubject.subscribe((foodsList: Array<Food>) => {
+            if (foodsList) {
+                this.availableFoods = foodsList.map((food: MealFood) => {
+                    food['qty'] = 0;
+                    return food;
+                });
+                this.foodsList = foodsList;
+                console.log('this.availableFoodsList', this.availableFoods);
+                (this.selectedFoodId = this.availableFoods[0]._id);
+                this.mealFoodQty = 0;
+                console.log('this.selectedFood', this.selectedFoodId);
+            }
+        });
+    }
 
-  getMeal(id) {
-    this.mealsService.getMeal(id);
-  }
-  saveMeal(meal: Meal) {
-      this.mealsService.updateMeal(meal).subscribe((success: Meal) => {
+    ngOnChanges(simpleChanges: SimpleChanges) {
+    }
 
-      });
-  }
+    saveMeal() {
+        console.log(this.currentMeal);
+        this.mealsService.updateMeal(this.currentMeal).subscribe((success: Meal) => {
+            console.log(success);
+        });
+    }
 
-  ngOnInit() {
-      this.mealsService.mealSubject.subscribe((meal: Meal) => {
-          this.meal = meal;
-          console.log('meal updated', this.meal);
-      });
-      this.activatedRoute.params.subscribe((params) => {
-      console.log(params);
-        this.getMeal(params.mealId);
-    });
-  }
+    setMeal(meal: Meal) {
+        this.meal = meal;
+    }
+
+    logSelectedFood() {
+        console.log('this.selectedFood', this.selectedFoodId);
+    }
+
+    getAvailableFood(id) {
+        console.log(id);
+        return (id) && this.availableFoods.find((availableFood) => availableFood.id === id);
+    }
 }

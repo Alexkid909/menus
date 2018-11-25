@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import {Meal} from '../../meals/classes/meal';
 
 @Component({
   selector: 'app-meals',
   templateUrl: './meals.component.html',
   styleUrls: ['./meals.component.scss']
 })
-export class MealsComponent implements OnInit {
+export class MealsComponent {
 
-  constructor() { }
+    currentMeal: Meal;
 
-  ngOnInit() {
-  }
+    setCurrentMeal(meal: Meal) {
+        console.log('meal', meal);
+        this.currentMeal = meal;
+    }
 
 }

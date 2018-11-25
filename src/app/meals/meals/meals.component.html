@@ -1,4 +1,6 @@
 <div>
-  <app-meal-form></app-meal-form>
-  <app-meals-list></app-meals-list>
+  <app-meal-actions></app-meal-actions>
+  <app-meals-list (currentMeal)="setCurrentMeal($event)"></app-meals-list>
+  <app-add-meal></app-add-meal>
+  <app-edit-meal [currentMeal]="currentMeal"></app-edit-meal>
 </div>
