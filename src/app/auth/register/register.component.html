@@ -1,0 +1,14 @@
+<div class="component-container component-container-register">
+    <div class="form-container">
+      <div class="form-title">
+        <h1>Sign Up</h1>
+      </div>
+      <app-form [formModel]="registrationFormFieldsModel"
+                [formActions]="registrationFormActions"
+                [formErrors]="registrationErrors"
+                [formCSSClass]="'registration'"
+                [submissionInProgress]="registrationInProgress"
+                [submissionSuccessful]="registrationSuccessful">
+      </app-form>
+    </div>
+</div>

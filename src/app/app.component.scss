@@ -1,13 +1,21 @@
-div.app-root {
+.app-root {
   background-image: url("../assets/images/hamburger-494706_1920.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
   background-position: center center;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: stretch;
 
-  div.main {
-    width: 100%;
-    padding: 0 1rem;
+
+  .section-main {
+    flex-grow: 1;
+    height: 100%;
+    overflow-y: auto;
   }
 
 }

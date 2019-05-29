@@ -1,5 +1,5 @@
 import {AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnInit} from '@angular/core';
-import {Food} from '../classes/food';
+import {Food} from '../../shared/classes/food';
 import {NgxSmartModalComponent, NgxSmartModalService} from 'ngx-smart-modal';
 
 @Component({

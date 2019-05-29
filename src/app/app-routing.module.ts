@@ -1,21 +1,30 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {MealsRoutingModule} from './meals/meals-routing.module';
-import {MealsModule} from './meals/meals.module';
-import {FoodsRoutingModule} from './foods/foods-routing.module';
+import { MealsRoutingModule } from './meals/meals-routing.module';
+import { FoodsRoutingModule } from './foods/foods-routing.module';
+import { AuthRoutingModule } from './auth/auth-routing.module';
+import { TenantsRoutingModule } from './tenants/tenants-routing.module';
 
 const appRoutes: Routes = [
-    {
-      path: 'meals',
-      loadChildren: 'app/meals/meals.module#MealsModule'
-    },
     {
       path: 'foods',
       loadChildren: 'app/foods/foods.module#FoodsModule'
     },
     {
+      path: 'meals',
+      loadChildren: 'app/meals/meals.module#MealsModule'
+    },
+    {
+      path: 'login',
+      loadChildren: 'app/auth/auth.module#AuthModule'
+    },
+    {
+      path: 'tenants',
+      loadChildren: 'app/tenants/tenants.module#TenantsModule'
+    },
+    {
       path: '**',
-      redirectTo: 'meals'
+      redirectTo: '/foods'
     }
 ];
 
@@ -24,11 +33,13 @@ const appRoutes: Routes = [
       RouterModule.forRoot(
           appRoutes,
           {
-            // enableTracing: true
+            enableTracing: false
           }
       ),
       MealsRoutingModule,
-      FoodsRoutingModule
+      FoodsRoutingModule,
+      TenantsRoutingModule,
+      AuthRoutingModule
   ],
   exports: [RouterModule]
 })

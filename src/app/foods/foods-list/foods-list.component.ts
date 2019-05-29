@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewContainerRef} from '@angular/core';
 import {FoodsService} from '../foods.service';
-import {Food} from '../classes/food';
+import {Food} from '../../shared/classes/food';
 import {NgxSmartModalComponent, NgxSmartModalService} from 'ngx-smart-modal';
-import {ModalDialogService, SimpleModalComponent} from 'ngx-modal-dialog';
+// import {ModalDialogService, SimpleModalComponent} from 'ngx-modal-dialog';
 
 @Component({
     selector: 'app-foods-list',

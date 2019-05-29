@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NavRoute} from '../interfaces/nav-route';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   selector: 'app-navigation',
@@ -10,8 +11,9 @@ export class NavigationComponent implements OnInit {
 
   navRoutes: Array<NavRoute>;
   activeRoute: NavRoute;
+  isAuthenticated: boolean;
 
-  constructor() {
+  constructor(private authService: AuthService) {
     this.navRoutes = [
         {
             title: 'Foods',
@@ -23,6 +25,11 @@ export class NavigationComponent implements OnInit {
         }
     ];
     this.activeRoute = this.navRoutes[0];
+
+    this.isAuthenticated = false;
+    this.authService.loggedInSubject.subscribe((success: boolean) => {
+      this.isAuthenticated = success;
+    });
   }
 
   setActive(navRoute) {

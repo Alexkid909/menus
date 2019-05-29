@@ -1,0 +1,33 @@
+<div>
+  <form *ngIf="form" [formGroup]="form" class="form form-{{formCssClass}}">
+    <div formArrayName="groupsArray">
+      <div *ngFor="let group of groupsArray.controls; let groupIndex = index" class="form-group">
+        <div [formGroup]="getGroup(groupIndex)" class="">
+          <div formArrayName="fieldsArray">
+            <div *ngFor="let field of getFormGroupFields(group).controls; let fieldIndex = index" class="form-group">
+              <label>
+                {{ getField(groupIndex, fieldIndex).name }}
+                <input [type]="getField(groupIndex, fieldIndex).type" formControlName="{{fieldIndex}}" class="form-control">
+                <span *ngFor="let message of getFieldValidationErrorMessages(field)"
+                      class="form-field-message">{{message}}</span>
+                <span *ngFor="let message of getGroupValidationErrorMessages(group)"
+                      class="form-field-message">{{message}}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="submissionSuccessful === false" class="submission-errors alert alert-danger">
+      <div class="form-message" *ngFor="let message of formErrors">{{message}}</div>
+    </div>
+    <div *ngFor="let action of formActions">
+      <app-button (onClick)="action.method(form)" [disabled]="!form.valid" [loading]="submissionInProgress"
+                  [buttonText]="action.name"></app-button>
+    </div>
+  </form>
+</div>
+
+
+
+

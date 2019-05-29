@@ -1,0 +1,9 @@
+<div class="btn-container">
+  <button (click)="buttonClick()" type="submit" class="btn btn-primary form-btn" [disabled]="disabled">
+    <div  class="btn-text" *ngIf="!loading">
+      {{buttonText}}
+    </div>
+    <div class="btn-loader" *ngIf="loading">
+    </div>
+  </button>
+</div>

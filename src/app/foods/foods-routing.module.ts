@@ -2,14 +2,17 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {FoodsComponent} from './foods/foods.component';
 import {EditFoodComponent} from './edit-food/edit-food.component';
+import {AuthGuard} from '../shared/guards/auth.guard';
 
 const foodRoutes: Routes = [
     {
-        path: 'foods/food/:foodId',
-        component: EditFoodComponent
+        path: 'foods/:foodId',
+        canActivate: [AuthGuard],
+        component: EditFoodComponent,
     },
     {
         path: 'foods',
+        canActivate: [AuthGuard],
         component: FoodsComponent
     }
 ];

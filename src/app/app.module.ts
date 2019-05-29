@@ -1,7 +1,7 @@
 // Vendor
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 // App
 import { AppComponent } from './app.component';
@@ -12,22 +12,36 @@ import {MealsModule} from './meals/meals.module';
 import {AppRoutingModule} from './app-routing.module';
 import {FoodsModule} from './foods/foods.module';
 import { NavigationComponent } from './navigation/navigation.component';
-import {FormsModule} from '@angular/forms';
+import { AuthModule } from './auth/auth.module';
+import { ApiInterceptorService } from './api-interceptor.service';
+import { AuthGuard } from './shared/guards/auth.guard';
+import { SharedModule } from './shared/shared.module';
+import {TenantsModule} from './tenants/tenants.module';
 
 @NgModule({
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    MealsModule,
+    FoodsModule,
+    AuthModule,
+    AppRoutingModule,
+    SharedModule,
+    TenantsModule
+  ],
+  providers: [
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiInterceptorService,
+      multi: true
+    }
+  ],
   declarations: [
     AppComponent,
-    NavigationComponent,
+    NavigationComponent
   ],
-  imports: [
-      BrowserModule,
-      BrowserAnimationsModule,
-      HttpClientModule,
-      MealsModule,
-      FoodsModule,
-      AppRoutingModule
-  ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,26 +1,26 @@
 <div class="side-pane meal-side-pane">
+  <h2>{{currentMeal?.name}}</h2>
   <form (keyup.enter)="saveMeal(meal)" *ngIf="(meal)" autocomplete="off">
     <div *ngIf="meal.hasOwnProperty('name') && meal.name">
       <label for="meal-name">Name</label><input [(ngModel)]="meal.name" id="meal-name" name="meal-name">
     </div>
   </form>
-  <form>
+  <form (ngSubmit)="updateMealFoods()">
     <label for="available-foods">Select A Food To Add</label>
     <div>
-      <select name="available-foods" id="available-foods" [(ngModel)]="selectedFoodId" (change)="logSelectedFood()">
-        <option *ngFor="let food of availableFoods" [value]="food._id">{{food.name}}</option>
+      <select name="available-foods" id="available-foods" [(ngModel)]="selectedFood">
+        <option *ngFor="let food of availableFoods" [ngValue]="food">{{food.name}}</option>
       </select>
-      <!--<div *ngFor="let food of availableFoods">-->
-         <!--{{food | json}}-->
-      <!--</div>-->
 
-      <label *ngIf="selectedFoodId" for="selected-food-measurement"></label>
+      <label *ngIf="selectedFood" for="selected-food-measurement"></label>
+        <div>{{selectedFood?.measurement}}</div>
         <div>
-          <input *ngIf="selectedFoodId" value="0" name="selected-food-measurement" id="selected-food-measurement" [(ngModel)]="mealFoodQty">
-        </div>
-        <div>
-          {{selectedFoodId && getAvailableFood(selectedFoodId).name}}
+          <input *ngIf="selectedFood" value="0" name="selected-food-measurement" id="selected-food-measurement" [(ngModel)]="selectedFood.qty">
         </div>
     </div>
+    <div class="btn btn-primary" type="submit">Add Food</div>
   </form>
+  <div *ngFor="let mealFood of mealFoods">
+    <span>{{mealFood.name}}</span><span> - {{mealFood.qty}}</span><span *ngIf="mealFood.name !== mealFood.measurement">{{mealFood.measurement}}</span> <span (click)="deleteMealFood(mealFood)">x</span>
+  </div>
 </div>

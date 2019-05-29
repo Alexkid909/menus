@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { BehaviorSubject} from 'rxjs';
 import {Meal} from './classes/meal';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {MealFood} from './interfaces/meal-food';
 
 @Injectable()
 export class MealsService {
 
   apiUrl = `http://localhost:3001`;
-  resource = `/meals`;
+  mealsResource = `/meals`;
+  mealFoodsResource = `/meal-foods`;
   headers = new HttpHeaders({
       'type': 'application/**json',
       'responseType': 'text'
@@ -25,15 +26,17 @@ export class MealsService {
   }
 
   getMeals() {
-    const callUrl = `${this.apiUrl}${this.resource}`;
-    this.http.get(callUrl).subscribe((mealsList: Array<Meal>) => {
+    const callUrl = `${this.apiUrl}${this.mealsResource}`;
+    let params = new HttpParams();
+    params = params.set('includeFoods', 'true');
+    this.http.get(callUrl, { params }).subscribe((mealsList: Array<Meal>) => {
           this.mealsList = mealsList;
           this.mealsSubject.next(this.mealsList);
         });
   }
 
-  getMeal(id) {
-      const callUrl = `${this.apiUrl}${this.resource}/${id}`;
+  getMeal(id: string) {
+      const callUrl = `${this.apiUrl}${this.mealsResource}/${id}`;
       const options = {
           headers: this.headers
       };
@@ -43,34 +46,38 @@ export class MealsService {
       });
   }
 
-  createMeal(name) {
-    const callUrl = `${this.apiUrl}${this.resource}`;
+  createMeal(name: string) {
+    const callUrl = `${this.apiUrl}${this.mealsResource}`;
+    const foods = [];
     const body =  {
-      name
+      name,
+      foods
     };
     const options = {
       headers: this.headers
     };
-    console.log(name);
-    return this.http.post(callUrl, body, options).map(response => {
+    console.log('body', body);
+    return this.http.post(callUrl, body, options).pipe(map(response => {
         this.getMeals();
         return response;
-    });
+    }));
   }
+
   deleteMeal(meal: Meal) {
-      const callUrl = `${this.apiUrl}${this.resource}`;
+      const callUrl = `${this.apiUrl}${this.mealsResource}`;
 
       const options = {
         headers: this.headers
     };
     return this.http.delete(`${callUrl}/${meal._id}`, options)
-        .map(response => {
+        .pipe(map(response => {
           this.getMeals();
           return response;
-        });
+        }));
   }
+
   updateMeal(meal: Meal) {
-      const callUrl = `${this.apiUrl}${this.resource}/${meal._id}`;
+      const callUrl = `${this.apiUrl}${this.mealsResource}/${meal._id}`;
       console.log(meal);
       const body =  {
           name: meal.name
@@ -78,9 +85,39 @@ export class MealsService {
       const options = {
           headers: this.headers
       };
-      return this.http.put(callUrl, body, options).map(response => {
+      return this.http.put(callUrl, body, options).pipe(map(response => {
           this.getMeals();
           return response;
-      });
+      }));
+  }
+  updateMealFoods(mealId: string, mealFood: MealFood) {
+    const callUrl = `${this.apiUrl}${this.mealsResource}/${mealId}/foods`;
+
+    const body = {
+      mealFood:  {
+          foodId: mealFood._id,
+          qty: mealFood.qty
+      }
+    };
+
+    const options = {
+      headers: this.headers
+    };
+
+    return this.http.post(callUrl, body, options).pipe(map(response => {
+      this.getMeals();
+      return response;
+    }));
+  }
+
+  getMealFoods(mealId: string) {
+    console.log('getting meal foods', mealId);
+    const callUrl = `${this.apiUrl}${this.mealsResource}/${mealId}/foods`;
+    return this.http.get(callUrl);
+  }
+
+  deleteMealFood(mealFood: MealFood) {
+    const callUrl = `${this.apiUrl}${this.mealFoodsResource}/${mealFood._id}`;
+    return this.http.delete(callUrl);
   }
 }

@@ -1,0 +1,40 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins/breakpoints";
+
+.component-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+}
+
+.form-container {
+  flex-basis: 400px;
+}
+
+@include media-breakpoint-down(sm) {
+  .component-container {
+    align-content: stretch;
+    align-items: stretch;
+  }
+
+  .form-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+@include media-breakpoint-only(xs) {
+  .form-container {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+  }
+}
+
+
+
+
+

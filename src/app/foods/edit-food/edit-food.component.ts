@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {Food} from '../classes/food';
+import {Food} from '../../shared/classes/food';
 import {FoodsService} from '../foods.service';
 
 
