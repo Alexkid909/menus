@@ -1,0 +1,9 @@
+<div [@openClose]="isOpen ? 'open' : 'closed'" class="component-container component-container-side-bar">
+  <div class="side-bar-header">
+    <button (click)="closeClick()" >Close</button>
+    <h2 class="side-bar-title">{{title}}</h2>
+  </div>
+  <div class="side-bar-body">
+    <ng-content></ng-content>
+  </div>
+</div>

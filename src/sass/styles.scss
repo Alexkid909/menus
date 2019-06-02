@@ -9,12 +9,6 @@
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
 
-
-
-
-
-$side-nav-width: 12.5vw;
-
 body {
   position: absolute;
   height: 100%;
@@ -26,9 +20,9 @@ body {
   font-family: 'Open Sans', sans-serif !important;
 }
 
-
-
 .app-root {
+
+  font-size: 1.2rem;
 
   h1, h2, h3, h4, h5 {
     font-family: 'Muli', serif;
@@ -40,7 +34,6 @@ body {
 
   .component-container {
     position: relative;
-    //height: 100%;
     padding-left: 0;
     padding-right: 0;
   }
@@ -135,16 +128,6 @@ body {
   //  }
   //}
   //
-  //app-navigation {
-  //  div.side-nav {
-  //    //width: $side-nav-width;
-  //  }
-  //}
-  //
-  //div.main {
-  //  //margin-left: $side-nav-width;
-  //  min-height: 100vh;
-  //}
   //
   //div.grid-meals, div.grid-foods {
   //  min-height: 100%;

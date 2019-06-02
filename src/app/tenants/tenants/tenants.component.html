@@ -1,3 +1,14 @@
-<p>
-  tenants works!
-</p>
+<div class="component-container component-container-tenants">
+  <div *ngFor="let tenant of userTenants">
+    {{tenant.name}}
+  </div>
+  <app-side-bar  (onCloseClick)="sideBarOpen = false" [isOpen]="sideBarOpen" [title]="sideBarTitle">
+    <app-form [formModel]="tenantFormFieldsModel"
+    [formActions]="tenantFormActions"
+    [formErrors]="tenantFormErrors"
+    [formCSSClass]="'tenant'"
+    [submissionInProgress]="tenantFormnInProgress"
+    [submissionSuccessful]="tenantFormSuccessful">></app-form>
+  </app-side-bar>
+  <button (click)="sideBarOpen = true">Open Side Bar</button>
+</div>

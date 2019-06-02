@@ -1,7 +1,13 @@
-<div class="side-nav" *ngIf="isAuthenticated">
-    <ul class="side-nav-list">
-        <li *ngFor="let navRoute of navRoutes" class="side-nav-item">
-            <a (click)=setActive(navRoute) routerLink="{{navRoute.url}}" class="side-nav-link" [ngClass]="{active: navRoute === activeRoute}">{{navRoute.title}}</a>
+<div class="nav nav-main" *ngIf="isAuthenticated">
+    <ul class="nav-main-list">
+        <li *ngFor="let navItem of navItems" class="nav-main-item">
+            <a (click)=setActive(navItem)
+               routerLink="{{navItem.url}}"
+               class="nav-main-link"
+               [ngClass]="{active: navItem === activeRoute}">
+              <span class="nav-link-text">{{navItem.title}}</span>
+              <i class="nav-icon" [ngClass]="navItem.iconClass"></i>
+            </a>
         </li>
     </ul>
 </div>

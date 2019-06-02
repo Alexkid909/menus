@@ -32,7 +32,6 @@ export class FormComponent implements OnInit, OnChanges {
   }
 
   buildForm() {
-    debugger;
     const groupsArray = this.formBuilder.array(Object.keys(this.formModel).map(key => {
       const keyData = new FormArray(this.formModel[key]
         .fields.map((field: FormField) => new FormControl(field.formState, field.validator, field.asyncValidator)));

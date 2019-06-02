@@ -15,11 +15,10 @@ import { FormFieldType} from '../../shared/enums/form-field-type.enum';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup;
   loginFields: Array<FormField>;
   loginFormFieldsModel: Array<FormFieldGroup>;
   passwordRegex: RegExp;
-  loginInProgress: boolean = false;
+  loginInProgress = false;
   loginSuccessful: boolean;
   loginErrors: Array<string> = [];
   loginFormActions: Array<FormAction>;
@@ -78,34 +77,5 @@ export class LoginComponent implements OnInit {
       this.loginInProgress = false;
       this.loginSuccessful = false;
     });
-  }
-
-  getFieldFromName(name: string) {
-    const field = this.loginForm.get(name);
-    return field;
-  }
-
-  getFieldValidationErrorMessages(fieldName: string) {
-    const field = this.getFieldFromName(fieldName);
-    if (field.errors) {
-      return Object.keys(field.errors).map(error => {
-        let message;
-        switch (error) {
-          case 'required':
-            message = 'This field is required';
-            break;
-          case 'minlength':
-            message = `Please enter a value ${field.errors[error].requiredLength} or more characters long.`;
-            break;
-          case 'pattern':
-            message = 'Please enter a value containing letters numbers and special characters.';
-            break;
-          case 'email':
-            message = 'Please enter a valid email address.';
-            break;
-        }
-        return message;
-      });
-    }
   }
 }
