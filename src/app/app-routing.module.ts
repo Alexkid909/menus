@@ -19,6 +19,10 @@ const appRoutes: Routes = [
       loadChildren: 'app/auth/auth.module#AuthModule'
     },
     {
+      path: 'sign-up',
+      loadChildren: 'app/auth/auth.module#AuthModule'
+    },
+    {
       path: 'tenants',
       loadChildren: 'app/tenants/tenants.module#TenantsModule'
     },

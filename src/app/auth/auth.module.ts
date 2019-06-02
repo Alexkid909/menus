@@ -7,6 +7,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
 import { SharedModule } from '../shared/shared.module';
+import {UnauthGuard} from '../shared/guards/unauth.guard';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { SharedModule } from '../shared/shared.module';
     SharedModule
   ],
   providers: [
-    AuthService
+    AuthService,
+    UnauthGuard
   ],
   declarations: [
     LoginComponent,
