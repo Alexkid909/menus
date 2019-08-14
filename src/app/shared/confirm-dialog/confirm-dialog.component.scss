@@ -1,11 +1,12 @@
 .dialog {
   position: relative;
   background-color: transparent;
-  //display: flex;
-  //flex-direction: column;
-  //align-content: stretch;
-  //height: 100%;
   margin: 25px;
+
+  hr {
+    margin: .25em 0;
+    border-color: white;
+  }
 }
 
 .dialog-body {

@@ -10,7 +10,6 @@ import {SideBarService} from './side-bar.service';
 import { ModalComponent } from './modal/modal.component';
 import {ModalService} from './modal.service';
 import { ModalInsertionDirective } from './directives/modal-insertion.directive';
-import { ExampleComponent } from './example/example.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
@@ -41,7 +40,6 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
   ],
   entryComponents: [
     ModalComponent,
-    ExampleComponent,
     ConfirmDialogComponent
   ]
 })
