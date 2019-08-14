@@ -1,29 +1,18 @@
-import {AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnInit} from '@angular/core';
-import {Food} from '../../shared/classes/food';
-import {NgxSmartModalComponent, NgxSmartModalService} from 'ngx-smart-modal';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 
 @Component({
     selector: 'app-food-actions',
     templateUrl: './food-actions.component.html',
     styleUrls: ['./food-actions.component.scss']
 })
-export class FoodActionsComponent implements OnInit, AfterViewInit {
+export class FoodActionsComponent implements OnInit {
 
-    addFoodModal: NgxSmartModalComponent;
 
-    constructor(private ngxSmartModalService: NgxSmartModalService) {
+    constructor() {
 
     }
 
     ngOnInit() {
-    }
-
-    ngAfterViewInit() {
-        this.addFoodModal = this.ngxSmartModalService.getModal('addFoodModal');
-    }
-
-    showAddFoodModal() {
-        this.addFoodModal.open();
     }
 
 }

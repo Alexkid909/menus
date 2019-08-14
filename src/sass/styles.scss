@@ -18,24 +18,41 @@ body {
   font-size: 10px;
   color: #ffffff !important;
   font-family: 'Open Sans', sans-serif !important;
+
+
 }
 
 .app-root {
 
-  font-size: 1.2rem;
+  font-size: 1em;
+
+  @include media-breakpoint-up(lg) {
+    font-size: 1.2em;
+  }
 
   h1, h2, h3, h4, h5 {
     font-family: 'Muli', serif;
   }
 
   h1 {
-    font-size: 3rem;
+    font-size: 3em;
+  }
+
+  h2 {
+    font-size: 2em;
+  }
+
+  h3 {
+    font-size: 1.5em;
   }
 
   .component-container {
-    position: relative;
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .component-container-login, .component-container-register {
+    position: absolute;
   }
 
   .form-container {
@@ -47,71 +64,13 @@ body {
     &:hover {
       background-color: rgba(0, 0, 0, 0.5);
     }
-  }
 
-  .form {
-    //margin-top: 50px;
-  }
-
-  .form-title {
-    text-align: center;
-  }
-
-  .form-control {
-    margin-top: 5px;
-    border-radius: unset;
-  }
-
-  .form-group {
-    margin-bottom: 8px;
-  }
-
-  label {
-    width: 100%;
-    font-size: 0.75rem;
-  }
-
-  .form-btn {
-    width: 100%;
-  }
-
-  .form-message .form-field-message, .form-btn {
-    border-radius: 0;
-  }
-
-  .form-field-message {
-    display: none;
-    font-weight: 600;
-  }
-
-  .form-control {
-    transition: border-color 500ms linear;
-
-    &.ng-valid {
-      border: 1.5px solid transparent;
-
-      &:not(.ng-untouched) {
-        border-color: $green;
-      }
-    }
-
-    &:not(.ng-untouched) {
-      &.ng-invalid {
-        border: 1.5px solid $softRed;
-
-        & ~ .form-field-message {
-          display: block;
-          color: $softRed;
-        }
-      }
+    .form-title {
+      text-align: center;
     }
   }
 
   @include media-breakpoint-down(sm) {
-    .section-main {
-      min-height: 100%;
-    }
-
     .form-container {
       background-color: rgba(0, 0, 0, 0.5);
     }

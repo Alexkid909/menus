@@ -1,6 +1,6 @@
 <div [@openClose]="isOpen ? 'open' : 'closed'" class="component-container component-container-side-bar">
   <div class="side-bar-header">
-    <button (click)="closeClick()" >Close</button>
+    <app-button (onClick)="closeSideBar()" [iconClass]="'fas fa-times'" [buttonClasses]="'btn-close'" ></app-button>
     <h2 class="side-bar-title">{{title}}</h2>
   </div>
   <div class="side-bar-body">

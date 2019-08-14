@@ -1,0 +1,7 @@
+<div class="tool-bar-container" [ngClass]="[toolbarClasses, isResponsive && 'tool-bar-responsive']">
+  <ul class="tool-bar-list">
+    <li class="tool-bar-item" *ngFor="let tool of tools">
+      <app-button (onClick)="tool.definition($event)"  [buttonText]="tool.title" [buttonClasses]="tool.cssClasses" [iconClass]="tool.iconClass"></app-button>
+    </li>
+  </ul>
+</div>

@@ -6,6 +6,7 @@ import { TenantsComponent } from './tenants/tenants.component';
 import { TenantsService } from './tenants.service';
 import { TenantsRoutingModule} from './tenants-routing.module';
 import {AuthGuard} from '../shared/guards/auth.guard';
+import { TenantComponent } from './tenant/tenant.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import {AuthGuard} from '../shared/guards/auth.guard';
     AuthGuard
   ],
   declarations: [
-    TenantsComponent
+    TenantsComponent,
+    TenantComponent
   ],
   exports: [
     TenantsComponent

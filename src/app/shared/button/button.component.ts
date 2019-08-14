@@ -11,11 +11,12 @@ export class ButtonComponent implements OnInit {
   @Input() disabled: boolean;
   @Input() loading: boolean;
   @Input() buttonText: string;
+  @Input() buttonClasses: Array<string>;
+  @Input() iconClass: Array<string>;
 
 
-  buttonClick() {
-    console.log('click');
-    this.onClick.emit();
+  buttonClick(event: Event) {
+    this.onClick.emit(event);
   }
 
   constructor() { }

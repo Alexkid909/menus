@@ -28,7 +28,7 @@ export class FormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('changes', changes);
+    this.buildForm();
   }
 
   buildForm() {

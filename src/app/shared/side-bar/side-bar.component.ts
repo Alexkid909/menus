@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, ContentChildren, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, ComponentRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, Type} from '@angular/core';
 import {
   trigger,
   state,
@@ -6,6 +6,7 @@ import {
   animate,
   transition,
 } from '@angular/animations';
+import {SideBarService} from '../side-bar.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -28,24 +29,27 @@ import {
     ])
   ]
 })
-export class SideBarComponent implements OnInit, AfterContentInit {
+export class SideBarComponent implements OnChanges {
 
-  @Output() onCloseClick: EventEmitter<any> = new EventEmitter<any>();
   @Input() title: string;
-  @Input() isOpen = false;
+  isOpen = false;
 
-  constructor() { }
-
-  closeClick() {
-    console.log('close click');
-    this.onCloseClick.emit();
+  constructor(private sideBarService: SideBarService) {
+    this.sideBarService.isOpenBS.subscribe((isOpen: boolean) => {
+      this.isOpen = isOpen;
+      console.log('this.isOpen', this.isOpen);
+    });
   }
 
-
-  ngOnInit() {
+  closeSideBar() {
+    this.sideBarService.close();
   }
 
-  ngAfterContentInit(): void {
+  onArtifactClicked() {
+
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    // console.log('changes', changes);
+  }
 }

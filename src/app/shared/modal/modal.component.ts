@@ -1,26 +1,58 @@
-import { Component } from '@angular/core';
-
-export interface Modal {
-    title: string;
-    message: string;
-}
+import {
+  Component,
+  Type,
+  OnDestroy,
+  AfterViewInit,
+  ComponentRef,
+  ViewChild,
+  ComponentFactoryResolver,
+  ChangeDetectorRef
+} from '@angular/core';
+import {ModalInsertionDirective} from '../directives/modal-insertion.directive';
 
 @Component({
-    selector: 'app-modal',
-    templateUrl: './modal.component.html',
-    styleUrls: ['./modal.component.scss']
+  selector: 'app-modal',
+  templateUrl: './modal.component.html',
+  styleUrls: ['./modal.component.scss']
 })
+export class ModalComponent implements AfterViewInit, OnDestroy {
+  componentRef: ComponentRef<any>;
+  childComponentType: Type<any>;
 
-export class ModalComponent  {
-    title: string;
-    message: string;
-    constructor() {
-        // super();
+  @ViewChild(ModalInsertionDirective) insertionPoint: ModalInsertionDirective;
+
+  constructor(private componentFactoryResolver: ComponentFactoryResolver,
+              private cd: ChangeDetectorRef
+  ) {
+
+  }
+
+  ngAfterViewInit(): void {
+    this.loadChildComponent(this.childComponentType);
+    this.cd.detectChanges();
+  }
+
+  ngOnDestroy() {
+    if (this.componentRef) {
+      this.componentRef.destroy();
     }
-    confirm() {
-        // we set modal result as true on click on confirm button,
-        // then we can get modal result from caller code
-        // this.result = true;
-        // this.close();
-    }
+  }
+
+  onOverlayClicked(event: MouseEvent) {
+    // close the modal
+  }
+
+  onModalClicked(event: MouseEvent) {
+    event.stopPropagation();
+  }
+
+  loadChildComponent(componentType: Type<any>) {
+    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentType);
+
+    let viewContainerRef = this.insertionPoint.viewContainerRef;
+    viewContainerRef.clear();
+
+    this.componentRef = viewContainerRef.createComponent(componentFactory);
+  }
+
 }

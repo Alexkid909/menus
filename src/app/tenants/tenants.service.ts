@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {HttpClient} from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import {Tenant} from './interfaces/tenant';
+import { TenantClass } from './classes/tenant';
+import { TenantInterface } from '../shared/interfaces/tenant';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ export class TenantsService {
   api = 'https://localhost:8443';
   currentTenantID: string = null;
   currentTenantIDBehaviourSubject: BehaviorSubject<string>;
-  tenants: Array<Tenant>;
-  tenantsBehaviorSubject: BehaviorSubject<Array<Tenant>> = new BehaviorSubject([]);
+  tenants: Array<TenantInterface>;
+  tenantsBehaviorSubject: BehaviorSubject<Array<TenantInterface>> = new BehaviorSubject([]);
 
   constructor(private http: HttpClient) {
     this.getUserTenants();
@@ -47,14 +48,21 @@ export class TenantsService {
     });
   }
 
-  createTenant(name: string) {
-    return this.http.post(`${this.api}/tenants`, {name}).pipe(map((response: any) => {
+  createTenant(tenant: TenantClass) {
+    return this.http.post(`${this.api}/tenants`, {name: tenant.name}).pipe(map((response: any) => {
       this.getUserTenants();
     }));
   }
 
-  updateTenant(tenantId: string, name: string) {
-    this.http.post(`${this.api}/tenants`, {name});
+  updateTenant(tenantId: string, tenant: TenantClass) {
+    return this.http.put(`${this.api}/tenants/${tenantId}`, {name: tenant.name}).pipe(map((response: any) => {
+      this.getUserTenants();
+    }));
   }
 
+  deleteTenant(tenantId: string) {
+    return this.http.delete(`${this.api}/tenants/${tenantId}`).pipe(map((response: any) => {
+      this.getUserTenants();
+    }));
+  }
 }

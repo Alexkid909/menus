@@ -5,11 +5,7 @@ import {FoodsListComponent} from './foods-list/foods-list.component';
 import {FoodsService} from './foods.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FoodsComponent } from './foods/foods.component';
-import { EditFoodComponent } from './edit-food/edit-food.component';
-import {NgxSmartModalModule} from 'ngx-smart-modal';
-import {AddFoodComponent} from './add-food/add-food.component';
 import {FoodActionsComponent} from './food-actions/food-actions.component';
-import { DeleteFoodComponent } from './delete-food/delete-food.component';
 import {SharedModule} from '../shared/shared.module';
 import {AuthGuard} from '../shared/guards/auth.guard';
 
@@ -20,7 +16,6 @@ import {AuthGuard} from '../shared/guards/auth.guard';
       FormsModule,
       ReactiveFormsModule,
       SharedModule,
-      NgxSmartModalModule.forChild()
   ],
   providers: [
       FoodsService,
@@ -28,11 +23,8 @@ import {AuthGuard} from '../shared/guards/auth.guard';
   ],
   declarations: [
       FoodsListComponent,
-      AddFoodComponent,
       FoodsComponent,
-      EditFoodComponent,
       FoodActionsComponent,
-      DeleteFoodComponent
   ],
   exports: [
       FoodsListComponent,

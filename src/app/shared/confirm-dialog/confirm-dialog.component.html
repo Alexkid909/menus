@@ -1,0 +1,22 @@
+<div class="dialog dialog-delete-confirm">
+  <div class="dialog-section dialog-header">
+    <p>{{config.data.title}}</p>
+  </div>
+  <div class="dialog-section dialog-body">
+    <p>{{config.data.message}}</p>
+  </div>
+  <div class="dialog-section dialog-footer">
+    <app-button
+      (onClick)="accept($event)"
+      [disabled]="false"
+      [loading]="false"
+      [buttonText]="'Yes'"
+    ></app-button>
+    <app-button
+      (onClick)="decline($event)"
+      [disabled]="false"
+      [loading]="false"
+      [buttonText]="'No'"
+    ></app-button>
+  </div>
+</div>

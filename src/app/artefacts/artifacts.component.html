@@ -1,0 +1,29 @@
+<div class="component-container component-container-artifacts component-container-{{artifactName}}s">
+  <div class="component-header component-header-{{artifactName}}">
+    <app-tool-bar [toolbarClasses]="toolbarClasses" [isResponsive]="true" [tools]="toolbarFunctions"></app-tool-bar>
+  </div>
+  <div class="component-body component-body-{{artifactName}}s">
+    <div class="artifact-container artifact-container-{{artifactName}}s" *ngFor="let artifact of artifacts">
+      <div class="artifact artifact-{{artifactName}}" (click)="onArtifactClicked(artifact)">
+        <div class="artifact-item {{artifactName}}-item artifact-name {{artifactName}}-name">
+          {{artifact?.name}}
+        </div>
+        <div class="artifact-item artifact-image {{artifactName}}-item {{artifactName}}-image">
+          <img class="artifact-img {{artifactName}}-img img-fluid" src="https://via.placeholder.com/300" />
+        </div>
+        <div class="artifact-actions {{artifactName}}-actions">
+          <!--<app-tool-bar [toolbarClasses]="'toolbar-tenant'" [isResponsive]="true" [tools]="tenantToolbarFunctions"></app-tool-bar>-->
+          <app-button (onClick)="deleteButtonFunction.definition($event, artifact)"  [buttonText]="" [buttonClasses]="deleteButtonFunction.cssClasses" [iconClass]="deleteButtonFunction.iconClass"></app-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-side-bar [title]="sideBarTitle">
+    <app-form [formModel]="formFieldsModel"
+              [formActions]="formActions"
+              [formErrors]="formErrors"
+              [formCSSClass]="artifactName"
+              [submissionInProgress]="formnInProgress"
+              [submissionSuccessful]="formSuccessful"></app-form>
+  </app-side-bar>
+</div>

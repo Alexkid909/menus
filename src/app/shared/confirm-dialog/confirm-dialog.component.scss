@@ -1,0 +1,32 @@
+.dialog {
+  position: relative;
+  background-color: transparent;
+  //display: flex;
+  //flex-direction: column;
+  //align-content: stretch;
+  //height: 100%;
+  margin: 25px;
+}
+
+.dialog-body {
+  flex-grow: 1;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+
+  .btn {
+    margin-left: 1em;
+  }
+}
+
+::ng-deep {
+
+  .dialog-footer {
+
+    .btn {
+      margin-left: 1em;
+    }
+  }
+}
