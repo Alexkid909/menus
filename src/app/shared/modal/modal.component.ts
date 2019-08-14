@@ -47,9 +47,9 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
   }
 
   loadChildComponent(componentType: Type<any>) {
-    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentType);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentType);
 
-    let viewContainerRef = this.insertionPoint.viewContainerRef;
+    const viewContainerRef = this.insertionPoint.viewContainerRef;
     viewContainerRef.clear();
 
     this.componentRef = viewContainerRef.createComponent(componentFactory);

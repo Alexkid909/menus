@@ -1,4 +1,4 @@
-import { Injector, Type, InjectionToken, InjectFlags } from '@angular/core'
+import { Injector, Type, InjectionToken, InjectFlags } from '@angular/core';
 
 export class ModalInjector implements Injector {
   constructor(
@@ -13,9 +13,9 @@ export class ModalInjector implements Injector {
   ): T;
   get(token: any, notFoundValue?: any);
   get(token: any, notFoundValue?: any, flags?: any) {
-    const value = this._additionalTokens.get(token)
+    const value = this._additionalTokens.get(token);
 
-    if (value) return value
+    if (value) { return value; }
 
     return this._parentInjector.get<any>(token, notFoundValue);
   }

@@ -15,7 +15,7 @@ export class AuthService {
   modulePath = 'users';
   token: string;
   loggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  loggedIn: boolean = false;
+  loggedIn = false;
 
   constructor(private http: HttpClient) {
     this.getToken();

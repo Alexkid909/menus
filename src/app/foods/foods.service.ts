@@ -20,7 +20,7 @@ export class FoodsService {
   }
 
   getFoods() {
-      console.log('getting foods')
+      console.log('getting foods');
       const callUrl = `${this.apiUrl}${this.resource}`;
       this.http.get(callUrl).subscribe((foodsList: Array<Food>) => {
           this.foodsList = foodsList;

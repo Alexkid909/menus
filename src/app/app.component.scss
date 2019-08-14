@@ -1,3 +1,7 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins/breakpoints";
+
 .app-root {
   background-image: url("../assets/images/hamburger-494706_1920.jpg");
   background-repeat: no-repeat;

@@ -23,7 +23,7 @@ export class FoodsListComponent implements OnInit {
         this.foodsService.foodsSubject.subscribe((foodsList: Array<Food>) => {
             console.log('foodsList', foodsList);
             this.foods = foodsList;
-            (this.foods) && this.setCurrentFood(this.foods[0]);
+            if (this.foods) { this.setCurrentFood(this.foods[0]); }
         }, error => console.log(error));
     }
 
