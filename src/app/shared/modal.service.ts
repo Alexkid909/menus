@@ -66,7 +66,4 @@ export class ModalService {
     return modalRef;
   }
 
-  public close () {
-
-  }
 }

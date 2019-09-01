@@ -1,4 +1,7 @@
-<div class="overlay" (click)="onOverlayClicked($event)">
+<div [ngClass]="{'active': isVisible}"
+     (animationend)="handleCloseAnimation($event)"
+     class="overlay"
+     (click)="onOverlayClicked($event)">
   <div class="modal-container">
     <div class="modal" (click)="onModalClicked($event)">
       <ng-template appModalInsertion></ng-template>

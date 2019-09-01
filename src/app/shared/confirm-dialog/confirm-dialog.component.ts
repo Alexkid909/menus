@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {ModalConfig} from '../modal-config';
 import {ModalRef} from '../classes/modal-ref';
 
@@ -7,10 +7,8 @@ import {ModalRef} from '../classes/modal-ref';
   templateUrl: './confirm-dialog.component.html',
   styleUrls: ['./confirm-dialog.component.scss']
 })
-export class ConfirmDialogComponent implements OnInit {
+export class ConfirmDialogComponent {
 
-  @Output() onAccept: EventEmitter<any> = new EventEmitter<any>();
-  @Output() onDecline: EventEmitter<any> = new EventEmitter<any>();
   @Input() title: string;
   @Input() question: string;
   @Input() confirmMethod: string;
@@ -18,19 +16,14 @@ export class ConfirmDialogComponent implements OnInit {
 
   constructor(public config: ModalConfig, public modal: ModalRef) { }
 
-  ngOnInit() {
-    console.log('config', this.config);
-
-  }
 
   accept(event: Event) {
-    console.log('dialog accept', event);
     this.config.data.confirmationFunction(this.config.data.confirmationData);
+    this.modal.close();
   }
 
   decline(event: Event) {
-    console.log('dialog accept', event);
-    this.modal.close('somethin');
+    this.modal.close();
   }
 
 }

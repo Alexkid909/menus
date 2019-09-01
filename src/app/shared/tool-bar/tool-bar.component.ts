@@ -7,16 +7,11 @@ import {ToolBarFunction} from '../classes/tool-bar-function';
   templateUrl: './tool-bar.component.html',
   styleUrls: ['./tool-bar.component.scss']
 })
-export class ToolBarComponent implements OnInit {
+export class ToolBarComponent {
 
   @Input() tools: Array<ToolBarFunction>;
   @Input() isResponsive = false;
   @Input() toolbarClasses: Array<string>;
 
   constructor() { }
-
-  ngOnInit() {
-    console.log('tools', this.tools);
-  }
-
 }

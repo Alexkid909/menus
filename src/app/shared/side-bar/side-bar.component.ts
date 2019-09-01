@@ -29,7 +29,7 @@ import {SideBarService} from '../side-bar.service';
     ])
   ]
 })
-export class SideBarComponent implements OnChanges {
+export class SideBarComponent {
 
   @Input() title: string;
   isOpen = false;
@@ -43,13 +43,5 @@ export class SideBarComponent implements OnChanges {
 
   closeSideBar() {
     this.sideBarService.close();
-  }
-
-  onArtifactClicked() {
-
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    // console.log('changes', changes);
   }
 }
