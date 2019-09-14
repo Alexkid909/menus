@@ -1,0 +1,36 @@
+@import 'appColors';
+
+
+.search-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 0;
+}
+
+.search-container {
+  height: 100%;
+  transform: translateY(-50%);
+}
+
+.search-input {
+
+  border: none;
+  outline: none;
+
+  &:not(:focus) {
+    background-color: transparent;
+    &::placeholder {
+      color: white;
+    }
+  };
+
+}
+
+.search-results {
+  position: absolute;
+  padding: 0;
+  list-style-type: none;
+  width: 100%;
+  background-color: white;
+  color: $green;
+}

@@ -37,7 +37,6 @@ export class SideBarComponent {
   constructor(private sideBarService: SideBarService) {
     this.sideBarService.isOpenBS.subscribe((isOpen: boolean) => {
       this.isOpen = isOpen;
-      console.log('this.isOpen', this.isOpen);
     });
   }
 

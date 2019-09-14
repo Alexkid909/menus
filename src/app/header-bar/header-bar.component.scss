@@ -1,0 +1,26 @@
+@import 'appColors';
+
+.header-bar {
+  background-color: $dominant;
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  > * {
+    margin-left: 50px;
+  }
+}
+
+
+
+.header-search-container {
+  position: relative;
+}
+
+::ng-deep {
+
+}
+
+.search + .search-results {
+  
+}

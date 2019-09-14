@@ -1,0 +1,13 @@
+<div class="search-wrapper">
+  <div class="search-container">
+    <input
+      class="search-input"
+      [placeholder]="resultsPlaceholder"
+      [ngModel]="searchTerm"
+      (ngModelChange)="searchTermChange($event)"
+    >
+    <ul class="search-results">
+      <li *ngFor="let result of searchResults" (click)="resultSelected(result)">{{result.name}} </li>
+    </ul>
+  </div>
+</div>

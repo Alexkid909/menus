@@ -12,7 +12,7 @@ import {debug} from 'util';
   templateUrl: './artifacts.component.html',
   styleUrls: ['./artifacts.component.scss']
 })
-export class ArtifactsComponent implements OnInit, OnChanges {
+export class ArtifactsComponent implements OnInit {
 
   @Input() artifactName: string;
   toolbarClasses: string;
@@ -37,10 +37,6 @@ export class ArtifactsComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.toolbarClasses = `toolbar-artifacts toolbar-${this.artifactName}`;
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('artifact changes', changes);
   }
 
   onArtifactClicked(artifact: any) {

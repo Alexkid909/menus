@@ -17,6 +17,7 @@ import {ApiInterceptorService} from './api-interceptor.service';
 import {AuthGuard} from './shared/guards/auth.guard';
 import {SharedModule} from './shared/shared.module';
 import {TenantsModule} from './tenants/tenants.module';
+import { HeaderBarComponent } from './header-bar/header-bar.component';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import {TenantsModule} from './tenants/tenants.module';
   ],
   declarations: [
     AppComponent,
-    NavigationComponent
+    NavigationComponent,
+    HeaderBarComponent
   ],
   bootstrap: [AppComponent]
 })

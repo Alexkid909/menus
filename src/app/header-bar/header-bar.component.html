@@ -1,0 +1,13 @@
+<div class="header-bar">
+  <div class="app-name">
+    <h1>Eatsy</h1>
+  </div>
+  <div class="header-search-container">
+    <app-search
+      [resultsPlaceholder]="currentTenant?.name"
+      (onResultSelected)="setCurrentTenant($event)"
+      [searchSource]="searchTenantsSource"
+      (onSearchTermChange)="searchTenants($event)"
+    ></app-search>
+  </div>
+</div>
