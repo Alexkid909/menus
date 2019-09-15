@@ -24,6 +24,14 @@
     }
   };
 
+  &:focus {
+
+    & + .search-results {
+
+     display: block;
+    }
+  }
+
 }
 
 .search-results {
@@ -33,4 +41,5 @@
   width: 100%;
   background-color: white;
   color: $green;
+  display: none;
 }

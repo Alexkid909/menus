@@ -19,8 +19,8 @@
 
 ::ng-deep {
 
+  .search-wrapper {
+    z-index: 1;
+  }
 }
 
-.search + .search-results {
-  
-}
