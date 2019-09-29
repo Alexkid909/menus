@@ -8,6 +8,8 @@ import { FoodsComponent } from './foods/foods.component';
 import {FoodActionsComponent} from './food-actions/food-actions.component';
 import {SharedModule} from '../shared/shared.module';
 import {AuthGuard} from '../shared/guards/auth.guard';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {CurrentTenantInterceptorService} from '../interceptors/current-tenant-interceptor.service';
 
 @NgModule({
   imports: [
@@ -19,7 +21,12 @@ import {AuthGuard} from '../shared/guards/auth.guard';
   ],
   providers: [
       FoodsService,
-      AuthGuard
+      AuthGuard,
+      {
+        provide: HTTP_INTERCEPTORS,
+        useClass: CurrentTenantInterceptorService,
+        multi: true
+      }
   ],
   declarations: [
       FoodsListComponent,

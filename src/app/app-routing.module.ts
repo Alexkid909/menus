@@ -8,23 +8,23 @@ import { TenantsRoutingModule } from './tenants/tenants-routing.module';
 const appRoutes: Routes = [
     {
       path: 'foods',
-      loadChildren: 'app/foods/foods.module#FoodsModule'
+      loadChildren: () => import('./foods/foods.module').then(mod => mod.FoodsModule)
     },
     {
       path: 'meals',
-      loadChildren: 'app/meals/meals.module#MealsModule'
+      loadChildren: () => import('./meals/meals.module').then(mod => mod.MealsModule)
     },
     {
       path: 'login',
-      loadChildren: 'app/auth/auth.module#AuthModule'
+      loadChildren: () => import('./auth/auth.module').then(mod => mod.AuthModule)
     },
     {
       path: 'sign-up',
-      loadChildren: 'app/auth/auth.module#AuthModule'
+      loadChildren: () => import('./auth/auth.module').then(mod => mod.AuthModule)
     },
     {
       path: 'tenants',
-      loadChildren: 'app/tenants/tenants.module#TenantsModule'
+      loadChildren: () => import('./tenants/tenants.module').then(mod => mod.TenantsModule)
     },
     {
       path: '**',

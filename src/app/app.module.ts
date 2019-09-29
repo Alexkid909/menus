@@ -13,7 +13,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {FoodsModule} from './foods/foods.module';
 import {NavigationComponent} from './navigation/navigation.component';
 import {AuthModule} from './auth/auth.module';
-import {ApiInterceptorService} from './api-interceptor.service';
 import {AuthGuard} from './shared/guards/auth.guard';
 import {SharedModule} from './shared/shared.module';
 import {TenantsModule} from './tenants/tenants.module';
@@ -32,12 +31,7 @@ import { HeaderBarComponent } from './header-bar/header-bar.component';
     TenantsModule
   ],
   providers: [
-    AuthGuard,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ApiInterceptorService,
-      multi: true
-    }
+    AuthGuard
   ],
   declarations: [
     AppComponent,
