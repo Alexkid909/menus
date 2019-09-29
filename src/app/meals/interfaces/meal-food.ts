@@ -1,5 +1,5 @@
-import {Food} from '../../shared/classes/food';
+import { FoodInterface } from '../../shared/interfaces/food';
 
-export interface MealFood extends Food {
+export interface MealFood extends FoodInterface {
     qty: number;
 }

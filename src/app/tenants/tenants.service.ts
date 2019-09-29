@@ -27,8 +27,8 @@ export class TenantsService {
         this.broadcastCurrentTenant();
       }
     });
-    this.getUserTenants();
     this.getCurrentTenantID();
+    this.getUserTenants();
     this.broadcastUserTenants();
     this.broadcastCurrentTenantID();
   }
@@ -63,18 +63,16 @@ export class TenantsService {
   }
 
   public searchTenants(term: string): Observable<Array<TenantInterface>> {
-    console.log('new search', term);
     return this.http.get(`${this.api}/user/tenants`).pipe(map((results: any) => {
       const searchResults = !term ? [] : results.data.filter((result: TenantInterface) => {
         return result.name.indexOf(term) >= 0;
       });
-      console.log('search results', searchResults);
       return searchResults;
     }));
   }
 
   private getUserTenants() {
-    this.http.get(`${this.api}/user/tenants`).subscribe ((response: any) => {
+    this.http.get(`${this.api}/user/tenants`).subscribe((response: any) => {
       this.tenants = response.data;
       this.broadcastUserTenants();
     });

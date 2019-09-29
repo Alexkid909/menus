@@ -2,35 +2,44 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject} from 'rxjs';
-import { Food } from '../shared/classes/food';
+import { FoodClass } from './classes/food';
+import { FoodInterface } from '../shared/interfaces/food';
+import {TenantsService} from '../tenants/tenants.service';
 
 @Injectable()
 export class FoodsService {
 
   apiUrl = `https://localhost:8443`;
   resource = `/foods`;
-  foodsList: Array<Food>;
-  foodsSubject: BehaviorSubject<Food[]> = new BehaviorSubject(<Food[]> this.foodsList);
-  food: Food;
-  foodSubject: BehaviorSubject<Food> = new BehaviorSubject<Food>(this.food);
+  foods: Array<FoodInterface>;
+  foodsBehaviorSubject: BehaviorSubject<FoodInterface[]> = new BehaviorSubject(<FoodInterface[]> this.foods);
+  food: FoodInterface;
+  foodSubject: BehaviorSubject<FoodInterface> = new BehaviorSubject<FoodInterface>(this.food);
 
 
-  constructor(private http: HttpClient) {
-    this.getFoods();
+  constructor(private http: HttpClient,
+              private tenantsService: TenantsService) {
+    this.tenantsService.currentTenantIDBehaviourSubject.subscribe(() => {
+      this.getFoods().subscribe((foods: Array<FoodInterface>) => {
+        this.foods = foods;
+        this.broadcastFoods();
+      });
+    });
   }
 
   getFoods() {
-      console.log('getting foods');
+      // console.log('getting foods');
       const callUrl = `${this.apiUrl}${this.resource}`;
-      this.http.get(callUrl).subscribe((foodsList: Array<Food>) => {
-          this.foodsList = foodsList;
-          this.foodsSubject.next(this.foodsList);
-      });
+      return this.http.get(callUrl).pipe(map((response: any) => response.data));
+  }
+
+  broadcastFoods() {
+    this.foodsBehaviorSubject.next(this.foods);
   }
 
   getFood(id) {
       const callUrl = `${this.apiUrl}${this.resource}/${id}`;
-      return this.http.get(callUrl).subscribe((food: Food) => {
+      return this.http.get(callUrl).subscribe((food: FoodInterface) => {
          this.food = food;
          this.foodSubject.next(this.food);
       });
@@ -49,7 +58,7 @@ export class FoodsService {
     }));
   }
 
-  deleteFood(food: Food) {
+  deleteFood(food: FoodInterface) {
     const callUrl = `${this.apiUrl}${this.resource}`;
     return this.http.delete(`${callUrl}/${food._id}`)
         .pipe(map(response => {
@@ -58,7 +67,7 @@ export class FoodsService {
         }));
   }
 
-  updateFood(food: Food) {
+  updateFood(food: FoodInterface) {
       const callUrl = `${this.apiUrl}${this.resource}/${food._id}`;
       console.log(food);
       const body = food;

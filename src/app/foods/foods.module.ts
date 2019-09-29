@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FoodsRoutingModule } from './foods-routing.module';
-import {FoodsListComponent} from './foods-list/foods-list.component';
 import {FoodsService} from './foods.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FoodsComponent } from './foods/foods.component';
@@ -29,12 +28,10 @@ import {CurrentTenantInterceptorService} from '../interceptors/current-tenant-in
       }
   ],
   declarations: [
-      FoodsListComponent,
       FoodsComponent,
       FoodActionsComponent,
   ],
   exports: [
-      FoodsListComponent,
       FoodsComponent
   ]
 })

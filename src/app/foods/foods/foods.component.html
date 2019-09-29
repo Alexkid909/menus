@@ -1,4 +1,26 @@
-<div>
-  <app-food-actions></app-food-actions>
-  <app-foods-list (currentFood)="setCurrentFood($event)"></app-foods-list>
-</div>
+<app-artifacts
+  [artifactName]="'food'"
+  [toolbarFunctions]="toolbarFunctions"
+  [artifacts]="userFoods"
+  [crudState]="crudState"
+  [sideBarTitle]="sideBarTitle"
+  [formFields]="foodFormFields"
+  [formFieldsModel]="foodFormFieldsModel"
+  [formInProgress]="foodFormInProgress"
+  [formSuccessful]="foodFormSuccessful"
+  [formErrors]="foodFormErrors"
+  [formActions]="foodFormActions"
+  [deleteButtonFunction]="deleteButtonFunction"
+  [currentArtifactId]="currentFoodId"
+  [sideBarOpen]="sideBarOpen"
+  [deleteButtonFunction]
+  (artifactClicked)="showEdit($event)"
+>
+
+</app-artifacts>
+
+
+<!--<div>-->
+  <!--<app-food-actions></app-food-actions>-->
+  <!--<app-foods-list (currentFood)="setCurrentFood($event)"></app-foods-list>-->
+<!--</div>-->
