@@ -16,19 +16,21 @@ export class HeaderBarComponent implements OnInit {
   searchTerm: string;
 
   constructor(private tenantsService: TenantsService) {
-    this.tenantsService.currentTenantBehaviourSubject.subscribe((currentTenant: TenantInterface) => {
-      this.currentTenant = currentTenant;
-    });
-    // this.searchTenantsSource = this.tenantsService.searchTenants('');
+
   }
 
   ngOnInit() {
+    this.tenantsService.currentTenantBehaviourSubject.subscribe((currentTenant: TenantInterface) => {
+      this.currentTenant = currentTenant;
+    });
+    this.searchTenantsSource = this.tenantsService.searchTenants('');
     this.tenantsService.tenantsBehaviorSubject.subscribe((tenants: Array<TenantInterface>) => {
       this.tenants = tenants;
     });
   }
 
   setCurrentTenant(tenant: TenantInterface) {
+    this.currentTenant = tenant;
     this.tenantsService.setCurrentTenant(tenant._id);
   }
 

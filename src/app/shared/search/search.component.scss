@@ -24,13 +24,13 @@
     }
   };
 
-  &:focus {
-
-    & + .search-results {
-
-     display: block;
-    }
-  }
+  //&:focus {
+  //
+  //  & + .search-results {
+  //
+  //   display: block;
+  //  }
+  //}
 
 }
 
@@ -41,5 +41,5 @@
   width: 100%;
   background-color: white;
   color: $green;
-  display: none;
+  //display: none;
 }

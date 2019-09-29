@@ -3,7 +3,7 @@
     <input
       class="search-input"
       [placeholder]="resultsPlaceholder"
-      [ngModel]="searchTerm"
+      [(ngModel)]="searchTerm"
       (ngModelChange)="searchTermChange($event)"
     >
     <ul class="search-results">

@@ -4,7 +4,7 @@
   </div>
   <div class="header-search-container">
     <app-search
-      [resultsPlaceholder]="currentTenant?.name"
+      [resultsPlaceholder]="currentTenant?.name || 'Search for a tenant'"
       (onResultSelected)="setCurrentTenant($event)"
       [searchSource]="searchTenantsSource"
       (onSearchTermChange)="searchTenants($event)"

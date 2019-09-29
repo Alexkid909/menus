@@ -15,16 +15,19 @@ export class SearchComponent implements OnInit, OnChanges {
   @Input() resultsPlaceholder = 'Search Here';
   searchTerm: string;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-    this.searchTerm = null;
+    this.searchTerm = '';
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('changes', changes);
     if (changes.hasOwnProperty('searchSource') && changes.searchSource.currentValue) {
+      // console.log('searchTerm', this.searchTerm);
       this.search();
+    }
+    if (changes.hasOwnProperty('resultsPlaceholder') && changes.resultsPlaceholder.currentValue) {
+      // console.log('searchTerm', this.resultsPlaceholder);
     }
   }
 
@@ -34,14 +37,15 @@ export class SearchComponent implements OnInit, OnChanges {
 
   resultSelected(event) {
     this.onResultSelected.emit(event);
+    this.searchResults = [];
+    this.searchTerm = '';
   }
 
   search() {
     this.searchSource.subscribe((result: Array<any>) => {
       this.searchResults = result;
-      console.log('this.searchResults', this.searchResults);
+      // console.log('this.searchResults', this.searchResults);
     });
   }
-
 
 }
