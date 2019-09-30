@@ -60,7 +60,8 @@ export class FoodsComponent implements OnInit {
     this.crudState = CrudStateEnum.create;
 
     this.foodFormFields = [
-      new FormField('foodName', FormFieldType.text, '', Validators.required)
+      new FormField('foodName', FormFieldType.text, '', Validators.required),
+      new FormField('foodMeasurement', FormFieldType.text, '', Validators.required),
     ];
 
     this.foodFormFieldsModel = [
@@ -96,7 +97,8 @@ export class FoodsComponent implements OnInit {
       action.name = this.crudState;
     });
     this.foodFormFields = [
-      new FormField('foodName', FormFieldType.text, food ? food.name : '', Validators.required)
+      new FormField('foodName', FormFieldType.text, food ? food.name : '', Validators.required),
+      new FormField('foodMeasurement', FormFieldType.text, food ? food.measurement : '', Validators.required)
     ];
 
     this.foodFormActions.forEach((action: FormAction) => {
@@ -133,15 +135,15 @@ export class FoodsComponent implements OnInit {
       });
     });
 
-    const { foodName } = formValues;
-    // const food = new FoodClass(foodName);
-    //
-    //
-    // if (this.crudState === CrudStateEnum.create) {
-    //   this.createFood(food);
-    // } else {
-    //   this.updateFood(this.currentFoodId, food);
-    // }
+    const { foodName, foodMeasurement } = formValues;
+    const food = new FoodClass(foodName, foodMeasurement);
+
+
+    if (this.crudState === CrudStateEnum.create) {
+      this.createFood(food);
+    } else {
+      this.updateFood(this.currentFoodId, food);
+    }
   }
 
   getField(groupIndex: number, fieldIndex: number) {
@@ -165,8 +167,8 @@ export class FoodsComponent implements OnInit {
 
   }
 
-  updateFood(updatedFood: FoodInterface) {
-    this.foodsService.updateFood(updatedFood).subscribe((response: any) => {
+  updateFood(foodId: string, updatedFood: FoodClass) {
+    this.foodsService.updateFood(foodId, updatedFood).subscribe((response: any) => {
       this.foodFormInProgress = false;
       this.foodFormSuccessful = true;
       this.sideBarService.close();
@@ -190,8 +192,8 @@ export class FoodsComponent implements OnInit {
     this.modal.open(ConfirmDialogComponent, config);
   }
 
-  deleteFood(food: FoodInterface) {
-    this.foodsService.deleteFood(food).subscribe((response: any) => {
+  deleteFood(foodId: string) {
+    this.foodsService.deleteFood(foodId).subscribe((response: any) => {
     }, (errorResponse: any) => {
       // @TODO Implement error handling.
     });
