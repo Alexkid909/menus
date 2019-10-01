@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject} from 'rxjs';
 import { FoodClass } from './classes/food';
 import { FoodInterface } from '../shared/interfaces/food';
 import {TenantsService} from '../tenants/tenants.service';
-import {debug} from 'util';
 
 @Injectable()
 export class FoodsService {

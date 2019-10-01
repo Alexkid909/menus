@@ -54,9 +54,6 @@ export class FoodsComponent implements OnInit {
     });
 
 
-    console.log('this.userFoods', this.userFoods);
-
-
     this.crudState = CrudStateEnum.create;
 
     this.foodFormFields = [
