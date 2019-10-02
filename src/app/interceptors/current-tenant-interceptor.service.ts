@@ -8,7 +8,6 @@ export class CurrentTenantInterceptorService implements HttpInterceptor {
 
   headers: HttpHeaders;
   currentTenantID: string;
-  newHeaders: HttpHeaders;
 
   constructor() {}
 
