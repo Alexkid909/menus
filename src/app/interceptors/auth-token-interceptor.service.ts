@@ -24,16 +24,13 @@ export class AuthTokenInterceptorService implements HttpInterceptor {
     let headers: HttpHeaders = req.headers;
     for (const headerName in this.headers) {
       if (this.headers.hasOwnProperty(headerName)) {
-        headers = headers.append(headerName, this.headers[headerName]);
+        headers = headers.set(headerName, this.headers[headerName]);
       }
     }
 
     const request = req.clone({
       headers
     });
-
-    // console.log('auth token interceptor', request.url, request.headers.keys());
-
 
     return next.handle(request);
    }

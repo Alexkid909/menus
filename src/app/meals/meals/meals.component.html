@@ -1,4 +1,20 @@
-<div>
-  <app-meal-actions></app-meal-actions>
-  <app-meals-list (currentMeal)="setCurrentMeal($event)"></app-meals-list>
-</div>
+<app-artifacts
+  [artifactName]="'meal'"
+  [toolbarFunctions]="toolbarFunctions"
+  [artifacts]="userMeals"
+  [crudState]="crudState"
+  [sideBarTitle]="sideBarTitle"
+  [formFields]="mealFormFields"
+  [formFieldsModel]="mealFormFieldsModel"
+  [formInProgress]="mealFormInProgress"
+  [formSuccessful]="mealFormSuccessful"
+  [formErrors]="mealFormErrors"
+  [formActions]="mealFormActions"
+  [deleteButtonFunction]="deleteButtonFunction"
+  [currentArtifactId]="currentMealId"
+  [sideBarOpen]="sideBarOpen"
+  [deleteButtonFunction]
+  (artifactClicked)="showEdit($event)"
+>
+
+</app-artifacts>

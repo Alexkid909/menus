@@ -15,14 +15,11 @@ export class CurrentTenantInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     this.currentTenantID = localStorage.getItem('currentTenantID');
-    this.headers = this.currentTenantID ? req.headers.append('tenant-id', this.currentTenantID) : req.headers;
+    this.headers = this.currentTenantID ? req.headers.set('tenant-id', this.currentTenantID) : req.headers;
 
     const request = req.clone({
       headers: this.headers
     });
-
-
-    // console.log('current tenant interceptor', request.url, request.headers.keys());
 
     return next.handle(request);
   }

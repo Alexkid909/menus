@@ -35,8 +35,6 @@ export class FormComponent implements OnInit, OnChanges {
     const groupsArray = this.formBuilder.array(Object.keys(this.formModel).map(key => {
       const keyData = new FormArray(this.formModel[key]
         .fields.map((field: FormField) => new FormControl(field.formState, field.validator, field.asyncValidator)));
-      console.log('this.formModel[key]', this.formModel[key]);
-      console.log('keyData', keyData.controls);
       return new FormGroup({fieldsArray: keyData}, this.formModel[key].validators);
     }));
 
