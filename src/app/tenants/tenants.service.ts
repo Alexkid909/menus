@@ -6,10 +6,10 @@ import { TenantClass } from './classes/tenant';
 import { TenantInterface } from '../shared/interfaces/tenant';
 import {combineLatest} from 'rxjs/internal/observable/combineLatest';
 import {Observable} from 'rxjs/internal/Observable';
+import {AuthService} from '../auth/auth.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
+
 export class TenantsService {
 
   api = 'https://localhost:8443';
@@ -20,17 +20,21 @@ export class TenantsService {
   tenants: Array<TenantInterface> = [];
   tenantsBehaviorSubject: BehaviorSubject<Array<TenantInterface>> = new BehaviorSubject([]);
 
-  constructor(private http: HttpClient) {
-    combineLatest([this.currentTenantIDBehaviourSubject, this.tenantsBehaviorSubject]).subscribe((results: any) => {
-      if (this.currentTenantID && this.tenants.length) {
-        this.getCurrentTenant();
-        this.broadcastCurrentTenant();
+  constructor(private http: HttpClient, private authService: AuthService) {
+    this.authService.loggedInSubject.subscribe((state: boolean) => {
+      if (state) {
+        combineLatest([this.currentTenantIDBehaviourSubject, this.tenantsBehaviorSubject]).subscribe((results: any) => {
+          if (this.currentTenantID && this.tenants.length) {
+            this.getCurrentTenant();
+            this.broadcastCurrentTenant();
+          }
+        });
+        this.getCurrentTenantID();
+        this.getUserTenants();
+        this.broadcastUserTenants();
+        this.broadcastCurrentTenantID();
       }
     });
-    this.getCurrentTenantID();
-    this.getUserTenants();
-    this.broadcastUserTenants();
-    this.broadcastCurrentTenantID();
   }
 
   private getCurrentTenantID() {

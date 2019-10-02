@@ -12,11 +12,14 @@ export class AuthTokenInterceptorService implements HttpInterceptor {
       this.headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'authorization': `Bearer ${localStorage.getItem('auth_token')}`,
       };
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    if (localStorage.getItem('auth_token')) {
+      this.headers.authorization = `Bearer ${localStorage.getItem('auth_token')}`;
+    }
 
     let headers: HttpHeaders = req.headers;
     for (const headerName in this.headers) {

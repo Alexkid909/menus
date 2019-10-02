@@ -2,7 +2,7 @@
   <div class="app-name">
     <h1>Eatsy</h1>
   </div>
-  <div class="header-search-container">
+  <div *ngIf="isAuthed" class="header-search-container">
     <app-search
       [resultsPlaceholder]="currentTenant?.name || 'Search for a tenant'"
       (onResultSelected)="setCurrentTenant($event)"

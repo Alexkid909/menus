@@ -10,13 +10,12 @@ export class CurrentTenantInterceptorService implements HttpInterceptor {
   currentTenantID: string;
   newHeaders: HttpHeaders;
 
-  constructor() {
-  }
+  constructor() {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     this.currentTenantID = localStorage.getItem('currentTenantID');
-    this.headers = req.headers.append('tenant-id', this.currentTenantID);
+    this.headers = this.currentTenantID ? req.headers.append('tenant-id', this.currentTenantID) : req.headers;
 
     const request = req.clone({
       headers: this.headers

@@ -19,8 +19,8 @@ export class FoodsService {
 
   constructor(private http: HttpClient,
               private tenantsService: TenantsService) {
-    this.tenantsService.currentTenantIDBehaviourSubject.subscribe(() => {
-      this.getFoods();
+    this.tenantsService.currentTenantIDBehaviourSubject.subscribe((id: string) => {
+      if (id) { this.getFoods(); }
     });
   }
 
