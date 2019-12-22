@@ -1,0 +1,36 @@
+@import 'appColors';
+
+.block {
+  .search-input,
+  .search-label {
+    display: block;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .search-label {
+    margin-bottom: 0;
+  }
+}
+
+.search-input,
+.search-results {
+  padding-left: 0.75rem;
+  margin-bottom: 0;
+}
+
+.search-container {
+  .search-input {
+    border-color: white;
+  }
+}
+
+
+.search-results {
+  list-style-type: none;
+  width: 100%;
+  background-color: white;
+  color: black;
+}

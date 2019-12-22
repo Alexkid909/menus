@@ -1,0 +1,160 @@
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins/breakpoints";
+@import "appColors";
+
+$diameter: 2rem;
+
+.component-artifacts {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+
+.component-body {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1em 1em 5em;
+  align-items: stretch;
+}
+
+.artifact-container {
+  flex-basis: calc(100% / 6);
+  padding: 0.75em;
+
+  @include media-breakpoint-down(lg) {
+    flex-basis: 25%;
+  }
+
+  @include media-breakpoint-down(md) {
+    flex-basis: calc(100% / 3);
+  }
+
+  @include media-breakpoint-down(sm) {
+    flex-basis: 100%;
+  }
+}
+
+.artifact {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: .25em 1em;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+
+  ::ng-deep {
+    .tool-bar-container {
+      &.toolbar-artifact {
+        background-color: transparent;
+      }
+    }
+
+
+    .btn-artifact-action {
+      .btn-text {
+        display: none;
+      }
+
+      &.btn-artifact-action-delete {
+        font-size: 1.25rem;
+        background-color: transparent;
+        padding: 0;
+        height: $diameter;
+        width: $diameter;
+        border-radius: 100%;
+        border: 0;
+        transition: color 300ms ease-in;
+
+        &:hover {
+          background-color: transparent;
+          color: $green;
+          border: 0;
+        }
+      }
+    }
+  }
+
+
+  @include media-breakpoint-up(xl) {
+    padding: 1em 1.5vw;
+  }
+
+  @include media-breakpoint-down(sm) {
+    flex-wrap: nowrap;
+  }
+
+
+}
+
+.artifact-item {
+  flex: 1 100%;
+  line-height: 1.25;
+  margin-bottom: 0.5em;
+}
+
+.artifact-name {
+  text-align: center;
+}
+
+@include media-breakpoint-down(sm) {
+  .component-body {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .artifact-container {
+    padding: .125em 0;
+    border-radius: 5px;
+  }
+
+  .artifact {
+    align-items: center;
+    padding: 0.33em 0.75em;
+  }
+
+  .artifact-item {
+    margin-bottom: 0;
+  }
+
+  .artifact-name {
+    order: 2;
+  }
+
+  .artifact-actions {
+    order: 100;
+
+    ::ng-deep {
+      .btn-container {
+        margin: 0;
+      }
+    }
+  }
+
+  .artifact-image {
+    flex-basis: 25%;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .component-container-artifacts {
+
+    ::ng-deep {
+
+      .tool-bar-container {
+        &.toolbar-artifacts {
+          background-color: transparent;
+          position: fixed;
+          bottom: 3rem;
+          right: 0;
+          z-index: 2;
+        }
+      }
+    }
+  }
+}
+
+
+
+

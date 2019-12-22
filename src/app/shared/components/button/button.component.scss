@@ -1,0 +1,98 @@
+@import "appColors";
+@import '../../../../../node_modules/spinthatshit/src/loaders/loader03';
+@import "../../../../../node_modules/spinthatshit/src/variables";
+@import '../../../../../node_modules/spinthatshit/src/animations';
+@import "../../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../../node_modules/bootstrap/scss/variables";
+@import "../../../../../node_modules/bootstrap/scss/mixins/breakpoints";
+
+
+@mixin btn-disc($diameter) {
+  height: $diameter;
+  width: $diameter;
+  border-radius: 100%;
+  padding: 0;
+  //font-size: 1.5rem;
+  border: 1.5px solid white;
+  box-shadow: 5px 5px 25px 1.25px black;
+  font-weight: 600;
+}
+
+%btn-disc {
+  @include btn-disc(3.75rem);
+}
+
+%btn-disc-small {
+  @include btn-disc(1.75rem);
+}
+
+// usage
+.btn-disc {
+  @extend %btn-disc;
+}
+
+.btn-disc-small {
+  @extend %btn-disc-small;
+}
+
+.btn {
+  padding: 0.5rem 0.8rem;
+  position: relative;
+  &:focus, &:active {
+    box-shadow: none !important;
+  }
+}
+
+.btn-primary, .btn-primary:disabled {
+  background-color: $dominant;
+  color: white;
+  border: 1.25px solid $dominant;
+}
+
+.btn-primary {
+  &:disabled {
+    opacity: 0.7;
+  }
+  &:not(:disabled) {
+    &:hover {
+      border: 1.25px solid lighten($dominant, 10%);
+      background-color: lighten($dominant, 10%);
+      font-weight: 500;
+    }
+  }
+
+  transition: all 250ms ease-in;
+}
+
+.btn-container {
+  position: relative;
+}
+
+.btn-icon, .btn-text {
+  display: inline-block;
+  padding: 0 .25rem;
+}
+
+.btn-transparent {
+  background-color: transparent;
+  border: transparent;
+}
+
+.btn-loader {
+  @include loader03(26px, white, 4px, 1000ms);
+  margin: 0 auto;
+}
+
+@include media-breakpoint-down(md) {
+  .btn-mobile-disc {
+    @include btn-disc(3.75rem);
+
+    .btn-text {
+      display: none;
+    }
+  }
+
+  .btn-container {
+    //margin-top: .5rem;
+  }
+}

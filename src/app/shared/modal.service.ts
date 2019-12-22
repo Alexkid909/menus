@@ -6,10 +6,10 @@ import {
   EmbeddedViewRef,
   ComponentRef, Type
 } from '@angular/core';
-import {ModalComponent} from './modal/modal.component';
+import {ModalComponent} from './components/modal/modal.component';
 import {ModalConfig} from './modal-config';
 import {ModalInjector} from './modal-injector';
-import {ModalRef} from './classes/modal-ref';
+import {ModalRefClass} from './classes/modal-ref.class';
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +30,8 @@ export class ModalService {
     const map = new WeakMap();
     map.set(ModalConfig, config);
 
-    const modalRef = new ModalRef();
-    map.set(ModalRef, modalRef);
+    const modalRef = new ModalRefClass();
+    map.set(ModalRefClass, modalRef);
 
     const sub = modalRef.afterClosed.subscribe(() => {
       // close the dialog

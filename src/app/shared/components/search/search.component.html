@@ -1,0 +1,18 @@
+<div class="search-wrapper" [ngClass]="cssClasses">
+  <div class="search-container">
+    <label class="search-label">
+      <span *ngIf="labelText">
+        {{labelText}}
+      </span>
+      <input
+        class="search-input form-control"
+        [placeholder]="resultsPlaceholder"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="searchTermChange($event)"
+      >
+    </label>
+    <ul class="search-results">
+      <li class="search-result" *ngFor="let result of searchResults" (click)="resultSelected(result)">{{result.name}} </li>
+    </ul>
+  </div>
+</div>

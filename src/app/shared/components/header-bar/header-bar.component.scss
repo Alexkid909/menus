@@ -1,0 +1,57 @@
+@import 'appColors';
+
+.header-bar {
+  background-color: $dominant;
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  > * {
+    margin-left: 50px;
+  }
+}
+
+
+
+.header-search-container {
+  position: relative;
+}
+
+::ng-deep {
+
+  .header-bar {
+    .search-wrapper {
+      z-index: 1;
+      position: absolute;
+      top: 50%;
+      left: 0;
+    }
+
+    .search-container {
+      height: 100%;
+      transform: translateY(-50%);
+    }
+
+    .search-input {
+      border: none;
+      outline: none;
+      display: inline-block;
+      width: auto;
+
+      &:not(:focus) {
+        background-color: transparent;
+        &::placeholder {
+          color: white;
+        }
+      };
+    }
+
+    .search-results {
+      position: absolute;
+      padding: 0;
+      color: #4be14b;
+    }
+  }
+
+}
+

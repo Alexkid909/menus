@@ -1,0 +1,102 @@
+@import "appColors";
+@import "appAnimations";
+@import "../../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../../node_modules/bootstrap/scss/variables";
+@import "../../../../../node_modules/bootstrap/scss/mixins/breakpoints";
+
+
+.component-container-form {
+  .form-inline {
+    display: flex;
+    align-items: flex-start;
+
+    label, .form-control {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: inline-block
+    }
+
+    .form-control {
+      width: 100%;
+    }
+  }
+
+  form {
+    align-items: flex-end;
+    justify-content: space-around;
+  }
+
+  .form-group {
+    margin: 0;
+  }
+}
+
+
+.form {
+  margin: .75em 0;
+
+  ::ng-deep {
+
+    .form-action-inline {
+      margin-bottom: 5px
+    }
+
+    .form-control {
+      margin-top: 5px;
+      border-radius: unset;
+    }
+
+    .form-group {
+      margin-bottom: 8px;
+    }
+
+    label {
+      width: 100%;
+      font-size: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: stretch;
+    }
+
+    .form-message .form-field-message {
+      border-radius: 0;
+    }
+
+    .form-field-message {
+      display: none;
+      font-weight: 600;
+    }
+
+    .form-control {
+      transition: border-color 500ms linear;
+
+      &.search-input {
+        border-top: 1.5px solid transparent !important;
+      }
+
+      &.ng-valid {
+        border: 1.5px solid transparent;
+
+        &:not(.ng-untouched) {
+          border-color: $green;
+        }
+      }
+
+      &:not(.ng-untouched) {
+        &.ng-invalid {
+          border: 1.5px solid $softRed;
+
+          & ~ .form-field-message {
+            display: block;
+            color: $softRed;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
