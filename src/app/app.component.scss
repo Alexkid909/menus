@@ -9,22 +9,27 @@
   background-attachment: fixed;
   background-position: center center;
   display: flex;
-  flex-flow: row wrap;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100vh;
 
-  .section {
+  .section-body {
     flex-grow: 1;
-    flex-shrink: 0;
-    flex-basis: 0;
+    display: flex;
 
-    &.section-header {
-      flex-basis: 100%;
+    .sub-section {
     }
 
-    &.section-main {
-      overflow-y: auto;
+    .sub-section-main {
       flex-grow: 5;
+      flex-shrink: 1;
+    }
+
+    .sub-section-nav {
+      flex-shrink: 2;
     }
   }
+
 
 
 }
@@ -36,38 +41,52 @@
   }
 }
 
+@include media-breakpoint-up(sm) {
+  .section-body {
+    overflow: hidden;
+  }
+
+  .sub-section-main {
+    overflow: hidden;
+  }
+
+  ::ng-deep {
+    .component-container-artifacts {
+      .component-body {
+        overflow-y: auto;
+        height: 100%;
+      }
+    }
+  }
+}
+
 
 
 @include media-breakpoint-down(sm) {
   .app-root {
-    flex-direction: column;
     height: 100%;
     width: 100%;
     position: fixed;
     align-content: stretch;
     flex-wrap: nowrap;
 
-    .section {
-      flex-grow: 0;
-
-      &.section-header {
-
-        flex-basis: auto;
-      }
-
-      &.section-main {
-        flex-grow: 2;
-        order: 1;
-        position: relative;
-      }
-
-      &.section-nav {
-        order: 2;
-      }
-
+    .section-body {
+      display: flex;
+      flex-direction: column;
+      max-height: 100%;
     }
-
-
   }
 
+  .section-body {
+    overflow: auto;
+  }
+
+
+  .sub-section-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+  }
 }

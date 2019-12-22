@@ -18,17 +18,12 @@ body {
   font-size: 10px;
   color: #ffffff !important;
   font-family: 'Open Sans', sans-serif !important;
-
-
 }
 
 .app-root {
 
   font-size: 1em;
 
-  @include media-breakpoint-up(lg) {
-    font-size: 1.2em;
-  }
 
   h1, h2, h3, h4, h5 {
     font-family: 'Muli', serif;
@@ -52,7 +47,10 @@ body {
   }
 
   .component-container-login, .component-container-register {
-    position: absolute;
+    //position: absolute;
+    //top: 0;
+    //left: 0;
+
   }
 
   .form-container {
@@ -68,6 +66,14 @@ body {
     .form-title {
       text-align: center;
     }
+  }
+
+  .btn {
+    border-radius: 0;
+  }
+
+  .btn-wide {
+    width: 100%;
   }
 
   @include media-breakpoint-down(sm) {

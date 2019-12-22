@@ -1,12 +1,14 @@
 <div class="app-root">
-    <section class="section section-header">
+    <section class="section-header">
       <app-header-bar></app-header-bar>
     </section>
-    <section class="section section-nav">
+  <section class="section-body">
+    <section class="sub-section sub-section-nav">
       <app-navigation></app-navigation>
     </section>
-    <section class="section section-main">
-        <router-outlet></router-outlet>
+    <section class="sub-section sub-section-main">
+      <router-outlet></router-outlet>
+    </section>
     </section>
 </div>
 
