@@ -1,0 +1,16 @@
+::ng-deep {
+  .form {
+    .form-groups-array {
+      flex-basis: 20%;
+    }
+
+    input {
+      flex-grow: 2;
+    }
+  }
+
+  app-search {
+    flex-grow: 2;
+  }
+}
+

@@ -1,0 +1,12 @@
+.artifact-sub-item {
+  display: flex;
+  align-items: baseline;
+
+  .measurement {
+    font-size: 0.5em;
+  }
+
+  .name {
+    margin-left: 10px;
+  }
+}

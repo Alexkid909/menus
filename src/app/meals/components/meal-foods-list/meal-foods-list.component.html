@@ -1,0 +1,23 @@
+<div class="component-container component-container-meal-foods-list">
+  <h3>Foods in this meal</h3>
+  <ul class="artifact-sub-item-list list-meal-foods">
+    <!--<li class="artifact-sub-item meal-food meal-food-added" *ngFor="let addedMealFood of addedMealFoods">-->
+      <!--<span class="artifact-sub-item-name meal-food meal-food-added">{{addedMealFood.food.name}}</span>-->
+      <!--<span class="meal-food-qty">{{addedMealFood.qty}}<span class="meal-food-measurement"> ({{addedMealFood.food.measurement}})</span></span>-->
+    <!--</li>-->
+    <app-artifact-sub-item
+      *ngFor="let addedMealFood of addedMealFoods"
+      [artifactSubItemName]="addedMealFood.food.name"
+      [artifactSubItemQty]="addedMealFood.qty"
+      [artifactSubItemMeasurement]="addedMealFood.food.measurement"
+      [artifactSubItemClass]="'meal-food-added'" >
+    </app-artifact-sub-item>
+    <app-artifact-sub-item
+      *ngFor="let currentMealFood of currentMealFoods"
+      [artifactSubItemName]="currentMealFood.name"
+      [artifactSubItemQty]="currentMealFood.qty"
+      [artifactSubItemMeasurement]="currentMealFood.measurement"
+      [artifactSubItemClass]="'meal-food-current'" >
+    </app-artifact-sub-item>
+  </ul>
+</div>

@@ -1,0 +1,10 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins/breakpoints";
+
+.component-container-meal-foods-list {
+  @include media-breakpoint-up(lg) {
+    font-size: 0.8em;
+  }
+}
+
