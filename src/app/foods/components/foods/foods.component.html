@@ -13,14 +13,16 @@
   [deleteButtonFunction]="deleteButtonFunction"
   [currentArtifactId]="currentFoodId"
   [sideBarOpen]="sideBarOpen"
-  [deleteButtonFunction]
   (artifactClicked)="showEdit($event)"
 >
 
 </app-artifacts>
-
-
-<!--<div>-->
-  <!--<app-food-actions></app-food-actions>-->
-  <!--<app-foods-list (currentFood)="setCurrentFood($event)"></app-foods-list>-->
-<!--</div>-->
+<app-side-bar [title]="sideBarTitle">
+  <app-form [formModel]="foodFormFieldsModel"
+            [formActions]="foodFormActions"
+            [formErrors]="foodFormErrors"
+            [formCSSClass]="'Food'"
+            [submissionInProgress]="foodFormnInProgress"
+            [submissionSuccessful]="foodFormSuccessful">
+  </app-form>
+</app-side-bar>

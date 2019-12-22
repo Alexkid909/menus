@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject} from 'rxjs';
-import { FoodClass } from './classes/food';
-import { FoodInterface } from '../shared/interfaces/food';
+import { FoodClass } from './classes/food.class';
+import { FoodInterface } from '../shared/interfaces/food.interface';
 import {TenantsService} from '../tenants/tenants.service';
+import {Observable} from 'rxjs/internal/Observable';
 
 @Injectable()
 export class FoodsService {
@@ -29,6 +30,15 @@ export class FoodsService {
         this.foods = response.data;
         this.broadcastFoods();
       });
+  }
+
+  public searchFoods(term: string): Observable<Array<FoodInterface>> {
+    return this.http.get(`${this.apiUrl}/foods/`).pipe(map((results: any) => {
+      const searchResults = !term ? [] : results.data.filter((result: FoodInterface) => {
+        return result.name.toLowerCase().includes(term.toLowerCase());
+      });
+      return searchResults;
+    }));
   }
 
   broadcastFoods() {

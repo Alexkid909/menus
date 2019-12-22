@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {FoodsComponent} from './foods/foods.component';
+import {FoodsComponent} from './components/foods/foods.component';
 import {AuthGuard} from '../shared/guards/auth.guard';
 
 const foodRoutes: Routes = [

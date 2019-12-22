@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FoodsRoutingModule } from './foods-routing.module';
 import {FoodsService} from './foods.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { FoodsComponent } from './foods/foods.component';
+import { FoodsComponent } from './components/foods/foods.component';
 import {SharedModule} from '../shared/shared.module';
 import {AuthGuard} from '../shared/guards/auth.guard';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
