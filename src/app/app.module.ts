@@ -11,12 +11,12 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MealsModule} from './meals/meals.module';
 import {AppRoutingModule} from './app-routing.module';
 import {FoodsModule} from './foods/foods.module';
-import {NavigationComponent} from './navigation/navigation.component';
+import {NavigationComponent} from './shared/components/navigation/navigation.component';
 import {AuthModule} from './auth/auth.module';
 import {AuthGuard} from './shared/guards/auth.guard';
 import {SharedModule} from './shared/shared.module';
 import {TenantsModule} from './tenants/tenants.module';
-import { HeaderBarComponent } from './header-bar/header-bar.component';
+import { HeaderBarComponent } from './shared/components/header-bar/header-bar.component';
 
 @NgModule({
   imports: [

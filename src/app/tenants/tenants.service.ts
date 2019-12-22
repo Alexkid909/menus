@@ -12,7 +12,7 @@ import {AuthService} from '../auth/auth.service';
 
 export class TenantsService {
 
-  api = 'https://localhost:8443';
+  api = 'https://localhost:49161';
   currentTenantID: string = null;
   currentTenantIDBehaviourSubject: BehaviorSubject<string> = new BehaviorSubject(null);
   currentTenant: TenantInterface;

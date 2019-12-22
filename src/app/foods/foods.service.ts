@@ -10,7 +10,7 @@ import {Observable} from 'rxjs/internal/Observable';
 @Injectable()
 export class FoodsService {
 
-  apiUrl = `https://localhost:8443`;
+  apiUrl = `https://localhost:49161`;
   resource = `/foods`;
   foods: Array<FoodInterface>;
   foodsBehaviorSubject: BehaviorSubject<FoodInterface[]> = new BehaviorSubject(<FoodInterface[]> this.foods);

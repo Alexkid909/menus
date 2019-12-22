@@ -10,7 +10,7 @@ import {MealFoodClass} from './classes/meal-food.class';
 @Injectable()
 export class MealsService {
 
-  apiUrl = `https://localhost:8443`;
+  apiUrl = `https://localhost:49161`;
   resource = `/meals`;
   meals: Array<MealInterface>;
   mealsBehaviorSubject: BehaviorSubject<MealInterface[]> = new BehaviorSubject(<MealInterface[]> this.meals);
