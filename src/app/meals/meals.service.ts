@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map} from 'rxjs/operators';
 import { BehaviorSubject} from 'rxjs';
-import { MealClass } from './classes/mealClass';
+import { MealClass } from './classes/meal.class';
 import { TenantsService } from '../tenants/tenants.service';
-import { MealInterface } from '../shared/interfaces/meal';
+import { MealInterface } from '../shared/interfaces/meal.interface';
+import {MealFoodClass} from './classes/meal-food.class';
 
 @Injectable()
 export class MealsService {
@@ -70,5 +71,21 @@ export class MealsService {
       this.getMeals();
       return response;
     }));
+  }
+
+  addFoodsToMeal(mealID: string, mealFoods: Array<MealFoodClass>) {
+    const callUrl = `${this.apiUrl}${this.resource}/${mealID}/foods`;
+    const body = mealFoods.map((mealFood: MealFoodClass) => {
+      return {
+        foodId: mealFood.food._id,
+        qty: mealFood.qty
+      };
+    });
+    return this.http.post(callUrl, body);
+  }
+
+  getMealFoods(mealId: string) {
+    const callUrl = `${this.apiUrl}${this.resource}/${mealId}/foods`;
+    return this.http.get(callUrl);
   }
 }

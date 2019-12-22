@@ -1,0 +1,41 @@
+<div class="component-container-meals">
+  <app-artifacts
+    [artifactName]="'meal'"
+    [toolbarFunctions]="toolbarFunctions"
+    [artifacts]="userMeals"
+    [crudState]="crudState"
+    [sideBarTitle]="sideBarTitle"
+    [formFields]="mealFormFields"
+    [formFieldsModel]="mealFormFieldsModel"
+    [formInProgress]="mealFormInProgress"
+    [formSuccessful]="mealFormSuccessful"
+    [formErrors]="mealFormErrors"
+    [formActions]="mealFormActions"
+    [deleteButtonFunction]="deleteButtonFunction"
+    [currentArtifactId]="currentMealId"
+    [sideBarOpen]="sideBarOpen"
+    (artifactClicked)="showEdit($event)"
+  >
+  </app-artifacts>
+  <app-side-bar [title]="sideBarTitle">
+    <app-form
+      [formModel]="mealFormFieldsModel"
+      [formActions]="mealFormActions"
+      [formErrors]="mealFormErrors"
+      [formCSSClass]="'form-meal form-inline'"
+      [submissionInProgress]="mealFormnInProgress"
+      [submissionSuccessful]="mealFormSuccessful">
+      <app-meal-foods
+        before-actions
+        [currentMealId]="currentMealId"
+        (onAddMealFood)="addFoodToMeal($event)"
+      >
+      </app-meal-foods>
+      <app-meal-foods-list
+        before-actions
+        [currentMealFoods]="currentMealFoods"
+        [addedMealFoods]="addedMealFoods"
+      ></app-meal-foods-list>
+    </app-form>
+  </app-side-bar>
+</div>

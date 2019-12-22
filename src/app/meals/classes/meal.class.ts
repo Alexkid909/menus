@@ -1,8 +1,8 @@
-import {MealFood} from '../interfaces/meal-food';
+import { MealFoodInterface } from '../interfaces/meal-food';
 
 export class MealClass {
     name: string;
-    foods: Array<MealFood>;
+    foods: Array<MealFoodInterface>;
     constructor(name: string) {
         this.name = name;
     }

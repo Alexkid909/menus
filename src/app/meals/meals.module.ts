@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { MealsRoutingModule } from './meals-routing.module';
 import { MealsService } from './meals.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { MealsComponent } from './meals/meals.component';
+import { MealsComponent } from './components/meals/meals.component';
 import {SharedModule} from '../shared/shared.module';
 import {AuthGuard} from '../shared/guards/auth.guard';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {CurrentTenantInterceptorService} from '../interceptors/current-tenant-interceptor.service';
+import { MealFoodsComponent } from './components/meal-foods/meal-foods.component';
+import { MealFoodsListComponent } from './components/meal-foods-list/meal-foods-list.component';
 
 @NgModule({
   imports: [
@@ -28,6 +30,8 @@ import {CurrentTenantInterceptorService} from '../interceptors/current-tenant-in
   ],
   declarations: [
       MealsComponent,
+      MealFoodsComponent,
+      MealFoodsListComponent,
   ],
   exports: [
       MealsComponent
