@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/internal/Observable';
-import {Registration} from './classes/registration';
+import {RegistrationClass} from './classes/registration.class';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
 @Injectable({
@@ -11,7 +11,7 @@ import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
 export class AuthService {
 
-  api = 'https://localhost:8443';
+  api = 'https://localhost:49161';
   modulePath = 'users';
   token: string;
   loggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -49,13 +49,13 @@ export class AuthService {
   logout(): Observable<string> {
     localStorage.removeItem('auth_token');
     return new Observable((observer: any) => {
+      this.updateLoggedInState(false);
       observer.next('You have logged out');
       observer.complete();
     });
-    this.updateLoggedInState(false);
   }
 
-  register(registration: Registration) {
+  register(registration: RegistrationClass) {
     return this.http.post(`${this.api}/${this.modulePath}/register`, registration).pipe(
       map((response: any) => {
         console.log(response);

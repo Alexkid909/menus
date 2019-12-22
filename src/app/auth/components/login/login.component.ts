@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
-import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
+import { AuthService } from '../../auth.service';
+import { FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
-import {FormFieldGroup} from '../../shared/classes/form-field-group';
-import {FormField} from '../../shared/interfaces/form-field';
-import {FormAction} from '../../shared/classes/form-action';
-import { FormFieldType} from '../../shared/enums/form-field-type.enum';
+import {FormFieldGroupClass} from '../../../shared/classes/form-field-group.class';
+import {FormFieldInterface} from '../../../shared/interfaces/form-field.interface';
+import {FormActionClass} from '../../../shared/classes/form-action.class';
+import { FormFieldType} from '../../../shared/enums/form-field-type.enum';
 
 
 @Component({
@@ -15,13 +15,13 @@ import { FormFieldType} from '../../shared/enums/form-field-type.enum';
 })
 export class LoginComponent implements OnInit {
 
-  loginFields: Array<FormField>;
-  loginFormFieldsModel: Array<FormFieldGroup>;
+  loginFields: Array<FormFieldInterface>;
+  loginFormFieldsModel: Array<FormFieldGroupClass>;
   passwordRegex: RegExp;
   loginInProgress = false;
   loginSuccessful: boolean;
   loginErrors: Array<string> = [];
-  loginFormActions: Array<FormAction>;
+  loginFormActions: Array<FormActionClass>;
 
   constructor(private authService: AuthService, private router: Router) {
     this.passwordRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
@@ -31,8 +31,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginFields = [
-      new FormField('userName', FormFieldType.text, '', Validators.required),
-      new FormField('password', FormFieldType.password, '', [
+      new FormFieldInterface('userName', FormFieldType.text, '', Validators.required),
+      new FormFieldInterface('password', FormFieldType.password, '', [
         Validators.required,
         Validators.minLength(8),
         Validators.pattern(this.passwordRegex)
@@ -40,11 +40,11 @@ export class LoginComponent implements OnInit {
     ];
 
     this.loginFormFieldsModel = [
-      new FormFieldGroup('loginGroup', this.loginFields, []),
+      new FormFieldGroupClass('loginGroup', this.loginFields, []),
     ];
 
     this.loginFormActions = [
-      new FormAction('Login', this.login)
+      new FormActionClass('Login', this.login, { buttonClasses: 'btn-wide' })
     ];
   }
 
@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
     const {userName, password} = formValues;
 
     this.loginInProgress = true;
-    this.authService.login(userName, password).subscribe((response: any) => {
+    this.authService.login(userName, password).subscribe(() => {
       this.loginInProgress = false;
       this.loginSuccessful = true;
       this.router.navigate(['tenants']);

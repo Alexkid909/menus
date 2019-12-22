@@ -1,6 +1,4 @@
-import {last} from 'rxjs/operators';
-
-export class Registration {
+export class RegistrationClass {
   firstName: string;
   lastName: string;
   userName: string;

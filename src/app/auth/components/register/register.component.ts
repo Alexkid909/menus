@@ -4,13 +4,13 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
-import { AuthService } from '../auth.service';
-import { Registration } from '../classes/registration';
+import { AuthService } from '../../auth.service';
+import { RegistrationClass } from '../../classes/registration.class';
 import { Router } from '@angular/router';
-import { FormField } from '../../shared/interfaces/form-field';
-import { FormFieldGroup } from '../../shared/classes/form-field-group';
-import { FormAction } from '../../shared/classes/form-action';
-import { FormFieldType} from '../../shared/enums/form-field-type.enum';
+import { FormFieldInterface } from '../../../shared/interfaces/form-field.interface';
+import { FormFieldGroupClass } from '../../../shared/classes/form-field-group.class';
+import { FormActionClass } from '../../../shared/classes/form-action.class';
+import { FormFieldType} from '../../../shared/enums/form-field-type.enum';
 
 
 @Component({
@@ -23,14 +23,14 @@ import { FormFieldType} from '../../shared/enums/form-field-type.enum';
 export class RegisterComponent implements OnInit {
 
   passwordRegex: RegExp;
-  registrationFormFieldsModel: Array<FormFieldGroup>;
+  registrationFormFieldsModel: Array<FormFieldGroupClass>;
   registrationInProgress = false;
   registrationErrors: Array<string> = [];
   registrationSuccessful: boolean;
-  userDataFields: Array<FormField>;
-  userIdentifierFields: Array<FormField>;
-  passwordFields: Array<FormField>;
-  registrationFormActions: Array<FormAction>;
+  userDataFields: Array<FormFieldInterface>;
+  userIdentifierFields: Array<FormFieldInterface>;
+  passwordFields: Array<FormFieldInterface>;
+  registrationFormActions: Array<FormActionClass>;
 
 
   constructor(private authService: AuthService, private router: Router) {
@@ -39,22 +39,22 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.userDataFields = [
-      new FormField('firstName', FormFieldType.text, 'Alex', Validators.required),
-      new FormField('lastName', FormFieldType.text, 'Robinson', Validators.required),
+      new FormFieldInterface('firstName', FormFieldType.text, 'Alex', Validators.required),
+      new FormFieldInterface('lastName', FormFieldType.text, 'Robinson', Validators.required),
     ];
 
     this.userIdentifierFields = [
-      new FormField('userName', FormFieldType.text, 'alexkid5'),
-      new FormField('email', FormFieldType.text, 'alex5@robinson.com', [Validators.email, Validators.required]),
+      new FormFieldInterface('userName', FormFieldType.text, 'alexkid5'),
+      new FormFieldInterface('email', FormFieldType.text, 'alex5@robinson.com', [Validators.email, Validators.required]),
     ];
 
     this.passwordFields = [
-      new FormField('password', FormFieldType.password, 'P@ssword321', [
+      new FormFieldInterface('password', FormFieldType.password, 'P@ssword321', [
         Validators.required,
         Validators.pattern(this.passwordRegex),
         Validators.minLength(8),
       ]),
-      new FormField('passwordConfirm', FormFieldType.password, 'P@ssword321', [
+      new FormFieldInterface('passwordConfirm', FormFieldType.password, 'P@ssword321', [
         Validators.required,
         Validators.pattern(this.passwordRegex),
         Validators.minLength(8),
@@ -62,13 +62,13 @@ export class RegisterComponent implements OnInit {
     ];
 
     this.registrationFormFieldsModel = [
-      new FormFieldGroup('userDataGroup', this.userDataFields, []),
-      new FormFieldGroup('userIdentifierGroup', this.userIdentifierFields, []),
-      new FormFieldGroup('passwordGroup', this.passwordFields, [this.passwordMatchValidator])
+      new FormFieldGroupClass('userDataGroup', this.userDataFields, []),
+      new FormFieldGroupClass('userIdentifierGroup', this.userIdentifierFields, []),
+      new FormFieldGroupClass('passwordGroup', this.passwordFields, [this.passwordMatchValidator])
     ];
 
     this.registrationFormActions = [
-      new FormAction('Submit', this.register)
+      new FormActionClass('Submit', this.register, { buttonClasses: 'btn-wide' })
     ];
   }
 
@@ -96,8 +96,8 @@ export class RegisterComponent implements OnInit {
 
     this.registrationInProgress = true;
     const {firstName, lastName, userName, email, password, passwordConfirm} = formValues;
-    const registration = new Registration(firstName, lastName, userName, email, password, passwordConfirm);
-    this.authService.register(registration).subscribe((success: any) => {
+    const registration = new RegistrationClass(firstName, lastName, userName, email, password, passwordConfirm);
+    this.authService.register(registration).subscribe(() => {
       this.registrationInProgress = false;
       this.registrationSuccessful = true;
       this.router.navigate(['tenants']);
