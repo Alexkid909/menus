@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../shared/guards/auth.guard';
-import { TenantsComponent } from './tenants/tenants.component';
+import { TenantsComponent } from './components/tenants/tenants.component';
 
 const tenantsRoutes: Routes = [
     // {

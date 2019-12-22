@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {HttpClient} from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { TenantClass } from './classes/tenant';
-import { TenantInterface } from '../shared/interfaces/tenant';
+import { TenantClass } from './classes/tenant.interface';
+import { TenantInterface } from '../shared/interfaces/tenant.interface';
 import {combineLatest} from 'rxjs/internal/observable/combineLatest';
 import {Observable} from 'rxjs/internal/Observable';
 import {AuthService} from '../auth/auth.service';
@@ -23,7 +23,7 @@ export class TenantsService {
   constructor(private http: HttpClient, private authService: AuthService) {
     this.authService.loggedInSubject.subscribe((state: boolean) => {
       if (state) {
-        combineLatest([this.currentTenantIDBehaviourSubject, this.tenantsBehaviorSubject]).subscribe((results: any) => {
+        combineLatest([this.currentTenantIDBehaviourSubject, this.tenantsBehaviorSubject]).subscribe(() => {
           if (this.currentTenantID && this.tenants.length) {
             this.getCurrentTenant();
             this.broadcastCurrentTenant();
@@ -69,7 +69,7 @@ export class TenantsService {
   public searchTenants(term: string): Observable<Array<TenantInterface>> {
     return this.http.get(`${this.api}/user/tenants`).pipe(map((results: any) => {
       const searchResults = !term ? [] : results.data.filter((result: TenantInterface) => {
-        return result.name.indexOf(term) >= 0;
+        return result.name.toLowerCase().indexOf(term.toLowerCase()) >= 0;
       });
       return searchResults;
     }));
@@ -83,19 +83,19 @@ export class TenantsService {
   }
 
   public createTenant(tenant: TenantClass) {
-    return this.http.post(`${this.api}/tenants`, {name: tenant.name}).pipe(map((response: any) => {
+    return this.http.post(`${this.api}/tenants`, {name: tenant.name}).pipe(map(() => {
       this.getUserTenants();
     }));
   }
 
   public updateTenant(tenantId: string, tenant: TenantClass) {
-    return this.http.put(`${this.api}/tenants/${tenantId}`, {name: tenant.name}).pipe(map((response: any) => {
+    return this.http.put(`${this.api}/tenants/${tenantId}`, {name: tenant.name}).pipe(map(() => {
       this.getUserTenants();
     }));
   }
 
   public deleteTenant(tenantId: string) {
-    return this.http.delete(`${this.api}/tenants/${tenantId}`).pipe(map((response: any) => {
+    return this.http.delete(`${this.api}/tenants/${tenantId}`).pipe(map(() => {
       this.getUserTenants();
     }));
   }

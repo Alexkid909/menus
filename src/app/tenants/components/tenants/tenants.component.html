@@ -13,8 +13,17 @@
   [deleteButtonFunction]="deleteButtonFunction"
   [currentArtifactId]="currentTenantId"
   [sideBarOpen]="sideBarOpen"
-  [deleteButtonFunction]
   (artifactClicked)="showEdit($event)"
 >
 
 </app-artifacts>
+<app-side-bar [title]="sideBarTitle">
+  <app-form [formModel]="tenantFormFieldsModel"
+            [formActions]="tenantFormActions"
+            [formErrors]="tenantFormErrors"
+            [formCSSClass]="'Tenant'"
+            [submissionInProgress]="tenantFormnInProgress"
+            [submissionSuccessful]="tenantFormSuccessful">
+  </app-form>
+  <app-file-upload></app-file-upload>
+</app-side-bar>

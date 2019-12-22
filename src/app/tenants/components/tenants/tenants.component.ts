@@ -1,18 +1,18 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {TenantsService} from '../tenants.service';
+import {Component, OnInit} from '@angular/core';
+import {TenantsService} from '../../tenants.service';
 import {FormGroup, Validators} from '@angular/forms';
-import {FormField} from '../../shared/interfaces/form-field';
-import {FormFieldGroup} from '../../shared/classes/form-field-group';
-import {FormAction} from '../../shared/classes/form-action';
-import {FormFieldType} from '../../shared/enums/form-field-type.enum';
-import {CrudStateEnum} from '../../shared/enums/crud-state.enum';
-import {ToolBarFunction} from '../../shared/classes/tool-bar-function';
-import { TenantInterface } from '../../shared/interfaces/tenant';
-import { TenantClass} from '../classes/tenant';
-import {SideBarService} from '../../shared/side-bar.service';
-import {ModalService} from '../../shared/modal.service';
-import {ConfirmDialogComponent} from '../../shared/confirm-dialog/confirm-dialog.component';
-import {ModalConfig} from '../../shared/modal-config';
+import {FormFieldInterface} from '../../../shared/interfaces/form-field.interface';
+import {FormFieldGroupClass} from '../../../shared/classes/form-field-group.class';
+import {FormActionClass} from '../../../shared/classes/form-action.class';
+import {FormFieldType} from '../../../shared/enums/form-field-type.enum';
+import {CrudStateEnum} from '../../../shared/enums/crud-state.enum';
+import {ToolBarFunctionClass} from '../../../shared/classes/tool-bar-function.class';
+import { TenantInterface } from '../../../shared/interfaces/tenant.interface';
+import { TenantClass} from '../../classes/tenant.interface';
+import {SideBarService} from '../../../shared/side-bar.service';
+import {ModalService} from '../../../shared/modal.service';
+import {ConfirmDialogComponent} from '../../../shared/confirm-dialog/confirm-dialog.component';
+import {ModalConfig} from '../../../shared/modal-config';
 
 @Component({
   selector: 'app-tenants',
@@ -24,22 +24,21 @@ export class TenantsComponent implements OnInit {
   userTenants: Array<TenantInterface>;
   sideBarTitle: string;
   crudState: CrudStateEnum;
-  tenantFormFields: Array<FormField>;
-  tenantFormFieldsModel: Array<FormFieldGroup>;
+  tenantFormFields: Array<FormFieldInterface>;
+  tenantFormFieldsModel: Array<FormFieldGroupClass>;
   tenantFormInProgress = false;
   tenantFormSuccessful: boolean;
   tenantFormErrors: Array<string> = [];
-  tenantFormActions: Array<FormAction>;
-  toolbarFunctions: Array<ToolBarFunction>;
-  deleteButtonFunction: ToolBarFunction;
+  tenantFormActions: Array<FormActionClass>;
+  toolbarFunctions: Array<ToolBarFunctionClass>;
+  deleteButtonFunction: ToolBarFunctionClass;
   currentTenantId: string;
   sideBarOpen: boolean;
 
 
   constructor(public modal: ModalService,
               private tenantsService: TenantsService,
-              private sideBarService: SideBarService,
-              private modalService: ModalService) {
+              private sideBarService: SideBarService) {
     this.saveTenant = this.saveTenant.bind(this);
   }
 
@@ -51,19 +50,21 @@ export class TenantsComponent implements OnInit {
     this.crudState = CrudStateEnum.create;
 
     this.tenantFormFields = [
-      new FormField('tenantName', FormFieldType.text, '', Validators.required)
+      new FormFieldInterface('tenantName', FormFieldType.text, '', Validators.required)
     ];
 
     this.tenantFormFieldsModel = [
-      new FormFieldGroup('TenantGroup', this.tenantFormFields, []),
+      new FormFieldGroupClass('TenantGroup', this.tenantFormFields, []),
     ];
 
     this.tenantFormActions = [
-      new FormAction(this.crudState, this.saveTenant)
+      new FormActionClass(this.crudState, this.saveTenant, {
+        buttonClasses: 'btn-wide'
+      })
     ];
 
     this.toolbarFunctions = [
-      new ToolBarFunction('Create Tenant', this.showCreate, ['btn-mobile-disc'], ['fas fa-plus'])
+      new ToolBarFunctionClass('Create Tenant', this.showCreate, ['btn-mobile-disc'], ['fas fa-plus fa-lg'])
     ];
 
     this.toolbarFunctions.forEach((toolbarFunction: any) => {
@@ -71,7 +72,7 @@ export class TenantsComponent implements OnInit {
     });
 
     this.deleteButtonFunction =
-      new ToolBarFunction('Delete Tenant', this.initiateDelete, [
+      new ToolBarFunctionClass('Delete Tenant', this.initiateDelete, [
         'btn-artifact-action',
         'btn-artifact-action-delete',
       ], ['fas fa-trash-alt']);
@@ -82,19 +83,19 @@ export class TenantsComponent implements OnInit {
   updateSidebar(state: CrudStateEnum, tenant?: TenantInterface) {
     this.setCrudState(state);
     this.sideBarTitle = `${state} Tenant`;
-    this.tenantFormActions.forEach((action: FormAction) => {
+    this.tenantFormActions.forEach((action: FormActionClass) => {
       action.name = this.crudState;
     });
     this.tenantFormFields = [
-      new FormField('tenantName', FormFieldType.text, tenant ? tenant.name : '', Validators.required)
+      new FormFieldInterface('tenantName', FormFieldType.text, tenant ? tenant.name : '', Validators.required)
     ];
 
-    this.tenantFormActions.forEach((action: FormAction) => {
+    this.tenantFormActions.forEach((action: FormActionClass) => {
       action.name = this.crudState;
     });
 
     this.tenantFormFieldsModel = [
-      new FormFieldGroup('TenantGroup', this.tenantFormFields, []),
+      new FormFieldGroupClass('TenantGroup', this.tenantFormFields, []),
     ];
 
     this.sideBarService.open();
@@ -143,7 +144,7 @@ export class TenantsComponent implements OnInit {
 
   createTenant(tenant: TenantClass) {
     this.tenantFormInProgress = true;
-    this.tenantsService.createTenant(tenant).subscribe((response: any) => {
+    this.tenantsService.createTenant(tenant).subscribe(() => {
       this.tenantFormInProgress = false;
       this.tenantFormSuccessful = true;
       this.sideBarService.close();
@@ -156,7 +157,7 @@ export class TenantsComponent implements OnInit {
   }
 
   updateTenant(tenantId: string, updatedTenant: TenantClass) {
-     this.tenantsService.updateTenant(tenantId, updatedTenant).subscribe((response: any) => {
+     this.tenantsService.updateTenant(tenantId, updatedTenant).subscribe(() => {
       this.tenantFormInProgress = false;
       this.tenantFormSuccessful = true;
       this.sideBarService.close();
@@ -181,7 +182,7 @@ export class TenantsComponent implements OnInit {
   }
 
   deleteTenant(tenantId: string) {
-    this.tenantsService.deleteTenant(tenantId).subscribe((response: any) => {
+    this.tenantsService.deleteTenant(tenantId).subscribe(() => {
     }, (errorResponse: any) => {
       // @TODO Implement error handling.
     });
