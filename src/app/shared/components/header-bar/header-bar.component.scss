@@ -1,34 +1,38 @@
 @import 'appColors';
 
 .header-bar {
-  background-color: $dominant;
+  background-color: $secondary;
   height: 100%;
   display: flex;
   align-items: center;
-
-  > * {
-    margin-left: 50px;
-  }
 }
 
+.header-bar {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
 
+.app-name {
+  font-family: 'Fugaz One', cursive;
+  margin: 6px;
+}
 
 .header-search-container {
-  position: relative;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  left: 0;
 }
 
 ::ng-deep {
 
   .header-bar {
+
     .search-wrapper {
-      z-index: 1;
       position: absolute;
       top: 50%;
-      left: 0;
-    }
-
-    .search-container {
-      height: 100%;
+      left: 50px;
       transform: translateY(-50%);
     }
 
