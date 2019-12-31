@@ -18,7 +18,6 @@ export class MealFoodsListComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('meal food list changes', changes);
     if (changes.mealId && changes.mealId.currentValue) {
       this.getCurrentMealFoods();
     }
@@ -27,7 +26,6 @@ export class MealFoodsListComponent implements OnInit, OnChanges {
   getCurrentMealFoods() {
     this.currentMealFoods = [];
     this.mealsService.getMealFoods(this.mealId).subscribe((response: any) => {
-      console.log('current meal foods', response);
       this.currentMealFoods = response.data;
     });
   }

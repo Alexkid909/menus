@@ -116,25 +116,27 @@ export class MealsComponent implements OnInit {
         submissionInProgress: this.mealFormInProgress,
         submissionSuccessful: this.mealFormSuccessful,
         currentMealId: this.currentMealId,
-        addedMealFoods: this.addedMealFoods
+        addedMealFoods: this.addedMealFoods,
+        addFoodToMeal: this.addFoodToMeal.bind(this)
       }
     };
   }
 
 
   showCreate() {
+    this.setCurrentMealId(null);
     this.updateSidebar(CrudStateEnum.create);
     this.sideBar = this.sideBarService.open(MealsDialogComponent, this.sideBarConfig);
   }
 
-  showEdit(meal) {
+  showEdit(meal: MealInterface | null) {
     this.setCurrentMealId(meal._id);
     this.updateSidebar(CrudStateEnum.edit, meal);
     this.addedMealFoods = [];
     this.sideBar = this.sideBarService.open(MealsDialogComponent, this.sideBarConfig);
   }
 
-  setCurrentMealId(id: string) {
+  setCurrentMealId(id: string | null) {
     this.currentMealId = id;
   }
 
@@ -162,6 +164,7 @@ export class MealsComponent implements OnInit {
 
     if (this.addedMealFoods.length) {
       this.mealsService.addFoodsToMeal(this.currentMealId, this.addedMealFoods).subscribe((results: any) => {
+        this.addedMealFoods = [];
         console.log('added meal foods', results);
       });
     }
@@ -214,6 +217,6 @@ export class MealsComponent implements OnInit {
   addFoodToMeal(mealFood: MealFoodClass) {
     const addedMealFoods = [...this.addedMealFoods];
     addedMealFoods.push(mealFood);
-    this.addedMealFoods = addedMealFoods;
+    this.addedMealFoods = this.sideBarConfig.data.addedMealFoods = addedMealFoods;
   }
 }

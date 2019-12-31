@@ -15,7 +15,7 @@
       <app-meal-foods
         before-actions
         [currentMealId]="config.data.currentMealId"
-        (onAddMealFood)="addFoodToMeal($event)"
+        (onAddMealFood)="config.data.addFoodToMeal($event)"
       >
       </app-meal-foods>
       <app-meal-foods-list

@@ -26,6 +26,8 @@
 }
 
 .search-container {
+  position: relative;
+  
   .search-input {
     border-color: white;
   }
@@ -37,4 +39,5 @@
   width: 100%;
   background-color: white;
   color: black;
+  position: absolute;
 }
