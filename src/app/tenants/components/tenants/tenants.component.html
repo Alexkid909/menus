@@ -2,28 +2,6 @@
   [artifactName]="'tenant'"
   [toolbarFunctions]="toolbarFunctions"
   [artifacts]="userTenants"
-  [crudState]="crudState"
-  [sideBarTitle]="sideBarTitle"
-  [formFields]="tenantFormFields"
-  [formFieldsModel]="tenantFormFieldsModel"
-  [formInProgress]="tenantFormInProgress"
-  [formSuccessful]="tenantFormSuccessful"
-  [formErrors]="tenantFormErrors"
-  [formActions]="tenantFormActions"
   [deleteButtonFunction]="deleteButtonFunction"
-  [currentArtifactId]="currentTenantId"
-  [sideBarOpen]="sideBarOpen"
   (artifactClicked)="showEdit($event)"
->
-
-</app-artifacts>
-<app-side-bar [title]="sideBarTitle">
-  <app-form [formModel]="tenantFormFieldsModel"
-            [formActions]="tenantFormActions"
-            [formErrors]="tenantFormErrors"
-            [formCSSClass]="'Tenant'"
-            [submissionInProgress]="tenantFormnInProgress"
-            [submissionSuccessful]="tenantFormSuccessful">
-  </app-form>
-  <app-file-upload></app-file-upload>
-</app-side-bar>
+></app-artifacts>

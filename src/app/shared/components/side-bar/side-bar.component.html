@@ -1,9 +1,3 @@
-<div [@openClose]="isOpen ? 'open' : 'closed'" class="component-container component-container-side-bar">
-  <div class="side-bar-header">
-    <app-button (onClick)="closeSideBar()" [iconClass]="'fas fa-times'" [buttonClasses]="'btn-close'" ></app-button>
-    <h2 class="side-bar-title">{{title}}</h2>
-  </div>
-  <div class="side-bar-body">
-    <ng-content></ng-content>
-  </div>
+<div @openClose *ngIf=isOpen (@openClose.done)="handleCloseAnimation($event)" class="component-container component-container-side-bar">
+  <ng-template appSideBarInsertion></ng-template>
 </div>

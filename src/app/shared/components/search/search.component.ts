@@ -40,7 +40,6 @@ export class SearchComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('changes', changes);
     if (changes.hasOwnProperty('searchSource') && changes.searchSource.currentValue) {
       this.searchSourceBehaviorSubject.next(changes.searchSource.currentValue);
     }

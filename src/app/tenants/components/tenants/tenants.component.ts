@@ -7,12 +7,15 @@ import {FormActionClass} from '../../../shared/classes/form-action.class';
 import {FormFieldType} from '../../../shared/enums/form-field-type.enum';
 import {CrudStateEnum} from '../../../shared/enums/crud-state.enum';
 import {ToolBarFunctionClass} from '../../../shared/classes/tool-bar-function.class';
-import { TenantInterface } from '../../../shared/interfaces/tenant.interface';
-import { TenantClass} from '../../classes/tenant.interface';
+import {TenantInterface} from '../../../shared/interfaces/tenant.interface';
+import {TenantClass} from '../../classes/tenant.interface';
 import {SideBarService} from '../../../shared/side-bar.service';
 import {ModalService} from '../../../shared/modal.service';
 import {ConfirmDialogComponent} from '../../../shared/confirm-dialog/confirm-dialog.component';
-import {ModalConfig} from '../../../shared/modal-config';
+import {ModalConfig} from '../../../shared/modal.config';
+import {SideBarConfig} from '../../../shared/side-bar.config';
+import {SideBarDialogComponent} from '../../../shared/components/side-bar-dialog/side-bar-dialog.component';
+import {SideBarRefClass} from '../../../shared/classes/side-bar-ref.class';
 
 @Component({
   selector: 'app-tenants',
@@ -22,7 +25,6 @@ import {ModalConfig} from '../../../shared/modal-config';
 export class TenantsComponent implements OnInit {
 
   userTenants: Array<TenantInterface>;
-  sideBarTitle: string;
   crudState: CrudStateEnum;
   tenantFormFields: Array<FormFieldInterface>;
   tenantFormFieldsModel: Array<FormFieldGroupClass>;
@@ -33,8 +35,8 @@ export class TenantsComponent implements OnInit {
   toolbarFunctions: Array<ToolBarFunctionClass>;
   deleteButtonFunction: ToolBarFunctionClass;
   currentTenantId: string;
-  sideBarOpen: boolean;
-
+  sideBarConfig: SideBarConfig;
+  sideBar: SideBarRefClass;
 
   constructor(public modal: ModalService,
               private tenantsService: TenantsService,
@@ -82,7 +84,6 @@ export class TenantsComponent implements OnInit {
 
   updateSidebar(state: CrudStateEnum, tenant?: TenantInterface) {
     this.setCrudState(state);
-    this.sideBarTitle = `${state} Tenant`;
     this.tenantFormActions.forEach((action: FormActionClass) => {
       action.name = this.crudState;
     });
@@ -98,17 +99,28 @@ export class TenantsComponent implements OnInit {
       new FormFieldGroupClass('TenantGroup', this.tenantFormFields, []),
     ];
 
-    this.sideBarService.open();
+    this.sideBarConfig = {
+      data: {
+        title: `${state} Tenant`,
+        formModel: this.tenantFormFieldsModel,
+        formActions: this.tenantFormActions,
+        formErrors: this.tenantFormErrors,
+        formCSSClasses: 'tenant',
+        submissionInProgress: this.tenantFormInProgress,
+        submissionSuccessful: this.tenantFormSuccessful
+      }
+    };
   }
-
 
   showCreate() {
     this.updateSidebar(CrudStateEnum.create);
+    this.sideBar = this.sideBarService.open(SideBarDialogComponent, this.sideBarConfig);
   }
 
   showEdit(tenant) {
     this.updateSidebar(CrudStateEnum.edit, tenant);
     this.currentTenantId = tenant._id;
+    this.sideBar = this.sideBarService.open(SideBarDialogComponent, this.sideBarConfig);
   }
 
   setCrudState(state: CrudStateEnum) {
@@ -127,7 +139,6 @@ export class TenantsComponent implements OnInit {
     const {tenantName} = formValues;
     const tenant = new TenantClass(tenantName);
 
-
     if (this.crudState === CrudStateEnum.create) {
       this.createTenant(tenant);
     } else {
@@ -144,10 +155,10 @@ export class TenantsComponent implements OnInit {
 
   createTenant(tenant: TenantClass) {
     this.tenantFormInProgress = true;
-    this.tenantsService.createTenant(tenant).subscribe(() => {
+    return this.tenantsService.createTenant(tenant).subscribe(() => {
       this.tenantFormInProgress = false;
       this.tenantFormSuccessful = true;
-      this.sideBarService.close();
+      this.sideBar.close();
     }, (errorResponse: any) => {
       this.tenantFormErrors = errorResponse.error.messages;
       this.tenantFormInProgress = false;
@@ -157,10 +168,11 @@ export class TenantsComponent implements OnInit {
   }
 
   updateTenant(tenantId: string, updatedTenant: TenantClass) {
-     this.tenantsService.updateTenant(tenantId, updatedTenant).subscribe(() => {
+    this.tenantFormInProgress = true;
+    return this.tenantsService.updateTenant(tenantId, updatedTenant).subscribe(() => {
       this.tenantFormInProgress = false;
       this.tenantFormSuccessful = true;
-      this.sideBarService.close();
+      this.sideBar.close();
     }, (errorResponse: any) => {
       this.tenantFormErrors = errorResponse.error.messages;
       this.tenantFormInProgress = false;

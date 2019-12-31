@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {ModalConfig} from '../modal-config';
+import {ModalConfig} from '../modal.config';
 import {ModalRefClass} from '../classes/modal-ref.class';
 
 @Component({
@@ -25,5 +25,4 @@ export class ConfirmDialogComponent {
   decline() {
     this.modal.close();
   }
-
 }

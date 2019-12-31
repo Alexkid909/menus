@@ -10,11 +10,14 @@ import {ToolBarFunctionClass} from '../../../shared/classes/tool-bar-function.cl
 import {SideBarService} from '../../../shared/side-bar.service';
 import {ModalService} from '../../../shared/modal.service';
 import {ConfirmDialogComponent} from '../../../shared/confirm-dialog/confirm-dialog.component';
-import {ModalConfig} from '../../../shared/modal-config';
+import {ModalConfig} from '../../../shared/modal.config';
 import {MealInterface} from '../../../shared/interfaces/meal.interface';
 import {MealClass} from '../../classes/meal.class';
 import {MealFoodClass} from '../../classes/meal-food.class';
 import {FormService} from '../../../form.service';
+import {SideBarRefClass} from '../../../shared/classes/side-bar-ref.class';
+import {SideBarConfig} from '../../../shared/side-bar.config';
+import {MealsDialogComponent} from '../meals-dialog/meals-dialog.component';
 
 @Component({
   selector: 'app-meals',
@@ -27,20 +30,18 @@ export class MealsComponent implements OnInit {
   userMeals: Array<MealInterface> = [];
   sideBarTitle: string;
   crudState: CrudStateEnum;
-
   mealFormFields: Array<FormFieldInterface>;
   mealFormFieldsModel: Array<FormFieldGroupClass>;
   mealFormInProgress = false;
   mealFormSuccessful: boolean;
   mealFormActions: Array<FormActionClass>;
   mealFormErrors: Array<string> = [];
-
   toolbarFunctions: Array<ToolBarFunctionClass>;
   deleteButtonFunction: ToolBarFunctionClass;
   currentMealId: string;
-  currentMealFoods: Array<MealInterface>;
   addedMealFoods: Array<MealFoodClass> = [];
-  sideBarOpen: boolean;
+  sideBarConfig: SideBarConfig;
+  sideBar: SideBarRefClass;
 
   constructor(public modal: ModalService,
               private mealsService: MealsService,
@@ -105,20 +106,32 @@ export class MealsComponent implements OnInit {
       new FormFieldGroupClass('MealGroup', this.mealFormFields, [], 'form-array-meal'),
     ];
 
-    this.sideBarService.open();
+    this.sideBarConfig = {
+      data: {
+        title: `${state} Meal`,
+        formModel: this.mealFormFieldsModel,
+        formActions: this.mealFormActions,
+        formErrors: this.mealFormErrors,
+        formCSSClasses: 'meal',
+        submissionInProgress: this.mealFormInProgress,
+        submissionSuccessful: this.mealFormSuccessful,
+        currentMealId: this.currentMealId,
+        addedMealFoods: this.addedMealFoods
+      }
+    };
   }
 
 
   showCreate() {
-    this.currentMealFoods = [];
     this.updateSidebar(CrudStateEnum.create);
+    this.sideBar = this.sideBarService.open(MealsDialogComponent, this.sideBarConfig);
   }
 
   showEdit(meal) {
     this.setCurrentMealId(meal._id);
-    this.getCurrentMealFoods();
     this.updateSidebar(CrudStateEnum.edit, meal);
     this.addedMealFoods = [];
+    this.sideBar = this.sideBarService.open(MealsDialogComponent, this.sideBarConfig);
   }
 
   setCurrentMealId(id: string) {
@@ -141,7 +154,6 @@ export class MealsComponent implements OnInit {
     const { mealName } = formValues;
     const meal = new MealClass(mealName);
 
-
     if (this.crudState === CrudStateEnum.create) {
       this.createMeal(meal);
     } else {
@@ -160,7 +172,7 @@ export class MealsComponent implements OnInit {
     this.mealsService.createMeal(meal.name).subscribe(() => {
       this.mealFormInProgress = false;
       this.mealFormSuccessful = true;
-      this.sideBarService.close();
+      this.sideBar.close();
     }, (errorResponse: any) => {
       this.mealFormErrors = errorResponse.error.messages;
       this.mealFormInProgress = this.mealFormSuccessful = false;
@@ -172,7 +184,7 @@ export class MealsComponent implements OnInit {
     this.mealsService.updateMeal(mealId, updatedMeal).subscribe(() => {
       this.mealFormInProgress = false;
       this.mealFormSuccessful = true;
-      this.sideBarService.close();
+      this.sideBar.close();
     }, (errorResponse: any) => {
       this.mealFormErrors = errorResponse.error.messages;
       this.mealFormInProgress = this.mealFormSuccessful = false;
@@ -204,13 +216,4 @@ export class MealsComponent implements OnInit {
     addedMealFoods.push(mealFood);
     this.addedMealFoods = addedMealFoods;
   }
-
-  getCurrentMealFoods() {
-    this.currentMealFoods = [];
-    this.mealsService.getMealFoods(this.currentMealId).subscribe((response: any) => {
-      console.log('current meal foods', response);
-      this.currentMealFoods = response.data;
-    });
-  }
-
 }

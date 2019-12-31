@@ -39,7 +39,6 @@ export class MealFoodsComponent implements OnInit, AfterViewInit {
   constructor(
     private foodsService: FoodsService,
     public formService: FormService,
-    private sideBarService: SideBarService
   ) {}
 
   ngOnInit() {
@@ -58,18 +57,12 @@ export class MealFoodsComponent implements OnInit, AfterViewInit {
       }, false)
     ];
 
-    this.sideBarService.isOpenBS.subscribe(() => {
-      this.resetSearchFoodsSearch();
-    });
+    this.resetSearchFoodsSearch();
   }
 
 
   ngAfterViewInit(): void {
-    this.sideBarService.isOpenBS.subscribe((isOpen: boolean) => {
-      if (!isOpen && this.initialFormValues) {
-        this.mealFoodsFormChild.form.reset(this.initialFormValues);
-      }
-    });
+    this.mealFoodsFormChild.form.reset(this.initialFormValues);
   }
 
   setInitialFormValues(formBuiltData: FormValues) {

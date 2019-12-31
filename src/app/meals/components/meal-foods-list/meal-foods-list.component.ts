@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {MealFoodInterface} from '../../interfaces/meal-food';
 import {MealsService} from '../../meals.service';
 
@@ -7,13 +7,28 @@ import {MealsService} from '../../meals.service';
   templateUrl: './meal-foods-list.component.html',
   styleUrls: ['./meal-foods-list.component.scss']
 })
-export class MealFoodsListComponent implements OnInit {
+export class MealFoodsListComponent implements OnInit, OnChanges {
 
-  @Input() currentMealFoods: Array<MealFoodInterface>;
+  @Input() mealId: string;
+  currentMealFoods: Array<MealFoodInterface>;
   @Input() addedMealFoods: Array<MealFoodInterface>;
 
-  constructor() { }
+  constructor(private mealsService: MealsService) { }
 
   ngOnInit() {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('meal food list changes', changes);
+    if (changes.mealId && changes.mealId.currentValue) {
+      this.getCurrentMealFoods();
+    }
+  }
+
+  getCurrentMealFoods() {
+    this.currentMealFoods = [];
+    this.mealsService.getMealFoods(this.mealId).subscribe((response: any) => {
+      console.log('current meal foods', response);
+      this.currentMealFoods = response.data;
+    });
+  }
 }

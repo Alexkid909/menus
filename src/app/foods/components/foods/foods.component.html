@@ -2,27 +2,6 @@
   [artifactName]="'food'"
   [toolbarFunctions]="toolbarFunctions"
   [artifacts]="userFoods"
-  [crudState]="crudState"
-  [sideBarTitle]="sideBarTitle"
-  [formFields]="foodFormFields"
-  [formFieldsModel]="foodFormFieldsModel"
-  [formInProgress]="foodFormInProgress"
-  [formSuccessful]="foodFormSuccessful"
-  [formErrors]="foodFormErrors"
-  [formActions]="foodFormActions"
   [deleteButtonFunction]="deleteButtonFunction"
-  [currentArtifactId]="currentFoodId"
-  [sideBarOpen]="sideBarOpen"
   (artifactClicked)="showEdit($event)"
->
-
-</app-artifacts>
-<app-side-bar [title]="sideBarTitle">
-  <app-form [formModel]="foodFormFieldsModel"
-            [formActions]="foodFormActions"
-            [formErrors]="foodFormErrors"
-            [formCSSClass]="'Food'"
-            [submissionInProgress]="foodFormnInProgress"
-            [submissionSuccessful]="foodFormSuccessful">
-  </app-form>
-</app-side-bar>
+></app-artifacts>

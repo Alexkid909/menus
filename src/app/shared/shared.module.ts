@@ -13,6 +13,8 @@ import { ModalInsertionDirective } from './directives/modal-insertion.directive'
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { SearchComponent } from './components/search/search.component';
 import { ArtifactSubItemComponent } from './components/artifact-sub-item/artifact-sub-item.component';
+import { SideBarInsertionDirective } from './directives/side-bar-insertion.directive';
+import { SideBarDialogComponent } from './components/side-bar-dialog/side-bar-dialog.component';
 
 @NgModule({
   imports: [
@@ -23,7 +25,6 @@ import { ArtifactSubItemComponent } from './components/artifact-sub-item/artifac
   declarations: [
     ButtonComponent,
     FormComponent,
-    SideBarComponent,
     ToolBarComponent,
     ArtifactsComponent,
     ModalComponent,
@@ -31,11 +32,13 @@ import { ArtifactSubItemComponent } from './components/artifact-sub-item/artifac
     ConfirmDialogComponent,
     SearchComponent,
     ArtifactSubItemComponent,
+    SideBarComponent,
+    SideBarInsertionDirective,
+    SideBarDialogComponent,
   ],
   exports: [
     ButtonComponent,
     FormComponent,
-    SideBarComponent,
     ToolBarComponent,
     ArtifactsComponent,
     SearchComponent,
@@ -47,7 +50,9 @@ import { ArtifactSubItemComponent } from './components/artifact-sub-item/artifac
   ],
   entryComponents: [
     ModalComponent,
-    ConfirmDialogComponent
+    SideBarComponent,
+    ConfirmDialogComponent,
+    SideBarDialogComponent
   ]
 })
 export class SharedModule { }

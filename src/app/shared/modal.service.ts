@@ -6,8 +6,9 @@ import {
   EmbeddedViewRef,
   ComponentRef, Type
 } from '@angular/core';
+
 import {ModalComponent} from './components/modal/modal.component';
-import {ModalConfig} from './modal-config';
+import {ModalConfig} from './modal.config';
 import {ModalInjector} from './modal-injector';
 import {ModalRefClass} from './classes/modal-ref.class';
 
@@ -18,13 +19,10 @@ import {ModalRefClass} from './classes/modal-ref.class';
 export class ModalService {
   modalComponentRef: ComponentRef<ModalComponent>;
 
-
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private appRef: ApplicationRef,
               private injector: Injector
-  ) {
-
-  }
+  ) {}
 
   appendModalComponentToBody(config: ModalConfig) {
     const map = new WeakMap();
@@ -34,7 +32,6 @@ export class ModalService {
     map.set(ModalRefClass, modalRef);
 
     const sub = modalRef.afterClosed.subscribe(() => {
-      // close the dialog
       this.removeModalComponentFromBody();
       sub.unsubscribe();
     });
@@ -65,5 +62,4 @@ export class ModalService {
 
     return modalRef;
   }
-
 }

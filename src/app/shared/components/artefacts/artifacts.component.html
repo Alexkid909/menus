@@ -12,7 +12,6 @@
           <img class="artifact-img {{artifactName}}-img img-fluid" src="assets/images/300x300placeholder.png" />
         </div>
         <div class="artifact-actions {{artifactName}}-actions">
-          <!--<app-tool-bar [toolbarClasses]="'toolbar-tenant'" [isResponsive]="true" [tools]="tenantToolbarFunctions"></app-tool-bar>-->
           <app-button (onClick)="deleteButtonFunction.definition($event, artifact)"  [buttonText]="" [buttonClasses]="deleteButtonFunction.cssClasses" [iconClass]="deleteButtonFunction.iconClass"></app-button>
         </div>
       </div>

@@ -9,10 +9,14 @@
   .search-input {
     width: 100%;
   }
+}
 
-  .search-label {
-    margin-bottom: 0;
-  }
+.search-input {
+  border-radius: unset;
+}
+
+.search-label {
+  margin-bottom: 0;
 }
 
 .search-input,

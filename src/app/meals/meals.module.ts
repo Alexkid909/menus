@@ -10,6 +10,7 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {CurrentTenantInterceptorService} from '../interceptors/current-tenant-interceptor.service';
 import { MealFoodsComponent } from './components/meal-foods/meal-foods.component';
 import { MealFoodsListComponent } from './components/meal-foods-list/meal-foods-list.component';
+import { MealsDialogComponent } from './components/meals-dialog/meals-dialog.component';
 
 @NgModule({
   imports: [
@@ -32,9 +33,13 @@ import { MealFoodsListComponent } from './components/meal-foods-list/meal-foods-
       MealsComponent,
       MealFoodsComponent,
       MealFoodsListComponent,
+      MealsDialogComponent,
   ],
   exports: [
       MealsComponent
+  ],
+  entryComponents: [
+    MealsDialogComponent
   ]
 })
 export class MealsModule { }

@@ -10,9 +10,12 @@ import {ToolBarFunctionClass} from '../../../shared/classes/tool-bar-function.cl
 import {SideBarService} from '../../../shared/side-bar.service';
 import {ModalService} from '../../../shared/modal.service';
 import {ConfirmDialogComponent} from '../../../shared/confirm-dialog/confirm-dialog.component';
-import {ModalConfig} from '../../../shared/modal-config';
+import {ModalConfig} from '../../../shared/modal.config';
 import { FoodInterface } from '../../../shared/interfaces/food.interface';
 import {FoodClass} from '../../classes/food.class';
+import {SideBarConfig} from '../../../shared/side-bar.config';
+import {SideBarDialogComponent} from '../../../shared/components/side-bar-dialog/side-bar-dialog.component';
+import {SideBarRefClass} from '../../../shared/classes/side-bar-ref.class';
 
 @Component({
   selector: 'app-foods',
@@ -23,7 +26,6 @@ import {FoodClass} from '../../classes/food.class';
 export class FoodsComponent implements OnInit {
 
   userFoods: Array<FoodInterface>;
-  sideBarTitle: string;
   crudState: CrudStateEnum;
   foodFormFields: Array<FormFieldInterface>;
   foodFormFieldsModel: Array<FormFieldGroupClass>;
@@ -34,7 +36,8 @@ export class FoodsComponent implements OnInit {
   toolbarFunctions: Array<ToolBarFunctionClass>;
   deleteButtonFunction: ToolBarFunctionClass;
   currentFoodId: string;
-  sideBarOpen: boolean;
+  sideBarConfig: SideBarConfig;
+  sideBar: SideBarRefClass;
 
 
   constructor(public modal: ModalService,
@@ -83,12 +86,10 @@ export class FoodsComponent implements OnInit {
       ], ['fas fa-trash-alt']);
 
     this.deleteButtonFunction.definition = this.deleteButtonFunction.definition.bind(this);
-    // console.log('foods component', this);
   }
 
   updateSidebar(state: CrudStateEnum, food?: FoodInterface) {
     this.setCrudState(state);
-    this.sideBarTitle = `${state} Food`;
     this.foodFormActions.forEach((action: FormActionClass) => {
       action.name = this.crudState;
     });
@@ -105,17 +106,29 @@ export class FoodsComponent implements OnInit {
       new FormFieldGroupClass('FoodGroup', this.foodFormFields, []),
     ];
 
-    this.sideBarService.open();
+    this.sideBarConfig = {
+      data: {
+        title: `${state} Food`,
+        formModel: this.foodFormFieldsModel,
+        formActions: this.foodFormActions,
+        formErrors: this.foodFormErrors,
+        formCSSClasses: 'Food',
+        submissionInProgress: this.foodFormInProgress,
+        submissionSuccessful: this.foodFormSuccessful
+      }
+    };
   }
 
 
   showCreate() {
     this.updateSidebar(CrudStateEnum.create);
+    this.sideBar = this.sideBarService.open(SideBarDialogComponent, this.sideBarConfig);
   }
 
   showEdit(food) {
     this.updateSidebar(CrudStateEnum.edit, food);
     this.currentFoodId = food._id;
+    this.sideBar = this.sideBarService.open(SideBarDialogComponent, this.sideBarConfig);
   }
 
   setCrudState(state: CrudStateEnum) {
@@ -154,7 +167,7 @@ export class FoodsComponent implements OnInit {
     this.foodsService.createFood(food.name, food.measurement).subscribe(() => {
       this.foodFormInProgress = false;
       this.foodFormSuccessful = true;
-      this.sideBarService.close();
+      this.sideBar.close();
     }, (errorResponse: any) => {
       this.foodFormErrors = errorResponse.error.messages;
       this.foodFormInProgress = false;
@@ -167,7 +180,7 @@ export class FoodsComponent implements OnInit {
     this.foodsService.updateFood(foodId, updatedFood).subscribe(() => {
       this.foodFormInProgress = false;
       this.foodFormSuccessful = true;
-      this.sideBarService.close();
+      this.sideBar.close();
     }, (errorResponse: any) => {
       this.foodFormErrors = errorResponse.error.messages;
       this.foodFormInProgress = false;
