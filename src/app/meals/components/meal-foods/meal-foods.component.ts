@@ -31,6 +31,7 @@ export class MealFoodsComponent implements OnInit, AfterViewInit {
   @Output() onAddMealFood: EventEmitter<MealFoodClass> = new EventEmitter<MealFoodClass>();
   @Input() currentMealId: string;
   private resetTermSubject: Subject<void> = new Subject<void>();
+  private resetFormSubject: Subject<void> = new Subject<void>();
   initialFormValues: FormData;
 
   @ViewChild(FormComponent) mealFoodsFormChild: FormComponent;
@@ -57,7 +58,7 @@ export class MealFoodsComponent implements OnInit, AfterViewInit {
       }, false)
     ];
 
-    this.resetSearchFoodsSearch();
+    this.resetMealFoodsForm();
   }
 
 
@@ -69,7 +70,8 @@ export class MealFoodsComponent implements OnInit, AfterViewInit {
     this.initialFormValues = formBuiltData.formValues;
   }
 
-  resetSearchFoodsSearch(): void {
+  resetMealFoodsForm() {
+    this.resetFormSubject.next();
     this.searchFoodsSource = this.foodsService.searchFoods('');
     this.resetTermSubject.next();
     this.selectedFood = null;
@@ -98,5 +100,6 @@ export class MealFoodsComponent implements OnInit, AfterViewInit {
       const mealFood = new MealFoodClass(this.selectedFood, qty);
       this.onAddMealFood.emit(mealFood);
     }
+    this.resetMealFoodsForm();
   }
 }

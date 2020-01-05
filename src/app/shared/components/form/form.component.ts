@@ -4,6 +4,7 @@ import { FormFieldInterface } from '../../interfaces/form-field.interface';
 import { FormFieldGroupClass } from '../../classes/form-field-group.class';
 import { FormActionClass } from '../../classes/form-action.class';
 import {FormValues} from '../../classes/form-values.class';
+import {Observable} from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-form',
@@ -21,15 +22,23 @@ export class FormComponent implements OnInit, OnChanges {
   @Input() submissionSuccessful: boolean;
   @Input() formCSSClass = '';
   @Output() onFormBuild: EventEmitter<FormValues> = new EventEmitter();
+  @Input() resetFormSubject: Observable<string>;
 
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.buildForm();
+    if (this.resetFormSubject) {
+      this.resetFormSubject.subscribe(() => {
+        this.resetForm();
+      });
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.buildForm();
+    // @TODO not sure why this is here?
+    // debugger;
+    // this.buildForm();
   }
 
   buildForm() {
@@ -44,7 +53,6 @@ export class FormComponent implements OnInit, OnChanges {
     });
 
     this.onFormBuild.emit(new FormValues(this.form.value));
-
   }
 
   get groupsArray() {
@@ -111,8 +119,7 @@ export class FormComponent implements OnInit, OnChanges {
     }
   }
 
-  submitForm() {
-
+  resetForm() {
+    this.buildForm();
   }
-
 }

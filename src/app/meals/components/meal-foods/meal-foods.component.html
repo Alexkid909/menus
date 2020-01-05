@@ -5,7 +5,8 @@
           [formCSSClass]="'form-meal-food form-inline'"
           [submissionInProgress]="mealFormnInProgress"
           [submissionSuccessful]="mealFormSuccessful"
-          (onFormBuild)="setInitialFormValues($event)">
+          (onFormBuild)="setInitialFormValues($event)"
+          [resetFormSubject]="resetFormSubject.asObservable()">
   <app-search zone-before-fields
               [cssClasses]="'block search-foods'"
               [labelText]="'Add a food'"

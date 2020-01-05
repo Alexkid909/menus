@@ -45,7 +45,6 @@ export class NavigationComponent implements OnInit {
   }
 
   setActive(navRoute) {
-    console.log(navRoute);
     this.activeRoute = navRoute;
   }
 
