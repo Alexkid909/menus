@@ -7,7 +7,7 @@ import {
 import { AuthService } from '../../auth.service';
 import { RegistrationClass } from '../../classes/registration.class';
 import { Router } from '@angular/router';
-import { FormFieldInterface } from '../../../shared/interfaces/form-field.interface';
+import { FormFieldClass } from '../../../shared/interfaces/form-field.class';
 import { FormFieldGroupClass } from '../../../shared/classes/form-field-group.class';
 import { FormActionClass } from '../../../shared/classes/form-action.class';
 import { FormFieldType} from '../../../shared/enums/form-field-type.enum';
@@ -27,9 +27,9 @@ export class RegisterComponent implements OnInit {
   registrationInProgress = false;
   registrationErrors: Array<string> = [];
   registrationSuccessful: boolean;
-  userDataFields: Array<FormFieldInterface>;
-  userIdentifierFields: Array<FormFieldInterface>;
-  passwordFields: Array<FormFieldInterface>;
+  userDataFields: Array<FormFieldClass>;
+  userIdentifierFields: Array<FormFieldClass>;
+  passwordFields: Array<FormFieldClass>;
   registrationFormActions: Array<FormActionClass>;
 
 
@@ -39,22 +39,22 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.userDataFields = [
-      new FormFieldInterface('firstName', FormFieldType.text, 'Alex', Validators.required),
-      new FormFieldInterface('lastName', FormFieldType.text, 'Robinson', Validators.required),
+      new FormFieldClass('firstName', FormFieldType.text, '', Validators.required),
+      new FormFieldClass('lastName', FormFieldType.text, '', Validators.required),
     ];
 
     this.userIdentifierFields = [
-      new FormFieldInterface('userName', FormFieldType.text, 'alexkid5'),
-      new FormFieldInterface('email', FormFieldType.text, 'alex5@robinson.com', [Validators.email, Validators.required]),
+      new FormFieldClass('userName', FormFieldType.text, ''),
+      new FormFieldClass('email', FormFieldType.text, '', [Validators.email, Validators.required]),
     ];
 
     this.passwordFields = [
-      new FormFieldInterface('password', FormFieldType.password, 'P@ssword321', [
+      new FormFieldClass('password', FormFieldType.password, '', [
         Validators.required,
         Validators.pattern(this.passwordRegex),
         Validators.minLength(8),
       ]),
-      new FormFieldInterface('passwordConfirm', FormFieldType.password, 'P@ssword321', [
+      new FormFieldClass('passwordConfirm', FormFieldType.password, '', [
         Validators.required,
         Validators.pattern(this.passwordRegex),
         Validators.minLength(8),

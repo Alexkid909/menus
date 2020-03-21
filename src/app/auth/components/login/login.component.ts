@@ -3,7 +3,7 @@ import { AuthService } from '../../auth.service';
 import { FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
 import {FormFieldGroupClass} from '../../../shared/classes/form-field-group.class';
-import {FormFieldInterface} from '../../../shared/interfaces/form-field.interface';
+import {FormFieldClass} from '../../../shared/interfaces/form-field.class';
 import {FormActionClass} from '../../../shared/classes/form-action.class';
 import { FormFieldType} from '../../../shared/enums/form-field-type.enum';
 
@@ -15,7 +15,7 @@ import { FormFieldType} from '../../../shared/enums/form-field-type.enum';
 })
 export class LoginComponent implements OnInit {
 
-  loginFields: Array<FormFieldInterface>;
+  loginFields: Array<FormFieldClass>;
   loginFormFieldsModel: Array<FormFieldGroupClass>;
   passwordRegex: RegExp;
   loginInProgress = false;
@@ -31,8 +31,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginFields = [
-      new FormFieldInterface('userName', FormFieldType.text, '', Validators.required),
-      new FormFieldInterface('password', FormFieldType.password, '', [
+      new FormFieldClass('userName', FormFieldType.text, '', Validators.required),
+      new FormFieldClass('password', FormFieldType.password, '', [
         Validators.required,
         Validators.minLength(8),
         Validators.pattern(this.passwordRegex)

@@ -5,12 +5,13 @@ import { BehaviorSubject} from 'rxjs';
 import { MealClass } from './classes/meal.class';
 import { TenantsService } from '../tenants/tenants.service';
 import { MealInterface } from '../shared/interfaces/meal.interface';
-import {MealFoodClass} from './classes/meal-food.class';
+import { MealFoodClass } from './classes/meal-food.class';
+import { environment} from '../../environments/environment';
 
 @Injectable()
 export class MealsService {
 
-  apiUrl = `https://localhost:49161`;
+  apiUrl: string;
   resource = `/meals`;
   meals: Array<MealInterface>;
   mealsBehaviorSubject: BehaviorSubject<MealInterface[]> = new BehaviorSubject(<MealInterface[]> this.meals);
@@ -19,7 +20,9 @@ export class MealsService {
 
 
   constructor(private http: HttpClient,
-              private tenantsService: TenantsService) {
+              private tenantsService: TenantsService
+  ) {
+    this.apiUrl = environment.apiUrl;
     this.tenantsService.currentTenantIDBehaviourSubject.subscribe((id: string) => {
       if (id) { this.getMeals(); }
     });
@@ -44,12 +47,9 @@ export class MealsService {
     });
   }
 
-  createMeal(name) {
+  createMeal(meal: MealClass) {
     const callUrl = `${this.apiUrl}${this.resource}`;
-    const body = new MealClass(name);
-    console.log(name);
-    return this.http.post(callUrl, body).pipe(map(response => {
-
+    return this.http.post(callUrl, meal).pipe(map(response => {
       this.getMeals();
       return response;
     }));
@@ -66,8 +66,7 @@ export class MealsService {
 
   updateMeal(mealId: string, meal: MealClass) {
     const callUrl = `${this.apiUrl}${this.resource}/${mealId}`;
-    const body = meal;
-    return this.http.put(callUrl, body).pipe(map(response => {
+    return this.http.put(callUrl, meal).pipe(map(response => {
       this.getMeals();
       return response;
     }));

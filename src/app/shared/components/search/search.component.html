@@ -1,5 +1,5 @@
 <div class="search-wrapper" [ngClass]="cssClasses">
-  <div class="search-container">
+  <div class="search-container" [ngClass]="{'active': searchTerm}">
     <label class="search-label">
       <span *ngIf="labelText">
         {{labelText}}

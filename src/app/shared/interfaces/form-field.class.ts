@@ -2,7 +2,7 @@ import {AbstractControlOptions, AsyncValidatorFn, FormControl, ValidatorFn} from
 import { FormFieldType} from '../enums/form-field-type.enum';
 
 
-export class FormFieldInterface extends FormControl {
+export class FormFieldClass extends FormControl {
   title: string;
   type: FormFieldType;
   formState: string;

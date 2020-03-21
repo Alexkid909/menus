@@ -27,14 +27,20 @@
 
 .search-container {
   position: relative;
-  
-  .search-input {
-    border-color: white;
+
+  &.active {
+    .search-input {
+      background-color: white;
+    }
+
+   .search-results {
+     display: block;
+   }
   }
 }
 
-
 .search-results {
+  display: none;
   list-style-type: none;
   width: 100%;
   background-color: white;

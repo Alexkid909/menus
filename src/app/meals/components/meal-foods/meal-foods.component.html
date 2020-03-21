@@ -3,17 +3,13 @@
           [formActions]="mealFoodFormActions"
           [formErrors]="mealFoodFormErrors"
           [formCSSClass]="'form-meal-food form-inline'"
-          [submissionInProgress]="mealFormnInProgress"
-          [submissionSuccessful]="mealFormSuccessful"
-          (onFormBuild)="setInitialFormValues($event)"
-          [resetFormSubject]="resetFormSubject.asObservable()">
+          (onFormBuild)="setInitialFormValues($event)">
   <app-search zone-before-fields
               [cssClasses]="'block search-foods'"
               [labelText]="'Add a food'"
               [resultsPlaceholder]="selectedFood?.name || 'Add for a food'"
               (onResultSelected)="selectFood($event)"
               [searchSource]="searchFoodsSource"
-              [resetTerm]="resetTermSubject.asObservable()"
               (onSearchTermChange)="searchFoods($event)"
   ></app-search>
 </app-form>

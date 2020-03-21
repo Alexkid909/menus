@@ -8,11 +8,14 @@
         <div class="artifact-item {{artifactName}}-item artifact-name {{artifactName}}-name">
           {{artifact?.name}}
         </div>
-        <div class="artifact-item artifact-image {{artifactName}}-item {{artifactName}}-image">
-          <img class="artifact-img {{artifactName}}-img img-fluid" src="assets/images/300x300placeholder.png" />
+        <div class="artifact-item artifact-image-container {{artifactName}}-item {{artifactName}}-image-container">
+          <img class="artifact-image {{artifactName}}-img img-fluid" [ngStyle]="{'background-image': 'url(' + artifact.imgSrc + ')' || 'assets/images/300x300placeholder.png'}"/>
         </div>
         <div class="artifact-actions {{artifactName}}-actions">
-          <app-button (onClick)="deleteButtonFunction.definition($event, artifact)"  [buttonText]="" [buttonClasses]="deleteButtonFunction.cssClasses" [iconClass]="deleteButtonFunction.iconClass"></app-button>
+          <app-button (onClick)="deleteButtonFunction.definition($event, artifact)"
+                      [buttonText]="" [buttonClasses]="deleteButtonFunction.cssClasses"
+                      [iconClass]="deleteButtonFunction.iconClass">
+          </app-button>
         </div>
       </div>
     </div>

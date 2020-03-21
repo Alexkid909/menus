@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/internal/Observable';
 import {RegistrationClass} from './classes/registration.class';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
+import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,15 @@ import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
 export class AuthService {
 
-  api = 'https://localhost:49161';
+  apiUrl: string;
   modulePath = 'users';
   token: string;
   loggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   loggedIn = false;
 
   constructor(private http: HttpClient) {
+    this.apiUrl = environment.apiUrl;
+    console.log(this.apiUrl);
     this.getToken();
     if (this.token) {
       this.updateLoggedInState(true);
@@ -38,7 +41,7 @@ export class AuthService {
 
   login(userName: string, password: string) {
     const body = {userName, password };
-    return this.http.post(`${this.api}/users/authenticate`, body)
+    return this.http.post(`${this.apiUrl}/users/authenticate`, body)
       .pipe(map((response: any) => {
         this.setToken(response.data.token);
         this.updateLoggedInState(true);
@@ -56,7 +59,7 @@ export class AuthService {
   }
 
   register(registration: RegistrationClass) {
-    return this.http.post(`${this.api}/${this.modulePath}/register`, registration).pipe(
+    return this.http.post(`${this.apiUrl}/${this.modulePath}/register`, registration).pipe(
       map((response: any) => {
         console.log(response);
         this.setToken(response.data.token);

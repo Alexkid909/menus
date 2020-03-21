@@ -70,7 +70,7 @@ export class ModalComponent implements AfterViewInit, OnDestroy, OnInit {
     }
   }
 
-  onOverlayClicked() {
+  onOverlayClicked(event: any) {
     this.modal.close();
   }
 

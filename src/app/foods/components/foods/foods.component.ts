@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FoodsService} from '../../foods.service';
 import {FormGroup, Validators} from '@angular/forms';
-import {FormFieldInterface} from '../../../shared/interfaces/form-field.interface';
+import {FormFieldClass} from '../../../shared/interfaces/form-field.class';
 import {FormFieldGroupClass} from '../../../shared/classes/form-field-group.class';
 import {FormActionClass} from '../../../shared/classes/form-action.class';
 import {FormFieldType} from '../../../shared/enums/form-field-type.enum';
@@ -27,7 +27,7 @@ export class FoodsComponent implements OnInit {
 
   userFoods: Array<FoodInterface>;
   crudState: CrudStateEnum;
-  foodFormFields: Array<FormFieldInterface>;
+  foodFormFields: Array<FormFieldClass>;
   foodFormFieldsModel: Array<FormFieldGroupClass>;
   foodFormInProgress = false;
   foodFormSuccessful: boolean;
@@ -57,8 +57,8 @@ export class FoodsComponent implements OnInit {
     this.crudState = CrudStateEnum.create;
 
     this.foodFormFields = [
-      new FormFieldInterface('foodName', FormFieldType.text, '', Validators.required),
-      new FormFieldInterface('foodMeasurement', FormFieldType.text, '', Validators.required),
+      new FormFieldClass('foodName', FormFieldType.text, '', Validators.required),
+      new FormFieldClass('foodMeasurement', FormFieldType.text, '', Validators.required),
     ];
 
     this.foodFormFieldsModel = [
@@ -94,8 +94,9 @@ export class FoodsComponent implements OnInit {
       action.name = this.crudState;
     });
     this.foodFormFields = [
-      new FormFieldInterface('foodName', FormFieldType.text, food ? food.name : '', Validators.required),
-      new FormFieldInterface('foodMeasurement', FormFieldType.text, food ? food.measurement : '', Validators.required)
+      new FormFieldClass('foodName', FormFieldType.text, food ? food.name : '', Validators.required),
+      new FormFieldClass('foodMeasurement', FormFieldType.text, food ? food.measurement : '', Validators.required),
+      new FormFieldClass('foodImageUrl', FormFieldType.text, food ? food.imgSrc : '', null, null)
     ];
 
     this.foodFormActions.forEach((action: FormActionClass) => {
@@ -144,8 +145,8 @@ export class FoodsComponent implements OnInit {
       });
     });
 
-    const { foodName, foodMeasurement } = formValues;
-    const food = new FoodClass(foodName, foodMeasurement);
+    const { foodName, foodMeasurement, foodImageUrl } = formValues;
+    const food = new FoodClass(foodName, foodMeasurement, foodImageUrl);
 
 
     if (this.crudState === CrudStateEnum.create) {
@@ -164,7 +165,7 @@ export class FoodsComponent implements OnInit {
 
   createFood(food: FoodClass) {
     this.foodFormInProgress = true;
-    this.foodsService.createFood(food.name, food.measurement).subscribe(() => {
+    this.foodsService.createFood(food).subscribe(() => {
       this.foodFormInProgress = false;
       this.foodFormSuccessful = true;
       this.sideBar.close();

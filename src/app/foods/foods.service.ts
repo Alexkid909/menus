@@ -6,11 +6,12 @@ import { FoodClass } from './classes/food.class';
 import { FoodInterface } from '../shared/interfaces/food.interface';
 import {TenantsService} from '../tenants/tenants.service';
 import {Observable} from 'rxjs/internal/Observable';
+import { environment} from '../../environments/environment';
 
 @Injectable()
 export class FoodsService {
 
-  apiUrl = `https://localhost:49161`;
+  apiUrl: string;
   resource = `/foods`;
   foods: Array<FoodInterface>;
   foodsBehaviorSubject: BehaviorSubject<FoodInterface[]> = new BehaviorSubject(<FoodInterface[]> this.foods);
@@ -19,7 +20,9 @@ export class FoodsService {
 
 
   constructor(private http: HttpClient,
-              private tenantsService: TenantsService) {
+              private tenantsService: TenantsService
+  ) {
+    this.apiUrl = environment.apiUrl;
     this.tenantsService.currentTenantIDBehaviourSubject.subscribe((id: string) => {
       if (id) { this.getFoods(); }
     });
@@ -53,11 +56,9 @@ export class FoodsService {
       });
   }
 
-  createFood(name, measurement) {
+  createFood(food: FoodClass) {
     const callUrl = `${this.apiUrl}${this.resource}`;
-    const body = new FoodClass(name, measurement);
-    console.log(name);
-    return this.http.post(callUrl, body).pipe(map(response => {
+    return this.http.post(callUrl, food).pipe(map(response => {
 
         this.getFoods();
         return response;

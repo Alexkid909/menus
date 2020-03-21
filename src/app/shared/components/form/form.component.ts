@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import { FormFieldInterface } from '../../interfaces/form-field.interface';
+import { FormFieldClass } from '../../interfaces/form-field.class';
 import { FormFieldGroupClass } from '../../classes/form-field-group.class';
 import { FormActionClass } from '../../classes/form-action.class';
 import {FormValues} from '../../classes/form-values.class';
@@ -44,7 +44,7 @@ export class FormComponent implements OnInit, OnChanges {
   buildForm() {
     const groupsArray = this.formBuilder.array(Object.keys(this.formModel).map(key => {
       const keyData = new FormArray(this.formModel[key]
-        .fields.map((field: FormFieldInterface) => new FormControl(field.formState, field.validator, field.asyncValidator)));
+        .fields.map((field: FormFieldClass) => new FormControl(field.formState, field.validator, field.asyncValidator)));
       return new FormGroup({fieldsArray: keyData}, this.formModel[key].validators);
     }));
 

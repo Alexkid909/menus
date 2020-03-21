@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output, Input, OnInit, AfterViewInit, ViewChild} from '@angular/core';
-import {FormFieldInterface} from '../../../shared/interfaces/form-field.interface';
+import {FormFieldClass} from '../../../shared/interfaces/form-field.class';
 import {FormFieldGroupClass} from '../../../shared/classes/form-field-group.class';
 import {FormActionClass} from '../../../shared/classes/form-action.class';
 import {Observable} from 'rxjs/internal/Observable';
@@ -21,7 +21,7 @@ import {FormValues} from '../../../shared/classes/form-values.class';
 })
 export class MealFoodsComponent implements OnInit, AfterViewInit {
 
-  mealFoodFormFields: Array<FormFieldInterface>;
+  mealFoodFormFields: Array<FormFieldClass>;
   mealFoodFormFieldsModel: Array<FormFieldGroupClass>;
   mealFoodFormErrors: Array<string> = [];
   mealFoodFormActions: Array<FormActionClass>;
@@ -44,7 +44,7 @@ export class MealFoodsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.mealFoodFormFields = [
-      new FormFieldInterface('qty', FormFieldType.number, 1, null, null, 'form-input-meal-name')
+      new FormFieldClass('qty', FormFieldType.number, 1, null, null, 'form-input-meal-name')
     ];
 
     this.mealFoodFormFieldsModel = [

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TenantsService} from '../../tenants.service';
 import {FormGroup, Validators} from '@angular/forms';
-import {FormFieldInterface} from '../../../shared/interfaces/form-field.interface';
+import {FormFieldClass} from '../../../shared/interfaces/form-field.class';
 import {FormFieldGroupClass} from '../../../shared/classes/form-field-group.class';
 import {FormActionClass} from '../../../shared/classes/form-action.class';
 import {FormFieldType} from '../../../shared/enums/form-field-type.enum';
@@ -26,7 +26,7 @@ export class TenantsComponent implements OnInit {
 
   userTenants: Array<TenantInterface>;
   crudState: CrudStateEnum;
-  tenantFormFields: Array<FormFieldInterface>;
+  tenantFormFields: Array<FormFieldClass>;
   tenantFormFieldsModel: Array<FormFieldGroupClass>;
   tenantFormInProgress = false;
   tenantFormSuccessful: boolean;
@@ -52,7 +52,7 @@ export class TenantsComponent implements OnInit {
     this.crudState = CrudStateEnum.create;
 
     this.tenantFormFields = [
-      new FormFieldInterface('tenantName', FormFieldType.text, '', Validators.required)
+      new FormFieldClass('tenantName', FormFieldType.text, '', Validators.required)
     ];
 
     this.tenantFormFieldsModel = [
@@ -88,7 +88,7 @@ export class TenantsComponent implements OnInit {
       action.name = this.crudState;
     });
     this.tenantFormFields = [
-      new FormFieldInterface('tenantName', FormFieldType.text, tenant ? tenant.name : '', Validators.required)
+      new FormFieldClass('tenantName', FormFieldType.text, tenant ? tenant.name : '', Validators.required)
     ];
 
     this.tenantFormActions.forEach((action: FormActionClass) => {

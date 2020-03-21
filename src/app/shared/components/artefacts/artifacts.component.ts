@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {CrudStateEnum} from '../../enums/crud-state.enum';
-import {FormFieldInterface} from '../../interfaces/form-field.interface';
+import {FormFieldClass} from '../../interfaces/form-field.class';
 import {FormFieldGroupClass} from '../../classes/form-field-group.class';
 import {FormActionClass} from '../../classes/form-action.class';
 import { ToolBarFunctionClass} from '../../classes/tool-bar-function.class';
@@ -17,7 +17,7 @@ export class ArtifactsComponent implements OnInit {
   @Input() artifacts: Array<any>;
   @Input() crudState: CrudStateEnum;
   @Input() sideBarTitle: string;
-  @Input() formFields: Array<FormFieldInterface>;
+  @Input() formFields: Array<FormFieldClass>;
   @Input() formFieldsModel: Array<FormFieldGroupClass>;
   @Input() formInProgress = false;
   @Input() formSuccessful: boolean;

@@ -17,12 +17,12 @@ export class ConfirmDialogComponent {
   constructor(public config: ModalConfig, public modal: ModalRefClass) { }
 
 
-  accept() {
+  accept(event: any) {
     this.config.data.confirmationFunction(this.config.data.confirmationData);
     this.modal.close();
   }
 
-  decline() {
+  decline(event: any) {
     this.modal.close();
   }
 }

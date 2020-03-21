@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MealsService} from '../../meals.service';
 import {FormGroup, Validators} from '@angular/forms';
-import {FormFieldInterface} from '../../../shared/interfaces/form-field.interface';
+import {FormFieldClass} from '../../../shared/interfaces/form-field.class';
 import {FormFieldGroupClass} from '../../../shared/classes/form-field-group.class';
 import {FormActionClass} from '../../../shared/classes/form-action.class';
 import {FormFieldType} from '../../../shared/enums/form-field-type.enum';
@@ -30,7 +30,7 @@ export class MealsComponent implements OnInit {
   userMeals: Array<MealInterface> = [];
   sideBarTitle: string;
   crudState: CrudStateEnum;
-  mealFormFields: Array<FormFieldInterface>;
+  mealFormFields: Array<FormFieldClass>;
   mealFormFieldsModel: Array<FormFieldGroupClass>;
   mealFormInProgress = false;
   mealFormSuccessful: boolean;
@@ -58,10 +58,11 @@ export class MealsComponent implements OnInit {
     this.crudState = CrudStateEnum.create;
 
     this.mealFormFields = [
-      new FormFieldInterface('mealName', FormFieldType.text, '', Validators.required, null, 'form-input-meal-name'),
+      new FormFieldClass('mealName', FormFieldType.text, '', Validators.required, null, 'form-input-meal-name'),
+      new FormFieldClass('mealImgSrc', FormFieldType.text, '', null, null, 'form-input-meal-img-src')
     ];
     this.mealFormFieldsModel = [
-      new FormFieldGroupClass('MealGroup', this.mealFormFields, [], 'form-array-meal'),
+      new FormFieldGroupClass('MealGroup', this.mealFormFields, [], 'form-array-meal')
     ];
     this.mealFormActions = [
       new FormActionClass(this.crudState, this.saveMeal, {
@@ -94,7 +95,8 @@ export class MealsComponent implements OnInit {
     });
 
     this.mealFormFields = [
-      new FormFieldInterface('mealName', FormFieldType.text, meal ? meal.name : '', Validators.required, null, 'form-input-meal-name'),
+      new FormFieldClass('mealName', FormFieldType.text, meal ? meal.name : '', Validators.required, null, 'form-input-meal-name'),
+      new FormFieldClass('mealImageUrl', FormFieldType.text, meal ? meal.imgSrc : '', null, null, 'form-input-meal-img-src')
     ];
 
 
@@ -153,8 +155,8 @@ export class MealsComponent implements OnInit {
       });
     });
 
-    const { mealName } = formValues;
-    const meal = new MealClass(mealName);
+    const { mealName, mealImageUrl } = formValues;
+    const meal = new MealClass(mealName, mealImageUrl);
 
     if (this.crudState === CrudStateEnum.create) {
       this.createMeal(meal);
@@ -172,7 +174,7 @@ export class MealsComponent implements OnInit {
 
   createMeal(meal: MealClass) {
     this.mealFormInProgress = true;
-    this.mealsService.createMeal(meal.name).subscribe(() => {
+    this.mealsService.createMeal(meal).subscribe(() => {
       this.mealFormInProgress = false;
       this.mealFormSuccessful = true;
       this.sideBar.close();

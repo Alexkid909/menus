@@ -1,14 +1,14 @@
 import { ValidatorFn } from '@angular/forms';
-import { FormFieldInterface } from '../interfaces/form-field.interface';
+import { FormFieldClass } from '../interfaces/form-field.class';
 
 export class FormFieldGroupClass {
   name: string;
-  fields: Array<FormFieldInterface>;
+  fields: Array<FormFieldClass>;
   validators: Array<ValidatorFn>;
   cssClasses?: string | Array<string>;
 
   constructor(name: string,
-              fields: Array<FormFieldInterface>,
+              fields: Array<FormFieldClass>,
               validators: Array<ValidatorFn>,
               cssClasses?: string | Array<string>) {
     this.name = name;
