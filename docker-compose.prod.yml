@@ -1,0 +1,9 @@
+version: "2"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - "8888:80"
+    container_name: 'menus-fe'

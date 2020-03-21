@@ -1,0 +1,9 @@
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - build
+      - "--tag=gcr.io/menus-fe/menus-fe"
+      - "--file=./Dockerfile.prod"
+      - .
+images:
+  - "gcr.io/menus-fe/menus-fe"
