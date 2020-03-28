@@ -5,34 +5,56 @@
 
 $diameter: 2rem;
 
-.component-artifacts {
-  position: absolute;
-  top: 0;
-  left: 0;
+.component-body {
+  display: flex;
+  padding: 1em 1em 5em;
+  align-items: stretch;
+  align-content: flex-start;
+  //@include media-breakpoint-up(md) {
+    flex-wrap: wrap;
+  //}
+  overflow-y: auto;
   height: 100%;
 }
 
-.component-body {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 1em 1em 5em;
-  align-items: flex-start;
-}
-
 .artifact-container {
-  flex-basis: calc(100% / 6);
-  padding: 0.75em;
+  padding: 0.5em;
+  flex-basis: 100%;
+  height: 10vh;
 
-  @include media-breakpoint-down(lg) {
-    flex-basis: 25%;
+  @include media-breakpoint-down(sm) {
+    padding: 1vmin 0;
   }
 
-  @include media-breakpoint-down(md) {
+  @include media-breakpoint-up(md) {
+    height: (100% / 4.5);
     flex-basis: calc(100% / 3);
   }
 
-  @include media-breakpoint-down(sm) {
-    flex-basis: 100%;
+  @include media-breakpoint-up(lg) {
+    height: (100% / 5);
+  }
+
+  @media screen and (orientation: landscape) {
+    flex-basis: calc(100% / 2);
+    height: (100% / 2);
+    padding: 1.5vmin 2vmin;
+
+    @include media-breakpoint-up(sm) {
+      height: (100% / 2.5);
+    }
+
+    @media screen and (min-width: 813px) {
+      height: (100% / 3);
+    }
+
+    @include media-breakpoint-up(lg) {
+      flex-basis: calc(100% / 4);
+    }
+
+    @media screen and (min-width: 1367px) {
+      flex-basis: calc(100% / 6);
+    }
   }
 }
 
@@ -46,10 +68,21 @@ $diameter: 2rem;
   height: 100%;
 
   .artifact-image {
-    height: 18vmin;
     width: 100%;
     background: url('assets/images/300x300placeholder.png') center/cover;
     //background-size: cover;
+
+    @include media-breakpoint-up(md) {
+      //height: 15vmin;
+    }
+
+    @include media-breakpoint-up(lg) {
+      //height: 12vmin;
+    }
+
+    @include media-breakpoint-up(xl) {
+      //height: 18vmin;
+    }
   }
 
   ::ng-deep {
@@ -108,12 +141,11 @@ $diameter: 2rem;
 
 @include media-breakpoint-down(sm) {
   .component-body {
-    flex-direction: column;
+    //flex-direction: column;
     align-items: stretch;
   }
 
   .artifact-container {
-    padding: .125em 0;
     border-radius: 5px;
   }
 
@@ -144,6 +176,7 @@ $diameter: 2rem;
     flex-basis: 25%;
   }
 }
+
 
 @include media-breakpoint-down(md) {
   .component-container-artifacts {

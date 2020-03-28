@@ -17,10 +17,8 @@
     flex-grow: 1;
     display: flex;
 
-    .sub-section {
-    }
-
     .sub-section-main {
+      overflow: hidden;
       flex-grow: 5;
       flex-shrink: 1;
     }
@@ -44,19 +42,6 @@
 @include media-breakpoint-up(sm) {
   .section-body {
     overflow: hidden;
-  }
-
-  .sub-section-main {
-    overflow: hidden;
-  }
-
-  ::ng-deep {
-    .component-container-artifacts {
-      .component-body {
-        overflow-y: auto;
-        height: 100%;
-      }
-    }
   }
 }
 
