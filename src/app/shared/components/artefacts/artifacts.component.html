@@ -5,13 +5,13 @@
   <div class="component-body component-body-{{artifactName}}s">
     <div class="artifact-container artifact-container-{{artifactName}}s" *ngFor="let artifact of artifacts">
       <div class="artifact artifact-{{artifactName}}" (click)="onArtifactClicked(artifact)">
-        <div class="artifact-item {{artifactName}}-item artifact-name {{artifactName}}-name">
-          {{artifact?.name}}
-        </div>
         <div class="artifact-item artifact-image-container {{artifactName}}-item {{artifactName}}-image-container">
           <img class="artifact-image {{artifactName}}-img img-fluid" [ngStyle]="{'background-image': 'url(' + artifact.imgSrc + ')' || 'assets/images/300x300placeholder.png'}"/>
         </div>
-        <div class="artifact-actions {{artifactName}}-actions">
+        <div class="artifact-item {{artifactName}}-item artifact-name {{artifactName}}-name">
+          {{artifact?.name}}
+        </div>
+        <div class="artifact-item artifact-actions {{artifactName}}-actions">
           <app-button (onClick)="deleteButtonFunction.definition($event, artifact)"
                       [buttonText]="" [buttonClasses]="deleteButtonFunction.cssClasses"
                       [iconClass]="deleteButtonFunction.iconClass">
