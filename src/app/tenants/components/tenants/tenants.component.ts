@@ -11,11 +11,10 @@ import {TenantInterface} from '../../../shared/interfaces/tenant.interface';
 import {TenantClass} from '../../classes/tenant.interface';
 import {SideBarService} from '../../../shared/side-bar.service';
 import {ModalService} from '../../../shared/modal.service';
-import {ConfirmDialogComponent} from '../../../shared/confirm-dialog/confirm-dialog.component';
-import {ModalConfig} from '../../../shared/modal.config';
-import {SideBarConfig} from '../../../shared/side-bar.config';
+import {ConfirmDialogComponent} from '../../../shared/components/confirm-dialog/confirm-dialog.component';
+import {ComponentConfig} from '../../../shared/component.config';
 import {SideBarDialogComponent} from '../../../shared/components/side-bar-dialog/side-bar-dialog.component';
-import {SideBarRefClass} from '../../../shared/classes/side-bar-ref.class';
+import { ComponentRefClass } from '../../../shared/classes/component-ref.class';
 
 @Component({
   selector: 'app-tenants',
@@ -35,8 +34,8 @@ export class TenantsComponent implements OnInit {
   toolbarFunctions: Array<ToolBarFunctionClass>;
   deleteButtonFunction: ToolBarFunctionClass;
   currentTenantId: string;
-  sideBarConfig: SideBarConfig;
-  sideBar: SideBarRefClass;
+  sideBarConfig: ComponentConfig;
+  sideBar: ComponentRefClass;
 
   constructor(public modal: ModalService,
               private tenantsService: TenantsService,
@@ -182,7 +181,7 @@ export class TenantsComponent implements OnInit {
 
   initiateDelete(event: Event, tenant: TenantInterface) {
     event.stopPropagation();
-    const config: ModalConfig = {
+    const config: ComponentConfig = {
       data: {
         title: `Delete ${tenant.name}?`,
         message: `Are you sure you want to delete ${tenant.name}?`,

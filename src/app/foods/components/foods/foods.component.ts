@@ -9,13 +9,13 @@ import {CrudStateEnum} from '../../../shared/enums/crud-state.enum';
 import {ToolBarFunctionClass} from '../../../shared/classes/tool-bar-function.class';
 import {SideBarService} from '../../../shared/side-bar.service';
 import {ModalService} from '../../../shared/modal.service';
-import {ConfirmDialogComponent} from '../../../shared/confirm-dialog/confirm-dialog.component';
-import {ModalConfig} from '../../../shared/modal.config';
+import {ConfirmDialogComponent} from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { FoodInterface } from '../../../shared/interfaces/food.interface';
 import {FoodClass} from '../../classes/food.class';
-import {SideBarConfig} from '../../../shared/side-bar.config';
+import { ComponentConfig } from '../../../shared/component.config';
 import {SideBarDialogComponent} from '../../../shared/components/side-bar-dialog/side-bar-dialog.component';
-import {SideBarRefClass} from '../../../shared/classes/side-bar-ref.class';
+import { ComponentRefClass } from '../../../shared/classes/component-ref.class';
+import { NotificationService } from '../../../shared/notification.service';
 
 @Component({
   selector: 'app-foods',
@@ -36,13 +36,14 @@ export class FoodsComponent implements OnInit {
   toolbarFunctions: Array<ToolBarFunctionClass>;
   deleteButtonFunction: ToolBarFunctionClass;
   currentFoodId: string;
-  sideBarConfig: SideBarConfig;
-  sideBar: SideBarRefClass;
+  sideBarConfig: ComponentConfig;
+  sideBar: ComponentRefClass;
 
 
   constructor(public modal: ModalService,
               private foodsService: FoodsService,
-              private sideBarService: SideBarService) {
+              private sideBarService: SideBarService,
+              private notificationService: NotificationService) {
                 this.saveFood = this.saveFood.bind(this);
 
   }
@@ -169,6 +170,7 @@ export class FoodsComponent implements OnInit {
       this.foodFormInProgress = false;
       this.foodFormSuccessful = true;
       this.sideBar.close();
+      // this.notificationService.open();
     }, (errorResponse: any) => {
       this.foodFormErrors = errorResponse.error.messages;
       this.foodFormInProgress = false;
@@ -191,7 +193,7 @@ export class FoodsComponent implements OnInit {
 
   initiateDelete(event: Event, food: FoodInterface) {
     event.stopPropagation();
-    const config: ModalConfig = {
+    const config: ComponentConfig = {
       data: {
         title: `Delete ${food.name}?`,
         message: `Are you sure you want to delete ${food.name}?`,

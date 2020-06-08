@@ -1,8 +1,8 @@
 import {ApplicationRef, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, Injectable, Injector, Type} from '@angular/core';
-import {SideBarConfig} from './side-bar.config';
-import {SideBarRefClass} from './classes/side-bar-ref.class';
-import {SideBarComponent} from './components/side-bar/side-bar.component';
-import {SideBarInjector} from './side-bar-injector';
+import {ComponentConfig} from './component.config';
+import { ComponentRefClass } from './classes/component-ref.class';
+import { SideBarComponent } from './components/side-bar/side-bar.component';
+import { ComponentInjector } from './component.injector';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +16,12 @@ export class SideBarService {
               private injector: Injector
   ) {}
 
-  appendSideBarComponentToBody(config: SideBarConfig) {
+  appendSideBarComponentToBody(config: ComponentConfig) {
     const map = new WeakMap();
-    map.set(SideBarConfig, config);
+    map.set(ComponentConfig, config);
 
-    const sideBarRef = new SideBarRefClass();
-    map.set(SideBarRefClass, sideBarRef);
+    const sideBarRef = new ComponentRefClass();
+    map.set(ComponentRefClass, sideBarRef);
 
     const sub = sideBarRef.afterClosed.subscribe(() => {
       this.removeSideBarComponentFromBody();
@@ -30,7 +30,7 @@ export class SideBarService {
 
     const componentFactory = this.componentFactoryResolver
       .resolveComponentFactory(SideBarComponent);
-    const componentRef = componentFactory.create(new SideBarInjector(this.injector, map));
+    const componentRef = componentFactory.create(new ComponentInjector(this.injector, map));
     const domElement = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
 
     this.appRef.attachView(componentRef.hostView);
@@ -47,7 +47,7 @@ export class SideBarService {
     this.sideBarComponentRef.destroy();
   }
 
-  public open(componentType: Type<any>, config: SideBarConfig) {
+  public open(componentType: Type<any>, config: ComponentConfig) {
     const sideBarRef = this.appendSideBarComponentToBody(config);
 
     this.sideBarComponentRef.instance.childComponentType = componentType;

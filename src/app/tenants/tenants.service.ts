@@ -46,6 +46,12 @@ export class TenantsService {
     return this.currentTenantID;
   }
 
+  resetCurrentTenant() {
+    this.currentTenantID = null;
+    localStorage.removeItem('currentTenantID');
+    this.broadcastCurrentTenantID();
+  }
+
   setCurrentTenant(tenantID: string) {
     this.currentTenantID = tenantID;
     localStorage.setItem('currentTenantID', this.currentTenantID);

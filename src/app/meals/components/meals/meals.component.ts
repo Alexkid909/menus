@@ -9,14 +9,13 @@ import {CrudStateEnum} from '../../../shared/enums/crud-state.enum';
 import {ToolBarFunctionClass} from '../../../shared/classes/tool-bar-function.class';
 import {SideBarService} from '../../../shared/side-bar.service';
 import {ModalService} from '../../../shared/modal.service';
-import {ConfirmDialogComponent} from '../../../shared/confirm-dialog/confirm-dialog.component';
-import {ModalConfig} from '../../../shared/modal.config';
+import {ConfirmDialogComponent} from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import {MealInterface} from '../../../shared/interfaces/meal.interface';
 import {MealClass} from '../../classes/meal.class';
 import {MealFoodClass} from '../../classes/meal-food.class';
 import {FormService} from '../../../form.service';
-import {SideBarRefClass} from '../../../shared/classes/side-bar-ref.class';
-import {SideBarConfig} from '../../../shared/side-bar.config';
+import { ComponentRefClass } from '../../../shared/classes/component-ref.class';
+import {ComponentConfig} from '../../../shared/component.config';
 import {MealsDialogComponent} from '../meals-dialog/meals-dialog.component';
 
 @Component({
@@ -40,8 +39,8 @@ export class MealsComponent implements OnInit {
   deleteButtonFunction: ToolBarFunctionClass;
   currentMealId: string;
   addedMealFoods: Array<MealFoodClass> = [];
-  sideBarConfig: SideBarConfig;
-  sideBar: SideBarRefClass;
+  sideBarConfig: ComponentConfig;
+  sideBar: ComponentRefClass;
 
   constructor(public modal: ModalService,
               private mealsService: MealsService,
@@ -198,7 +197,7 @@ export class MealsComponent implements OnInit {
 
   initiateDelete(event: Event, meal: MealInterface) {
     event.stopPropagation();
-    const config: ModalConfig = {
+    const config: ComponentConfig = {
       data: {
         title: `Delete ${meal.name}?`,
         message: `Are you sure you want to delete ${meal.name}?`,

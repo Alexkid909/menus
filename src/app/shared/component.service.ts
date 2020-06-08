@@ -11,18 +11,26 @@ import {ModalComponent} from './components/modal/modal.component';
 import { ComponentConfig } from './component.config';
 import { ComponentInjector } from './component.injector';
 import { ComponentRefClass } from './classes/component-ref.class';
+import { InjectableComponentClass } from './classes/injectable-component.class';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class ModalService {
-  modalComponentRef: ComponentRef<ModalComponent>;
+export class ComponentService {
+  componentRef: ComponentRef<InjectableComponentClass<any>>;
+  componentFactoryResolver: ComponentFactoryResolver;
+  appRef: ApplicationRef;
+  injector: Injector;
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver,
-              private appRef: ApplicationRef,
-              private injector: Injector
-  ) {}
+  constructor(componentFactoryResolver: ComponentFactoryResolver,
+              appRef: ApplicationRef,
+              injector: Injector
+  ) {
+    this.componentFactoryResolver = componentFactoryResolver;
+    this.appRef = appRef;
+    this.injector = injector;
+  }
 
   appendModalComponentToBody(config: ComponentConfig) {
     const map = new WeakMap();
@@ -45,20 +53,20 @@ export class ModalService {
 
     document.body.appendChild(domElem);
 
-    this.modalComponentRef = componentRef;
+    this.componentRef = componentRef;
 
     return modalRef;
   }
 
   private removeModalComponentFromBody() {
-    this.appRef.detachView(this.modalComponentRef.hostView);
-    this.modalComponentRef.destroy();
+    this.appRef.detachView(this.componentRef.hostView);
+    this.componentRef.destroy();
   }
 
   public open(componentType: Type<any>, config: ComponentConfig) {
     const modalRef = this.appendModalComponentToBody(config);
 
-    this.modalComponentRef.instance.childComponentType = componentType;
+    this.componentRef.instance.childComponentType = componentType;
 
     return modalRef;
   }

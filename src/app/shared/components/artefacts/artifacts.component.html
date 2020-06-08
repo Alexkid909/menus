@@ -6,7 +6,7 @@
     <div class="artifact-container artifact-container-{{artifactName}}s" *ngFor="let artifact of artifacts">
       <div class="artifact artifact-{{artifactName}}" (click)="onArtifactClicked(artifact)">
         <div class="artifact-item artifact-image-container {{artifactName}}-item {{artifactName}}-image-container">
-          <img class="artifact-image {{artifactName}}-img img-fluid" [ngStyle]="{'background-image': 'url(' + artifact.imgSrc + ')' || 'assets/images/300x300placeholder.png'}"/>
+          <img class="artifact-image {{artifactName}}-img img-fluid" [src]="artifact.imgSrc"/>
         </div>
         <div class="artifact-item {{artifactName}}-item artifact-name {{artifactName}}-name">
           {{artifact?.name}}

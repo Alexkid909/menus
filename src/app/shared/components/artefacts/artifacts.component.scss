@@ -61,7 +61,6 @@ $diameter: 2rem;
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 10px;
   display: flex;
-  flex-wrap: wrap;
   height: 100%;
   justify-content: space-between;
   align-items: center;
@@ -88,6 +87,8 @@ $diameter: 2rem;
   .artifact-image {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    object-position: center;
     background: url('assets/images/300x300placeholder.png') center/cover;
   }
 
@@ -149,10 +150,12 @@ $diameter: 2rem;
 
 .artifact-image-container {
   flex-grow: 2;
+  max-height: 55%;
 
-  @media screen and (orientation: landscape) and (max-width: 812px) {
+  @media screen and (orientation: landscape) and (max-width: 823px) {
     height: 100%;
     flex-grow: 0;
+    max-height: none;
   }
 
   @include media-breakpoint-down(md) {
@@ -163,6 +166,7 @@ $diameter: 2rem;
     flex-basis: 25%;
     height: 100%;
     flex-grow: 0;
+    max-height: none;
   }
 }
 
