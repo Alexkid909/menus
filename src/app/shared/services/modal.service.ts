@@ -7,26 +7,26 @@ import {
   ComponentRef, Type
 } from '@angular/core';
 
-import {ModalComponent} from './components/modal/modal.component';
-import {ModalConfig} from './modal.config';
-import {ModalInjector} from './modal-injector';
-import {ModalRefClass} from './classes/modal-ref.class';
+import {ModalInjector} from '../modal-injector';
+import {ModalRefClass} from '../classes/modal-ref.class';
+import {ComponentConfig} from '../component.config';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class ModalService {
-  modalComponentRef: ComponentRef<ModalComponent>;
+  modalComponentRef: ComponentRef<any>;
+  // @TODO type this ^^
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private appRef: ApplicationRef,
               private injector: Injector
   ) {}
 
-  appendModalComponentToBody(config: ModalConfig) {
+  appendModalComponentToBody(config: ComponentConfig, modalComponent: any) {
     const map = new WeakMap();
-    map.set(ModalConfig, config);
+    map.set(ComponentConfig, config);
 
     const modalRef = new ModalRefClass();
     map.set(ModalRefClass, modalRef);
@@ -37,7 +37,7 @@ export class ModalService {
     });
 
 
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ModalComponent);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(modalComponent);
     const componentRef = componentFactory.create(new ModalInjector(this.injector, map));
     const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
 
@@ -55,8 +55,8 @@ export class ModalService {
     this.modalComponentRef.destroy();
   }
 
-  public open(componentType: Type<any>, config: ModalConfig) {
-    const modalRef = this.appendModalComponentToBody(config);
+  public open(componentType: Type<any>, config: ComponentConfig, modalComponent: any) {
+    const modalRef = this.appendModalComponentToBody(config, modalComponent);
 
     this.modalComponentRef.instance.childComponentType = componentType;
 

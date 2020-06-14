@@ -1,25 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import {SideBarConfig} from '../../side-bar.config';
-import {SideBarRefClass} from '../../classes/side-bar-ref.class';
-
+import { ComponentConfig } from '../../component.config';
+import {ModalRefClass} from '../../classes/modal-ref.class';
 
 @Component({
   selector: 'app-side-bar-dialog',
   templateUrl: './side-bar-dialog.component.html',
   styleUrls: ['./side-bar-dialog.component.scss']
 })
-export class SideBarDialogComponent implements OnInit {
+export class SideBarDialogComponent {
 
-  constructor(public config: SideBarConfig, public sideBar: SideBarRefClass) { }
-
-  ngOnInit() {
-  }
+  constructor(public config: ComponentConfig, public sideBarModal: ModalRefClass) { }
 
   confirm() {
-    this.sideBar.close();
+    this.sideBarModal.close();
   }
 
   cancel() {
-    this.sideBar.close();
+    this.sideBarModal.close();
   }
 }
