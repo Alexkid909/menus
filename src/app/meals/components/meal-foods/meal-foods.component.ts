@@ -9,7 +9,6 @@ import {FormFieldType} from '../../../shared/enums/form-field-type.enum';
 import {FormGroup} from '@angular/forms';
 import {FormService} from '../../../form.service';
 import {MealFoodClass} from '../../classes/meal-food.class';
-import {SideBarService} from '../../../shared/side-bar.service';
 import {Subject} from 'rxjs/internal/Subject';
 import {FormComponent} from '../../../shared/components/form/form.component';
 import {FormValues} from '../../../shared/classes/form-values.class';

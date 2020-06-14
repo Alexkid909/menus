@@ -9,13 +9,13 @@ import {CrudStateEnum} from '../../../shared/enums/crud-state.enum';
 import {ToolBarFunctionClass} from '../../../shared/classes/tool-bar-function.class';
 import {TenantInterface} from '../../../shared/interfaces/tenant.interface';
 import {TenantClass} from '../../classes/tenant.interface';
-import {SideBarService} from '../../../shared/side-bar.service';
-import {ModalService} from '../../../shared/modal.service';
-import {ConfirmDialogComponent} from '../../../shared/confirm-dialog/confirm-dialog.component';
-import {ModalConfig} from '../../../shared/modal.config';
-import {SideBarConfig} from '../../../shared/side-bar.config';
+import {ConfirmDialogComponent} from '../../../shared/components/confirm-dialog/confirm-dialog.component';
+import {ComponentConfig} from '../../../shared/component.config';
 import {SideBarDialogComponent} from '../../../shared/components/side-bar-dialog/side-bar-dialog.component';
-import {SideBarRefClass} from '../../../shared/classes/side-bar-ref.class';
+import {ModalRefClass} from '../../../shared/classes/modal-ref.class';
+import {ModalService} from '../../../shared/services/modal.service';
+import {SideBarModalComponent} from '../../../shared/components/side-bar-modal/side-bar-modal.component';
+import {ModalComponent} from '../../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-tenants',
@@ -35,14 +35,11 @@ export class TenantsComponent implements OnInit {
   toolbarFunctions: Array<ToolBarFunctionClass>;
   deleteButtonFunction: ToolBarFunctionClass;
   currentTenantId: string;
-  sideBarConfig: SideBarConfig;
-  sideBar: SideBarRefClass;
-  loading: boolean;
+  sideBarConfig: ComponentConfig;
+  sideBar: ModalRefClass;
 
-
-  constructor(public modal: ModalService,
-              private tenantsService: TenantsService,
-              private sideBarService: SideBarService) {
+  constructor(public modalService: ModalService,
+              private tenantsService: TenantsService) {
     this.saveTenant = this.saveTenant.bind(this);
   }
 
@@ -63,15 +60,12 @@ export class TenantsComponent implements OnInit {
 
     this.tenantFormActions = [
       new FormActionClass(this.crudState, this.saveTenant, {
-        buttonClasses: ['btn-wide', 'btn-primary']
+        buttonClasses: 'btn-wide'
       })
     ];
 
     this.toolbarFunctions = [
-      new ToolBarFunctionClass('Create Tenant', this.showCreate, [
-        'btn-mobile-disc',
-        'btn-primary',
-      ], ['fas fa-plus fa-lg'])
+      new ToolBarFunctionClass('Create Tenant', this.showCreate, ['btn-mobile-disc'], ['fas fa-plus fa-lg'])
     ];
 
     this.toolbarFunctions.forEach((toolbarFunction: any) => {
@@ -82,7 +76,6 @@ export class TenantsComponent implements OnInit {
       new ToolBarFunctionClass('Delete Tenant', this.initiateDelete, [
         'btn-artifact-action',
         'btn-artifact-action-delete',
-        'btn-icon',
       ], ['fas fa-trash-alt']);
 
     this.deleteButtonFunction.definition = this.deleteButtonFunction.definition.bind(this);
@@ -120,13 +113,14 @@ export class TenantsComponent implements OnInit {
 
   showCreate() {
     this.updateSidebar(CrudStateEnum.create);
-    this.sideBar = this.sideBarService.open(SideBarDialogComponent, this.sideBarConfig);
+    debugger;
+    this.sideBar = this.modalService.open(SideBarDialogComponent, this.sideBarConfig, SideBarModalComponent);
   }
 
   showEdit(tenant) {
     this.updateSidebar(CrudStateEnum.edit, tenant);
     this.currentTenantId = tenant._id;
-    this.sideBar = this.sideBarService.open(SideBarDialogComponent, this.sideBarConfig);
+    this.sideBar = this.modalService.open(SideBarDialogComponent, this.sideBarConfig, SideBarModalComponent);
   }
 
   setCrudState(state: CrudStateEnum) {
@@ -188,7 +182,7 @@ export class TenantsComponent implements OnInit {
 
   initiateDelete(event: Event, tenant: TenantInterface) {
     event.stopPropagation();
-    const config: ModalConfig = {
+    const config: ComponentConfig = {
       data: {
         title: `Delete ${tenant.name}?`,
         message: `Are you sure you want to delete ${tenant.name}?`,
@@ -196,7 +190,7 @@ export class TenantsComponent implements OnInit {
         confirmationData: tenant._id
       }
     };
-    this.modal.open(ConfirmDialogComponent, config);
+    this.modalService.open(ConfirmDialogComponent, config, ModalComponent);
   }
 
   deleteTenant(tenantId: string) {

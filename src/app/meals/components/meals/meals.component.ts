@@ -7,17 +7,17 @@ import {FormActionClass} from '../../../shared/classes/form-action.class';
 import {FormFieldType} from '../../../shared/enums/form-field-type.enum';
 import {CrudStateEnum} from '../../../shared/enums/crud-state.enum';
 import {ToolBarFunctionClass} from '../../../shared/classes/tool-bar-function.class';
-import {SideBarService} from '../../../shared/side-bar.service';
-import {ModalService} from '../../../shared/modal.service';
-import {ConfirmDialogComponent} from '../../../shared/confirm-dialog/confirm-dialog.component';
-import {ModalConfig} from '../../../shared/modal.config';
+import {ConfirmDialogComponent} from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import {MealInterface} from '../../../shared/interfaces/meal.interface';
 import {MealClass} from '../../classes/meal.class';
 import {MealFoodClass} from '../../classes/meal-food.class';
 import {FormService} from '../../../form.service';
-import {SideBarRefClass} from '../../../shared/classes/side-bar-ref.class';
-import {SideBarConfig} from '../../../shared/side-bar.config';
+import {ComponentConfig} from '../../../shared/component.config';
 import {MealsDialogComponent} from '../meals-dialog/meals-dialog.component';
+import {ModalService} from '../../../shared/services/modal.service';
+import {ModalRefClass} from '../../../shared/classes/modal-ref.class';
+import {SideBarModalComponent} from '../../../shared/components/side-bar-modal/side-bar-modal.component';
+import {ModalComponent} from '../../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-meals',
@@ -40,22 +40,18 @@ export class MealsComponent implements OnInit {
   deleteButtonFunction: ToolBarFunctionClass;
   currentMealId: string;
   addedMealFoods: Array<MealFoodClass> = [];
-  sideBarConfig: SideBarConfig;
-  sideBar: SideBarRefClass;
-  loading: boolean;
+  sideBarConfig: ComponentConfig;
+  sideBar: ModalRefClass;
 
-  constructor(public modal: ModalService,
+  constructor(public modalService: ModalService,
               private mealsService: MealsService,
-              private sideBarService: SideBarService,
               private formService: FormService) {
     this.saveMeal = this.saveMeal.bind(this);
-    this.loading = true;
   }
 
   ngOnInit() {
     this.mealsService.mealsBehaviorSubject.subscribe((meals: Array<MealInterface>) => {
       this.userMeals = meals || [];
-      this.loading = !meals;
     });
 
     this.crudState = CrudStateEnum.create;
@@ -69,15 +65,12 @@ export class MealsComponent implements OnInit {
     ];
     this.mealFormActions = [
       new FormActionClass(this.crudState, this.saveMeal, {
-        buttonClasses: ['btn-wide', 'btn-primary']
+        buttonClasses: 'btn-wide'
       })
     ];
 
     this.toolbarFunctions = [
-      new ToolBarFunctionClass('Create Meal', this.showCreate, [
-        'btn-mobile-disc',
-        'btn-primary',
-      ], ['fas fa-plus fa-lg'])
+      new ToolBarFunctionClass('Create Meal', this.showCreate, ['btn-mobile-disc'], ['fas fa-plus fa-lg'])
     ];
 
     this.toolbarFunctions.forEach((toolbarFunction: any) => {
@@ -88,7 +81,6 @@ export class MealsComponent implements OnInit {
       new ToolBarFunctionClass('Delete Meal', this.initiateDelete, [
         'btn-artifact-action',
         'btn-artifact-action-delete',
-        'btn-icon',
       ], ['fas fa-trash-alt']);
 
     this.deleteButtonFunction.definition = this.deleteButtonFunction.definition.bind(this);
@@ -135,14 +127,14 @@ export class MealsComponent implements OnInit {
   showCreate() {
     this.setCurrentMealId(null);
     this.updateSidebar(CrudStateEnum.create);
-    this.sideBar = this.sideBarService.open(MealsDialogComponent, this.sideBarConfig);
+    this.sideBar = this.modalService.open(MealsDialogComponent, this.sideBarConfig, SideBarModalComponent);
   }
 
   showEdit(meal: MealInterface | null) {
     this.setCurrentMealId(meal._id);
     this.updateSidebar(CrudStateEnum.edit, meal);
     this.addedMealFoods = [];
-    this.sideBar = this.sideBarService.open(MealsDialogComponent, this.sideBarConfig);
+    this.sideBar = this.modalService.open(MealsDialogComponent, this.sideBarConfig, SideBarModalComponent);
   }
 
   setCurrentMealId(id: string | null) {
@@ -205,7 +197,7 @@ export class MealsComponent implements OnInit {
 
   initiateDelete(event: Event, meal: MealInterface) {
     event.stopPropagation();
-    const config: ModalConfig = {
+    const config: ComponentConfig = {
       data: {
         title: `Delete ${meal.name}?`,
         message: `Are you sure you want to delete ${meal.name}?`,
@@ -213,7 +205,7 @@ export class MealsComponent implements OnInit {
         confirmationData: meal._id
       }
     };
-    this.modal.open(ConfirmDialogComponent, config);
+    this.modalService.open(ConfirmDialogComponent, config, ModalComponent);
   }
 
   deleteMeal(mealId: string) {
