@@ -72,7 +72,9 @@ export class FoodsComponent implements OnInit {
     ];
 
     this.toolbarFunctions = [
-      new ToolBarFunctionClass('Create Food', this.showCreate, ['btn-mobile-disc'], ['fas fa-plus fa-lg'])
+      new ToolBarFunctionClass('Create Food', this.showCreate, [
+        'btn-primary',
+        'btn-mobile-disc'], ['fas fa-plus fa-lg'])
     ];
 
     this.toolbarFunctions.forEach((toolbarFunction: any) => {
@@ -83,6 +85,7 @@ export class FoodsComponent implements OnInit {
       new ToolBarFunctionClass('Delete Food', this.initiateDelete, [
         'btn-artifact-action',
         'btn-artifact-action-delete',
+        'btn-icon',
       ], ['fas fa-trash-alt']);
 
     this.deleteButtonFunction.definition = this.deleteButtonFunction.definition.bind(this);

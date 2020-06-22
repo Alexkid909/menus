@@ -1,9 +1,9 @@
 <div class="btn-container">
-  <button [ngClass]="buttonClasses" (click)="buttonClick($event)" type="submit" class="btn btn-primary" [disabled]="disabled">
+  <button [ngClass]="buttonClasses" (click)="buttonClick($event)" type="submit" class="btn" [disabled]="disabled">
     <div  class="btn-text" *ngIf="showLabel && buttonText && !loading">
       {{buttonText}}
     </div>
-    <div *ngIf="iconClass" [ngClass]="iconClass"  class="btn-icon">
+    <div *ngIf="iconClass" [ngClass]="iconClass">
     </div>
     <div class="btn-loader" *ngIf="loading">
     </div>
