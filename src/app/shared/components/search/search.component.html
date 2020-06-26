@@ -1,18 +1,26 @@
 <div class="search-wrapper" [ngClass]="cssClasses">
-  <div class="search-container" [ngClass]="{'active': searchTerm}">
+  <div class="search-container" [ngClass]="{'active': inputActive, 'has-results': searchResults.length}">
     <label class="search-label">
       <span *ngIf="labelText">
         {{labelText}}
       </span>
-      <input
-        class="search-input form-control"
-        [placeholder]="resultsPlaceholder"
-        [(ngModel)]="searchTerm"
-        (ngModelChange)="searchTermChange($event)"
-      >
+      <div class="input-wrapper active">
+        <div class="search-icon-container">
+          <i class="fas fa-search"></i>
+        </div>
+        <input
+          class="search-input form-control"
+          #searchInput
+          [placeholder]="resultsPlaceholder"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="searchTermChange($event)"
+          (focus)="setActive(true)"
+          (blur)="onBlur($event)"
+        >
+      </div>
     </label>
     <ul class="search-results">
-      <li class="search-result" *ngFor="let result of searchResults" (click)="resultSelected(result)">{{result.name}} </li>
+      <li class="search-result" *ngFor="let result of searchResults" (mousedown)="resultSelected(result)">{{result.name}} </li>
     </ul>
   </div>
 </div>

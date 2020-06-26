@@ -1,9 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {TenantsService} from '../../../tenants/tenants.service';
 import { TenantInterface } from '../../interfaces/tenant.interface';
 
 import {Observable} from 'rxjs/internal/Observable';
 import {AuthService} from '../../../auth/auth.service';
+import {SearchComponent} from '../search/search.component';
+
+interface TransitionEvent extends Event {
+  propertyName: string;
+}
 
 @Component({
   selector: 'app-header-bar',
@@ -15,8 +20,9 @@ export class HeaderBarComponent implements OnInit {
   tenants: Array<TenantInterface>;
   currentTenant: TenantInterface;
   searchTenantsSource: Observable<Array<TenantInterface>>;
-  searchTerm: string;
   isAuthed: boolean;
+  searchActiveState = false;
+  @ViewChild(SearchComponent) searchComponent: SearchComponent;
 
   constructor(private tenantsService: TenantsService,
               private authService: AuthService) {}
@@ -36,7 +42,36 @@ export class HeaderBarComponent implements OnInit {
     });
   }
 
+  setSearchActiveState(newState: boolean) {
+    this.searchActiveState = newState;
+  }
+
+  activateSearch() {
+    if (!this.searchActiveState) {
+      this.setSearchActiveState(true);
+    }
+  }
+
+  deactivateSearch() {
+    if (this.searchActiveState) {
+      this.setSearchActiveState(false);
+    }
+  }
+
+  handleSearchTransform(event: TransitionEvent) {
+    if (event.propertyName === 'transform') {
+      if (event.type === 'transitionend' && this.searchActiveState) {
+        this.searchComponent.setActive(true);
+      }
+
+      if (event.type === 'transitionstart' && !this.searchActiveState) {
+        this.searchComponent.setActive(false);
+      }
+    }
+  }
+
   setCurrentTenant(tenant: TenantInterface) {
+    this.setSearchActiveState(false);
     this.currentTenant = tenant;
     this.tenantsService.setCurrentTenant(tenant._id);
   }

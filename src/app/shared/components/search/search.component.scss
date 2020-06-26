@@ -13,6 +13,7 @@
 
 .search-input {
   border-radius: unset;
+  box-shadow: none;
 }
 
 .search-label {
@@ -25,12 +26,42 @@
   margin-bottom: 0;
 }
 
+.search-input {
+  padding-right: 2em;
+  border-radius: 15px;
+}
+
+.search-icon-container {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.5em;
+  color: white;
+  text-align: center;
+  margin-right: 0.25em;
+}
+
 .search-container {
   position: relative;
 
   &.active {
+    &.has-results {
+      .search-input {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+
     .search-input {
       background-color: white;
+    }
+
+    .search-icon-container {
+      pointer-events: none;
+      i {
+        color: gray;
+      }
     }
 
    .search-results {
