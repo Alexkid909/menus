@@ -20,6 +20,10 @@
   margin-bottom: 0;
 }
 
+.search-input-wrapper {
+  position: relative;
+}
+
 .search-input,
 .search-results {
   padding-left: 0.75rem;
@@ -28,7 +32,15 @@
 
 .search-input {
   padding-right: 2em;
-  border-radius: 15px;
+}
+
+.search-results {
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+}
+
+.search-result {
+  margin: 0.15em 0;
 }
 
 .search-icon-container {
@@ -46,13 +58,6 @@
   position: relative;
 
   &.active {
-    &.has-results {
-      .search-input {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-      }
-    }
-
     .search-input {
       background-color: white;
     }
@@ -76,5 +81,4 @@
   width: 100%;
   background-color: white;
   color: black;
-  position: absolute;
 }

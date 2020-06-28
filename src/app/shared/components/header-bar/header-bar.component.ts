@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostBinding, OnInit, ViewChild} from '@angular/core';
 import {TenantsService} from '../../../tenants/tenants.service';
 import { TenantInterface } from '../../interfaces/tenant.interface';
 
@@ -15,7 +15,7 @@ interface TransitionEvent extends Event {
   templateUrl: './header-bar.component.html',
   styleUrls: ['./header-bar.component.scss']
 })
-export class HeaderBarComponent implements OnInit {
+export class HeaderBarComponent implements OnInit, AfterViewInit {
 
   tenants: Array<TenantInterface>;
   currentTenant: TenantInterface;
@@ -23,6 +23,7 @@ export class HeaderBarComponent implements OnInit {
   isAuthed: boolean;
   searchActiveState = false;
   @ViewChild(SearchComponent) searchComponent: SearchComponent;
+  @ViewChild('headerBar') headerBarEl: ElementRef;
 
   constructor(private tenantsService: TenantsService,
               private authService: AuthService) {}
@@ -40,6 +41,15 @@ export class HeaderBarComponent implements OnInit {
     this.tenantsService.tenantsBehaviorSubject.subscribe((tenants: Array<TenantInterface>) => {
       this.tenants = tenants;
     });
+  }
+
+  ngAfterViewInit() {
+    this.setSearchTranslate();
+  }
+
+  setSearchTranslate() {
+    const newHeight = this.searchComponent.searchInput.nativeElement.clientHeight;
+    this.headerBarEl.nativeElement.style.setProperty('--search-translate', `${-newHeight / 2}px`);
   }
 
   setSearchActiveState(newState: boolean) {

@@ -4,7 +4,7 @@
       <span *ngIf="labelText">
         {{labelText}}
       </span>
-      <div class="input-wrapper active">
+      <div class="search-input-wrapper">
         <div class="search-icon-container">
           <i class="fas fa-search"></i>
         </div>
@@ -19,7 +19,7 @@
         >
       </div>
     </label>
-    <ul class="search-results">
+    <ul class="search-results" [hidden]="searchResults.length === 0">
       <li class="search-result" *ngFor="let result of searchResults" (mousedown)="resultSelected(result)">{{result.name}} </li>
     </ul>
   </div>

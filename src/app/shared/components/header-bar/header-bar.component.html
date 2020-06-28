@@ -1,14 +1,18 @@
-<div class="header-bar">
+<div #headerBar class="header-bar" (window:resize)="setSearchTranslate()">
   <div class="header-section header-section-main" (mousedown)="activateSearch()">
     <div class="header-bar-item header-app-name-container">
       <h1 class="app-name">Eatz</h1>
     </div>
   </div>
-  <div class="header-section header-section-search"
+  <div class="header-section header-section-search active"
        [ngClass]="{'active' : searchActiveState}"
        (transitionstart)="handleSearchTransform($event)"
        (transitionend)="handleSearchTransform($event)"
   >
+<!--  <div class="header-section header-section-search active"-->
+<!--       (transitionstart)="handleSearchTransform($event)"-->
+<!--       (transitionend)="handleSearchTransform($event)"-->
+<!--  >-->
     <div class="header-bar-item header-tenant-search">
       <div *ngIf="isAuthed" class="header-search-container">
         <app-search

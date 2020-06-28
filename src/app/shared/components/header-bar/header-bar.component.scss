@@ -4,6 +4,7 @@
 @import "bootstrap/scss/mixins/breakpoints";
 
 $headerHeight: 60px;
+$searchBorderRadius: 15px;
 
 .header-bar {
   background-color: $secondary;
@@ -13,9 +14,7 @@ $headerHeight: 60px;
 
 .header-section {
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 0 0.5em;
+  padding: 0 0.75em;
   background-color: $secondary;
   position: absolute;
   z-index: 3;
@@ -24,6 +23,7 @@ $headerHeight: 60px;
 
   &.header-section-main {
     background-color: transparent;
+    justify-content: flex-start;
   }
 
   &.header-section-search {
@@ -38,11 +38,10 @@ $headerHeight: 60px;
   }
 }
 
-.header-bar-item {
-  padding: 0 0.5em;
-}
-
 .header-app-name-container {
+  margin-left: 0.5em;
+  display: flex;
+  align-items: center;
 
   .app-name {
     font-family: 'Fugaz One', cursive;
@@ -61,22 +60,52 @@ $headerHeight: 60px;
 }
 
 .header-tenant-search {
-  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
 
   .header-search-container {
-    margin: 0.5em 0;
+    width: 100%;
+    max-width: 300px;
   }
 }
 
-::ng-deep {
+.header-bar {
+  --search-translate: 0;
 
-  .header-bar {
+  ::ng-deep {
+
+    .search-container {
+      border-radius: $searchBorderRadius;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(#{var(--search-translate)});
+
+      &.active {
+        box-shadow: 0 0 10px 2px lightgrey;
+
+        &.has-results {
+          .search-input {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+          }
+        }
+
+        .search-input {
+          text-align: left;
+        }
+      }
+    }
 
     .search-input {
       border: none;
       outline: none;
       display: inline-block;
+      font-size: 1.1em;
       text-align: right;
+      border-radius: $searchBorderRadius;
 
       &:not(:focus) {
         background-color: transparent;
@@ -86,10 +115,13 @@ $headerHeight: 60px;
       };
     }
 
+    .search-label {
+      width: 100%;
+    }
+
     .search-results {
-      position: absolute;
-      padding: 0;
-      color: #4be14b;
+      border-bottom-left-radius: $searchBorderRadius;
+      border-bottom-right-radius: $searchBorderRadius;
     }
   }
 }
