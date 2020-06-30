@@ -122,6 +122,25 @@ $searchBorderRadius: 15px;
     .search-results {
       border-bottom-left-radius: $searchBorderRadius;
       border-bottom-right-radius: $searchBorderRadius;
+      padding: 1px 0 0.25em;
+      font-size: 0.9em;
+      color: #6d6d6d;
+      font-weight: 500;
+
+      .result-part {
+        margin: 0 0.25em;
+      }
+
+      .result-icon {
+        font-size: 0.9em;
+      }
+    }
+
+    .search-result-wrapper {
+      border-radius: 10px;
+      background-color: #eaeaea;
+      margin: .25em .5em;
+      padding: .25em .5em;
     }
   }
 }

@@ -1,5 +1,6 @@
 <div class="search-wrapper" [ngClass]="cssClasses">
   <div class="search-container" [ngClass]="{'active': inputActive, 'has-results': searchResults.length}">
+<!--  <div class="search-container active has-results">-->
     <label class="search-label">
       <span *ngIf="labelText">
         {{labelText}}
@@ -20,7 +21,32 @@
       </div>
     </label>
     <ul class="search-results" [hidden]="searchResults.length === 0">
-      <li class="search-result" *ngFor="let result of searchResults" (mousedown)="resultSelected(result)">{{result.name}} </li>
+<!--    <ul class="search-results">-->
+      <li class="search-result" *ngFor="let result of searchResults" (mousedown)="resultSelected(result)">
+        <div class="search-result-wrapper">
+          <span class="result-part result-icon fas fa-home"></span><span class="result-part result-name">{{result.name}}</span>
+        </div>
+      </li>
+<!--      <li class="search-result">-->
+<!--        <div class="search-result-wrapper">-->
+<!--          <span class="result-part result-icon fas fa-home"></span><span class="result-part result-name">Result 4</span>-->
+<!--        </div>-->
+<!--      </li>-->
+<!--      <li class="search-result">-->
+<!--        <div class="search-result-wrapper">-->
+<!--          <span class="result-part result-icon fas fa-home"></span><span class="result-part result-name">Result 4</span>-->
+<!--        </div>-->
+<!--      </li>-->
+<!--      <li class="search-result">-->
+<!--        <div class="search-result-wrapper">-->
+<!--          <span class="result-part result-icon fas fa-home"></span><span class="result-part result-name">Result 4</span>-->
+<!--        </div>-->
+<!--      </li>-->
+<!--      <li class="search-result">-->
+<!--        <div class="search-result-wrapper">-->
+<!--          <span class="result-part result-icon fas fa-home"></span><span class="result-part result-name">Result 4</span>-->
+<!--        </div>-->
+<!--      </li>-->
     </ul>
   </div>
 </div>
