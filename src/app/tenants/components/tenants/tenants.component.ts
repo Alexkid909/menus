@@ -61,7 +61,7 @@ export class TenantsComponent implements OnInit {
 
     this.tenantFormActions = [
       new FormActionClass(this.crudState, this.saveTenant, {
-        buttonClasses: 'btn-wide'
+        buttonClasses: ['btn-wide', 'btn-primary']
       })
     ];
 

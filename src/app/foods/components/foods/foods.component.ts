@@ -67,7 +67,7 @@ export class FoodsComponent implements OnInit {
 
     this.foodFormActions = [
       new FormActionClass(this.crudState, this.saveFood, {
-        buttonClasses: 'btn-wide'
+        buttonClasses: ['btn-wide', 'btn-primary']
       })
     ];
 
