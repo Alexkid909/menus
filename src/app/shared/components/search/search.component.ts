@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import {debounceTime, delay, distinctUntilChanged} from 'rxjs/operators';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
@@ -20,8 +20,13 @@ export class SearchComponent implements OnInit, OnChanges {
   @Input() cssClasses: string | Array<string>;
   @Input() resetTerm: Observable<string>;
   searchSourceBehaviorSubject: BehaviorSubject <Observable<any>> = new BehaviorSubject(new Observable());
+  inputActive = false;
+  @ViewChild('searchInput') searchInput: ElementRef;
+  @Output() inputBlur: EventEmitter<null> = new EventEmitter<null>();
 
-  constructor() {}
+  constructor() {
+    this.searchResults = [];
+  }
 
   ngOnInit() {
     this.searchTerm = '';
@@ -45,6 +50,21 @@ export class SearchComponent implements OnInit, OnChanges {
     }
   }
 
+  onBlur(e: any) {
+    this.setActive(false);
+    this.resetSearch();
+    this.inputBlur.emit();
+  }
+
+  setActive(newValue: boolean) {
+    this.inputActive = newValue;
+    if (newValue) {
+      this.searchInput.nativeElement.focus();
+    } else {
+      this.searchInput.nativeElement.blur();
+    }
+  }
+
   searchTermChange(event) {
     this.onSearchTermChange.emit(event);
   }
@@ -52,8 +72,8 @@ export class SearchComponent implements OnInit, OnChanges {
   resultSelected(event) {
     console.log('result selected', event);
     this.onResultSelected.emit(event);
-    this.searchResults = [];
-    this.searchTerm = '';
+    this.setActive(false);
+    this.resetSearch();
   }
 
   search() {
@@ -62,4 +82,8 @@ export class SearchComponent implements OnInit, OnChanges {
     });
   }
 
+  resetSearch() {
+    this.searchResults = [];
+    this.searchTerm = '';
+  }
 }

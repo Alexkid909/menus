@@ -38,6 +38,7 @@
 .btn {
   padding: 0.5rem 0.8rem;
   position: relative;
+  transition: all 250ms ease-in;
   &:focus, &:active {
     box-shadow: none !important;
   }
@@ -60,8 +61,6 @@
       font-weight: 500;
     }
   }
-
-  transition: all 250ms ease-in;
 }
 
 .btn-container {
@@ -71,6 +70,15 @@
 .btn-icon, .btn-text {
   display: inline-block;
   padding: 0 .25rem;
+}
+
+.btn-icon {
+  color: white;
+
+  &:hover {
+    background-color: transparent;
+    color: lighten($dominant, 10%);
+  }
 }
 
 .btn-transparent {

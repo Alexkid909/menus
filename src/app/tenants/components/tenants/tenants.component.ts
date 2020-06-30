@@ -61,12 +61,15 @@ export class TenantsComponent implements OnInit {
 
     this.tenantFormActions = [
       new FormActionClass(this.crudState, this.saveTenant, {
-        buttonClasses: 'btn-wide'
+        buttonClasses: ['btn-wide', 'btn-primary']
       })
     ];
 
     this.toolbarFunctions = [
-      new ToolBarFunctionClass('Create Tenant', this.showCreate, ['btn-mobile-disc'], ['fas fa-plus fa-lg'])
+      new ToolBarFunctionClass('Create Tenant', this.showCreate, [
+        'btn-mobile-disc',
+        'btn-primary',
+      ], ['fas fa-plus fa-lg'])
     ];
 
     this.toolbarFunctions.forEach((toolbarFunction: any) => {
@@ -77,6 +80,7 @@ export class TenantsComponent implements OnInit {
       new ToolBarFunctionClass('Delete Tenant', this.initiateDelete, [
         'btn-artifact-action',
         'btn-artifact-action-delete',
+        'btn-icon',
       ], ['fas fa-trash-alt']);
 
     this.deleteButtonFunction.definition = this.deleteButtonFunction.definition.bind(this);
@@ -199,5 +203,4 @@ export class TenantsComponent implements OnInit {
       // @TODO Implement error handling.
     });
   }
-
 }

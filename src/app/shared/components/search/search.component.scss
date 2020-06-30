@@ -13,10 +13,15 @@
 
 .search-input {
   border-radius: unset;
+  box-shadow: none;
 }
 
 .search-label {
   margin-bottom: 0;
+}
+
+.search-input-wrapper {
+  position: relative;
 }
 
 .search-input,
@@ -25,12 +30,43 @@
   margin-bottom: 0;
 }
 
+.search-input {
+  padding-right: 2em;
+}
+
+.search-results {
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+}
+
+.search-result {
+  margin: 0.15em 0;
+}
+
+.search-icon-container {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.5em;
+  color: white;
+  text-align: center;
+  margin-right: 0.25em;
+}
+
 .search-container {
   position: relative;
 
   &.active {
     .search-input {
       background-color: white;
+    }
+
+    .search-icon-container {
+      pointer-events: none;
+      i {
+        color: gray;
+      }
     }
 
    .search-results {
@@ -45,5 +81,4 @@
   width: 100%;
   background-color: white;
   color: black;
-  position: absolute;
 }

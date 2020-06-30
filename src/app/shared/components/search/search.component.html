@@ -1,18 +1,52 @@
 <div class="search-wrapper" [ngClass]="cssClasses">
-  <div class="search-container" [ngClass]="{'active': searchTerm}">
+  <div class="search-container" [ngClass]="{'active': inputActive, 'has-results': searchResults.length}">
+<!--  <div class="search-container active has-results">-->
     <label class="search-label">
       <span *ngIf="labelText">
         {{labelText}}
       </span>
-      <input
-        class="search-input form-control"
-        [placeholder]="resultsPlaceholder"
-        [(ngModel)]="searchTerm"
-        (ngModelChange)="searchTermChange($event)"
-      >
+      <div class="search-input-wrapper">
+        <div class="search-icon-container">
+          <i class="fas fa-search"></i>
+        </div>
+        <input
+          class="search-input form-control"
+          #searchInput
+          [placeholder]="resultsPlaceholder"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="searchTermChange($event)"
+          (focus)="setActive(true)"
+          (blur)="onBlur($event)"
+        >
+      </div>
     </label>
-    <ul class="search-results">
-      <li class="search-result" *ngFor="let result of searchResults" (click)="resultSelected(result)">{{result.name}} </li>
+    <ul class="search-results" [hidden]="searchResults.length === 0">
+<!--    <ul class="search-results">-->
+      <li class="search-result" *ngFor="let result of searchResults" (mousedown)="resultSelected(result)">
+        <div class="search-result-wrapper">
+          <span class="result-part result-icon fas fa-home"></span><span class="result-part result-name">{{result.name}}</span>
+        </div>
+      </li>
+<!--      <li class="search-result">-->
+<!--        <div class="search-result-wrapper">-->
+<!--          <span class="result-part result-icon fas fa-home"></span><span class="result-part result-name">Result 4</span>-->
+<!--        </div>-->
+<!--      </li>-->
+<!--      <li class="search-result">-->
+<!--        <div class="search-result-wrapper">-->
+<!--          <span class="result-part result-icon fas fa-home"></span><span class="result-part result-name">Result 4</span>-->
+<!--        </div>-->
+<!--      </li>-->
+<!--      <li class="search-result">-->
+<!--        <div class="search-result-wrapper">-->
+<!--          <span class="result-part result-icon fas fa-home"></span><span class="result-part result-name">Result 4</span>-->
+<!--        </div>-->
+<!--      </li>-->
+<!--      <li class="search-result">-->
+<!--        <div class="search-result-wrapper">-->
+<!--          <span class="result-part result-icon fas fa-home"></span><span class="result-part result-name">Result 4</span>-->
+<!--        </div>-->
+<!--      </li>-->
     </ul>
   </div>
 </div>

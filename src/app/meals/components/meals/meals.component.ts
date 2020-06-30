@@ -66,12 +66,15 @@ export class MealsComponent implements OnInit {
     ];
     this.mealFormActions = [
       new FormActionClass(this.crudState, this.saveMeal, {
-        buttonClasses: 'btn-wide'
+        buttonClasses: ['btn-wide', 'btn-primary']
       })
     ];
 
     this.toolbarFunctions = [
-      new ToolBarFunctionClass('Create Meal', this.showCreate, ['btn-mobile-disc'], ['fas fa-plus fa-lg'])
+      new ToolBarFunctionClass('Create Meal', this.showCreate, [
+        'btn-mobile-disc',
+        'btn-primary',
+      ], ['fas fa-plus fa-lg'])
     ];
 
     this.toolbarFunctions.forEach((toolbarFunction: any) => {
@@ -82,6 +85,7 @@ export class MealsComponent implements OnInit {
       new ToolBarFunctionClass('Delete Meal', this.initiateDelete, [
         'btn-artifact-action',
         'btn-artifact-action-delete',
+        'btn-icon',
       ], ['fas fa-trash-alt']);
 
     this.deleteButtonFunction.definition = this.deleteButtonFunction.definition.bind(this);
