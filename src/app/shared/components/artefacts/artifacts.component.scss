@@ -101,6 +101,7 @@ $diameter: 2rem;
     height: 100%;
     background: url('assets/images/300x300placeholder.png') center/cover;
     object-fit: cover;
+    position: absolute;
   }
 
   ::ng-deep {
@@ -161,6 +162,7 @@ $diameter: 2rem;
 
 .artifact-image-container {
   flex-grow: 2;
+  position: relative;
 
   @media screen and (orientation: landscape) and (max-width: 812px) {
     height: 100%;
