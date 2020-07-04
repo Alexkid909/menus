@@ -5,6 +5,18 @@
 
 $diameter: 2rem;
 
+.component-loader-container, .component-body {
+  padding: 0 0 3.5em;;
+  height: 100%;
+  position: relative;
+}
+
+.loader-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
 .component-body {
   display: flex;
   padding: .5em 1em 4em;
@@ -12,7 +24,6 @@ $diameter: 2rem;
   align-content: flex-start;
   flex-wrap: wrap;
   overflow-y: auto;
-  height: 100%;
 }
 
 .artifact-container {

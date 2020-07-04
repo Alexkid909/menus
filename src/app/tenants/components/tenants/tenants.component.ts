@@ -37,6 +37,8 @@ export class TenantsComponent implements OnInit {
   currentTenantId: string;
   sideBarConfig: SideBarConfig;
   sideBar: SideBarRefClass;
+  loading: boolean;
+
 
   constructor(public modal: ModalService,
               private tenantsService: TenantsService,
