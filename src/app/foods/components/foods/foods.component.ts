@@ -38,19 +38,21 @@ export class FoodsComponent implements OnInit {
   currentFoodId: string;
   sideBarConfig: SideBarConfig;
   sideBar: SideBarRefClass;
+  loading: boolean;
 
 
   constructor(public modal: ModalService,
               private foodsService: FoodsService,
               private sideBarService: SideBarService) {
-                this.saveFood = this.saveFood.bind(this);
-
+    this.saveFood = this.saveFood.bind(this);
+    this.loading = true;
   }
 
   ngOnInit() {
     this.userFoods = [];
     this.foodsService.foodsBehaviorSubject.subscribe((foods: Array<FoodInterface>) => {
       this.userFoods = foods || [];
+      this.loading = !foods;
     });
 
 

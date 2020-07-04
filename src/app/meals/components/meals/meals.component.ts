@@ -42,17 +42,20 @@ export class MealsComponent implements OnInit {
   addedMealFoods: Array<MealFoodClass> = [];
   sideBarConfig: SideBarConfig;
   sideBar: SideBarRefClass;
+  loading: boolean;
 
   constructor(public modal: ModalService,
               private mealsService: MealsService,
               private sideBarService: SideBarService,
               private formService: FormService) {
     this.saveMeal = this.saveMeal.bind(this);
+    this.loading = true;
   }
 
   ngOnInit() {
     this.mealsService.mealsBehaviorSubject.subscribe((meals: Array<MealInterface>) => {
       this.userMeals = meals || [];
+      this.loading = !meals;
     });
 
     this.crudState = CrudStateEnum.create;

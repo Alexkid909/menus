@@ -1,16 +1,17 @@
-import {Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges} from '@angular/core';
 import {CrudStateEnum} from '../../enums/crud-state.enum';
 import {FormFieldClass} from '../../interfaces/form-field.class';
 import {FormFieldGroupClass} from '../../classes/form-field-group.class';
 import {FormActionClass} from '../../classes/form-action.class';
 import { ToolBarFunctionClass} from '../../classes/tool-bar-function.class';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-artifacts',
   templateUrl: './artifacts.component.html',
   styleUrls: ['./artifacts.component.scss']
 })
-export class ArtifactsComponent implements OnInit {
+export class ArtifactsComponent implements OnInit, OnChanges {
 
   @Input() artifactName: string;
   toolbarClasses: string;
@@ -28,10 +29,23 @@ export class ArtifactsComponent implements OnInit {
   @Input() sideBarOpen: boolean;
   @Input() currentArtifactId: string;
   @Output() artifactClicked: EventEmitter<any> = new EventEmitter<any>();
+  @Input() loading: boolean;
+  loaderTimeout: any;
 
+  constructor(private spinner: NgxSpinnerService) {}
 
-
-  constructor() { }
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.hasOwnProperty('loading') && changes.loading) {
+      if (this.loading) {
+        this.loaderTimeout = setTimeout(() => {
+          this.spinner.show();
+        }, 200);
+      } else {
+        clearTimeout(this.loaderTimeout);
+        this.spinner.hide();
+      }
+    }
+  }
 
   ngOnInit() {
     this.toolbarClasses = `toolbar-artifacts toolbar-${this.artifactName}`;

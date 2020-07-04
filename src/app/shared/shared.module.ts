@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from './components/button/button.component';
 import { FormComponent } from './components/form/form.component';
@@ -15,12 +15,14 @@ import { SearchComponent } from './components/search/search.component';
 import { ArtifactSubItemComponent } from './components/artifact-sub-item/artifact-sub-item.component';
 import { SideBarInsertionDirective } from './directives/side-bar-insertion.directive';
 import { SideBarDialogComponent } from './components/side-bar-dialog/side-bar-dialog.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgxSpinnerModule
   ],
   declarations: [
     ButtonComponent,
@@ -53,7 +55,8 @@ import { SideBarDialogComponent } from './components/side-bar-dialog/side-bar-di
     SideBarComponent,
     ConfirmDialogComponent,
     SideBarDialogComponent
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedModule { }
 

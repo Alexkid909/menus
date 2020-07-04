@@ -2,7 +2,12 @@
   <div class="component-header component-header-{{artifactName}}">
     <app-tool-bar [toolbarClasses]="toolbarClasses" [isResponsive]="true" [tools]="toolbarFunctions"></app-tool-bar>
   </div>
-  <div class="component-body component-body-{{artifactName}}s">
+  <div class="component-loader-container" [hidden]="!loading">
+    <div class="loader-wrapper">
+      <ngx-spinner [fullScreen]="false" type="pacman" size="medium"></ngx-spinner>
+    </div>
+  </div>
+  <div class="component-body component-body-{{artifactName}}s" [hidden]="loading">
     <div class="artifact-container artifact-container-{{artifactName}}s" *ngFor="let artifact of artifacts">
       <div class="artifact artifact-{{artifactName}}" (click)="onArtifactClicked(artifact)">
         <div class="artifact-item artifact-image-container {{artifactName}}-item {{artifactName}}-image-container">
