@@ -34,7 +34,7 @@ export class MealFoodsComponent implements OnInit, AfterViewInit {
   private resetFormSubject: Subject<void> = new Subject<void>();
   initialFormValues: FormData;
 
-  @ViewChild(FormComponent) mealFoodsFormChild: FormComponent;
+  @ViewChild(FormComponent, { static: false }) mealFoodsFormChild: FormComponent;
 
 
   constructor(

@@ -37,7 +37,7 @@ export class ModalComponent implements AfterViewInit, OnDestroy, OnInit {
   componentRef: ComponentRef<any>;
   childComponentType: Type<any>;
 
-  @ViewChild(ModalInsertionDirective) insertionPoint: ModalInsertionDirective;
+  @ViewChild(ModalInsertionDirective, { static: false }) insertionPoint: ModalInsertionDirective;
   isVisible = true;
 
 

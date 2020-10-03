@@ -22,8 +22,8 @@ export class HeaderBarComponent implements OnInit, AfterViewInit {
   searchTenantsSource: Observable<Array<TenantInterface>>;
   isAuthed: boolean;
   searchActiveState = false;
-  @ViewChild(SearchComponent) searchComponent: SearchComponent;
-  @ViewChild('headerBar') headerBarEl: ElementRef;
+  @ViewChild(SearchComponent, { static: false }) searchComponent: SearchComponent;
+  @ViewChild('headerBar', { static: false }) headerBarEl: ElementRef;
 
   constructor(private tenantsService: TenantsService,
               private authService: AuthService) {}

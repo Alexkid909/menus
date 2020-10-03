@@ -21,7 +21,7 @@ export class SearchComponent implements OnInit, OnChanges {
   @Input() resetTerm: Observable<string>;
   searchSourceBehaviorSubject: BehaviorSubject <Observable<any>> = new BehaviorSubject(new Observable());
   inputActive = false;
-  @ViewChild('searchInput') searchInput: ElementRef;
+  @ViewChild('searchInput', { static: false }) searchInput: ElementRef;
   @Output() inputBlur: EventEmitter<null> = new EventEmitter<null>();
 
   constructor() {
