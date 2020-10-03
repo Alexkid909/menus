@@ -8,6 +8,7 @@ import { TenantsRoutingModule} from './tenants-routing.module';
 import { AuthGuard } from '../shared/guards/auth.guard';
 import { TenantComponent } from './components/tenant/tenant.component';
 import { AuthTokenInterceptorService } from '../interceptors/auth-token-interceptor.service';
+import { FilesModule } from '../files/files.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { AuthTokenInterceptorService } from '../interceptors/auth-token-intercep
     CommonModule,
     HttpClientModule,
     SharedModule,
+    FilesModule
   ],
   providers: [
     TenantsService,
