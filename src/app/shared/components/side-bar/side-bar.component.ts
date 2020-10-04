@@ -44,7 +44,7 @@ export class SideBarComponent implements AfterViewInit, OnDestroy, OnInit {
   @Output() onSideBarClose: EventEmitter<boolean> = new EventEmitter(false);
   isOpen = true;
 
-  @ViewChild(SideBarInsertionDirective, { static: false }) insertionPoint: SideBarInsertionDirective;
+  @ViewChild(SideBarInsertionDirective) insertionPoint: SideBarInsertionDirective;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private cd: ChangeDetectorRef,
