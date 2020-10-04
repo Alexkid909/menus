@@ -14,14 +14,16 @@ export class MealsService {
   apiUrl: string;
   resource = `/meals`;
   meals: Array<MealInterface>;
-  mealsBehaviorSubject: BehaviorSubject<MealInterface[]> = new BehaviorSubject(<MealInterface[]> this.meals);
+  mealsBehaviorSubject: BehaviorSubject<MealInterface[]>;
   meal: MealInterface;
-  mealSubject: BehaviorSubject<MealInterface> = new BehaviorSubject<MealInterface>(this.meal);
+  mealSubject: BehaviorSubject<MealInterface>;
 
 
   constructor(private http: HttpClient,
               private tenantsService: TenantsService
   ) {
+    this.mealsBehaviorSubject = new BehaviorSubject<MealInterface[]>(this.meals);
+    this.mealSubject = new BehaviorSubject<MealInterface>(this.meal);
     this.apiUrl = environment.apiUrl;
     this.tenantsService.currentTenantIDBehaviourSubject.subscribe((id: string) => {
       if (id) { this.getMeals(); }
