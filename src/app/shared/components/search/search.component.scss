@@ -31,7 +31,7 @@
 }
 
 .search-input {
-  padding-right: 2em;
+  padding-right: 2.5em;
 }
 
 .search-results {
@@ -49,26 +49,15 @@
   top: 50%;
   transform: translateY(-50%);
   width: 1.5em;
-  color: white;
+  color: gray;
   text-align: center;
-  margin-right: 0.25em;
+  margin-right: 0.75em;
 }
 
 .search-container {
   position: relative;
 
   &.active {
-    .search-input {
-      background-color: white;
-    }
-
-    .search-icon-container {
-      pointer-events: none;
-      i {
-        color: gray;
-      }
-    }
-
    .search-results {
      display: block;
    }

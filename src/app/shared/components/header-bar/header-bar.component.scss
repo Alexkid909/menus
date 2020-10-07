@@ -35,6 +35,25 @@ $searchBorderRadius: 15px;
     &.active {
       transform: translateY(100%);
     }
+
+    ::ng-deep {
+      .search-container {
+
+        &.active {
+          .search-input {
+            background-color: white;
+          }
+        }
+
+        .search-icon-container {
+          pointer-events: none;
+          color: white;
+        }
+      }
+    }
+
+
+
   }
 }
 
