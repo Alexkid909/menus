@@ -1,7 +1,7 @@
 import {Directive, ViewContainerRef} from '@angular/core';
 
 @Directive({
-  selector: '[appModalInsertion]'
+  selector: '[appComponentInsertion]'
 })
 export class ComponentInsertionDirective {
   constructor(public viewContainerRef: ViewContainerRef) {}

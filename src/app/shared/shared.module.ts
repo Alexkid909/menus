@@ -6,14 +6,13 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { ToolBarComponent } from './components/tool-bar/tool-bar.component';
 import { ArtifactsComponent} from './components/artefacts/artifacts.component';
-import {SideBarService} from './side-bar.service';
+// import {SideBarService} from './side-bar.service';
 import { ModalComponent } from './components/modal/modal.component';
 import {ModalService} from './modal.service';
 import { ComponentInsertionDirective } from './directives/component-insertion.directive';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { SearchComponent } from './components/search/search.component';
 import { ArtifactSubItemComponent } from './components/artifact-sub-item/artifact-sub-item.component';
-import { SideBarInsertionDirective } from './directives/side-bar-insertion.directive';
 import { SideBarDialogComponent } from './components/side-bar-dialog/side-bar-dialog.component';
 import { NotificationComponent } from './components/notification/notification.component';
 
@@ -34,7 +33,6 @@ import { NotificationComponent } from './components/notification/notification.co
     SearchComponent,
     ArtifactSubItemComponent,
     SideBarComponent,
-    SideBarInsertionDirective,
     SideBarDialogComponent,
     NotificationComponent,
   ],
@@ -47,7 +45,7 @@ import { NotificationComponent } from './components/notification/notification.co
     ArtifactSubItemComponent
   ],
   providers: [
-    SideBarService,
+    // SideBarService,
     ModalService
   ],
   entryComponents: [
