@@ -23,6 +23,9 @@ export class SearchComponent implements OnInit, OnChanges {
   inputActive = false;
   @ViewChild('searchInput') searchInput: ElementRef;
   @Output() inputBlur: EventEmitter<null> = new EventEmitter<null>();
+  @Input() required = false;
+  @Input() resetOnResultSelection = true;
+  @Input() deactivateOnResultSelection = true;
 
   constructor() {
     this.searchResults = [];
@@ -72,8 +75,13 @@ export class SearchComponent implements OnInit, OnChanges {
   resultSelected(event) {
     console.log('result selected', event);
     this.onResultSelected.emit(event);
-    this.setActive(false);
-    this.resetSearch();
+    if (this.deactivateOnResultSelection) {
+      this.setActive(false);
+    }
+    this.searchTerm = event.name;
+    if (this.resetOnResultSelection) {
+      this.resetSearch();
+    }
   }
 
   search() {

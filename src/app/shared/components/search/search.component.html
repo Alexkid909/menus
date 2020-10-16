@@ -17,6 +17,7 @@
           (ngModelChange)="searchTermChange($event)"
           (focus)="setActive(true)"
           (blur)="onBlur($event)"
+          [required]="required"
         >
       </div>
     </label>
