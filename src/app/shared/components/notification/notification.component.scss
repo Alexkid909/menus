@@ -1,0 +1,36 @@
+@import 'appColors';
+
+.notification {
+  background-color: rgba(0, 0, 0, 1);
+  margin: 1em;
+  padding: 0.5em 1.5em;
+  border-radius: 1.5em;
+  border: 1.5px solid transparent;
+
+  &.notification-type-info {
+    border-color: $lightBlue;
+  }
+
+  &.notification-type-success {
+    border-color: $green;
+  }
+
+  &.notification-type-warning {
+    border-color: $softRed;
+  }
+}
+
+.notification {
+  position: relative;
+}
+
+.notification-title {
+  font-size: 1.65em;
+  font-weight: 600;
+}
+
+.notification-dismiss-icon-container {
+  position: absolute;
+  top: .5em;
+  right: .75em;
+}

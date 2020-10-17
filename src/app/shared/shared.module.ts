@@ -16,6 +16,9 @@ import { ArtifactSubItemComponent } from './components/artifact-sub-item/artifac
 import { SideBarInsertionDirective } from './directives/side-bar-insertion.directive';
 import { SideBarDialogComponent } from './components/side-bar-dialog/side-bar-dialog.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+import { NotificationsService } from './notifications.service';
+import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
   imports: [
@@ -37,6 +40,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     SideBarComponent,
     SideBarInsertionDirective,
     SideBarDialogComponent,
+    NotificationsComponent,
+    NotificationComponent,
   ],
   exports: [
     ButtonComponent,
@@ -44,11 +49,13 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ToolBarComponent,
     ArtifactsComponent,
     SearchComponent,
-    ArtifactSubItemComponent
+    ArtifactSubItemComponent,
+    NotificationsComponent
   ],
   providers: [
     SideBarService,
-    ModalService
+    ModalService,
+    NotificationsService
   ],
   entryComponents: [
     ModalComponent,
