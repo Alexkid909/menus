@@ -2,7 +2,7 @@ import { Notification as NotificationInt, NotificationType } from './../interfac
 export class Notification implements NotificationInt {
   type; message; title; dismissible;
 
-  constructor(type: NotificationType, message: string, title: string, dismissible: boolean) {
+  constructor(type: NotificationType, message: string, title: string, dismissible = true) {
     this.type = type;
     this.message = message;
     this.title = title;

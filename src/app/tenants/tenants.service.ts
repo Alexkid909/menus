@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {TenantClass} from './classes/tenant.interface';
 import {TenantInterface} from '../shared/interfaces/tenant.interface';
 import {combineLatest} from 'rxjs/internal/observable/combineLatest';
@@ -11,6 +11,7 @@ import {environment} from '../../environments/environment';
 import {NotificationsService} from '../shared/notifications.service';
 import {Notification} from '../shared/classes/notification';
 import {NotificationType} from '../shared/interfaces/notification';
+import {ErrorService} from '../shared/error.service';
 
 @Injectable()
 
@@ -24,7 +25,11 @@ export class TenantsService {
   tenants: Array<TenantInterface> = [];
   tenantsBehaviorSubject: BehaviorSubject<Array<TenantInterface>> = new BehaviorSubject([]);
 
-  constructor(private http: HttpClient, private authService: AuthService, private notificationsService: NotificationsService) {
+  constructor(private http: HttpClient,
+              private authService: AuthService,
+              private notificationsService: NotificationsService,
+              private errorService: ErrorService
+  ) {
     this.apiUrl = environment.apiUrl;
     this.authService.loggedInSubject.subscribe((state: boolean) => {
       if (state) {
@@ -88,22 +93,32 @@ export class TenantsService {
   }
 
   public createTenant(tenant: TenantClass) {
-    return this.http.post(`${this.apiUrl}/tenants`, {name: tenant.name}).pipe(map(() => {
-      this.getUserTenants();
-    }));
+    return this.http.post(`${this.apiUrl}/tenants`, {name: tenant.name})
+      .pipe(catchError(this.errorService.handleError))
+      .pipe(map(() => {
+        this.getUserTenants();
+        const notification = new Notification(NotificationType.Success, 'Well done you have created a new tenant', 'Tenant Created');
+        this.notificationsService.newNotification(notification);
+      }));
   }
 
   public updateTenant(tenantId: string, tenant: TenantClass) {
-    return this.http.put(`${this.apiUrl}/tenants/${tenantId}`, {name: tenant.name}).pipe(map(() => {
-      this.getUserTenants();
-      const notification = new Notification(NotificationType.Success, 'Well done you have updated the tenant', 'Tenant Updated', true);
-      this.notificationsService.newNotification(notification);
-    }));
+    return this.http.put(`${this.apiUrl}/tenants/${tenantId}`, {name: tenant.name})
+      .pipe(catchError(this.errorService.handleError))
+      .pipe(map(() => {
+        this.getUserTenants();
+        const notification = new Notification(NotificationType.Success, 'Well done you have updated the tenant', 'Tenant Updated');
+        this.notificationsService.newNotification(notification);
+      }));
   }
 
   public deleteTenant(tenantId: string) {
-    return this.http.delete(`${this.apiUrl}/tenants/${tenantId}`).pipe(map(() => {
-      this.getUserTenants();
-    }));
+    return this.http.delete(`${this.apiUrl}/tenants/${tenantId}`)
+      .pipe(catchError(this.errorService.handleError))
+      .pipe(map(() => {
+        this.getUserTenants();
+        const notification = new Notification(NotificationType.Success, 'Well done you have deleted the tenant', 'Tenant Deleted');
+        this.notificationsService.newNotification(notification);
+      }));
   }
 }

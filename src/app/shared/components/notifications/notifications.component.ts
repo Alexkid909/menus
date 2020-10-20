@@ -12,27 +12,30 @@ import {animate, style, transition, query, trigger, stagger, group} from '@angul
       transition('*=> *', [
         query(':enter', style( {
           opacity: 0,
-          transform: 'translateY(-33%)',
+          transform: 'translateY(-50%)',
         }), { optional: true }),
         query(':enter',
           stagger('500ms', group([
             animate('500ms',
               style({
                 opacity: 1,
-              })
-            ),
-            animate('300ms',
-              style({
                 transform: 'translateY(0)',
               })
-            ),
+            )
           ])), { optional: true }
         ),
         query(':leave',
-          stagger('500ms',
-            animate('500ms',
-              style({ opacity: 0 })
-            )
+          stagger('500ms', [
+            animate('300ms',
+              style({
+                transform: 'translateY(-50%)',
+              })
+            ),
+            animate('200ms',
+              style({
+                opacity: 0,
+              })
+            )]
           ), { optional: true }
         )
       ]),
@@ -43,6 +46,7 @@ import {animate, style, transition, query, trigger, stagger, group} from '@angul
 export class NotificationsComponent implements OnInit {
 
   public notifications: Array<Notification>;
+  translateXValue: string;
 
   constructor(private notificationsService: NotificationsService) {
     this.notifications = [];
@@ -51,21 +55,12 @@ export class NotificationsComponent implements OnInit {
   ngOnInit(): void {
     this.notificationsService.notificationsBehaviourSubject.subscribe((notifications: Array<Notification>) => {
       if (notifications.length) {
-        notifications.forEach((notification: Notification) => {
-          this.addNotification(notification);
-        });
+        this.notifications = notifications;
       }
     });
   }
 
-  addNotification(notifications: Notification) {
-    this.notifications.unshift(notifications);
-    console.log('New notification added', this.notifications);
-  }
-
-  removeNotification(index: number) {
-    if (index > -1) {
-      this.notifications.splice(index, 1);
-    }
+  dismissNotification(index: number): void {
+    this.notificationsService.removeNotification(index);
   }
 }

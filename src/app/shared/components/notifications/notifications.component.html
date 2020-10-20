@@ -3,7 +3,7 @@
     <li *ngFor="let notification of notifications; index as i" class="notification-container">
       <app-notification
         [notification]="notification"
-        (onDismiss)="removeNotification($event)"
+        (onDismiss)="dismissNotification($event)"
         [index]="i"
       ></app-notification>
     </li>
