@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import { BehaviorSubject} from 'rxjs';
 import { MealClass } from './classes/meal.class';
 import { TenantsService } from '../tenants/tenants.service';
 import { MealInterface } from '../shared/interfaces/meal.interface';
 import { MealFoodClass } from './classes/meal-food.class';
 import { environment} from '../../environments/environment';
+import {NotificationsService} from '../shared/notifications.service';
+import {ErrorService} from '../shared/error.service';
+import {Notification} from '../shared/classes/notification';
+import {NotificationType} from '../shared/interfaces/notification';
 
 @Injectable()
 export class MealsService {
@@ -20,7 +24,9 @@ export class MealsService {
 
 
   constructor(private http: HttpClient,
-              private tenantsService: TenantsService
+              private tenantsService: TenantsService,
+              private notificationsService: NotificationsService,
+              private errorService: ErrorService
   ) {
     this.mealsBehaviorSubject = new BehaviorSubject<MealInterface[]>(this.meals);
     this.mealSubject = new BehaviorSubject<MealInterface>(this.meal);
@@ -51,16 +57,23 @@ export class MealsService {
 
   createMeal(meal: MealClass) {
     const callUrl = `${this.apiUrl}${this.resource}`;
-    return this.http.post(callUrl, meal).pipe(map(response => {
-      this.getMeals();
-      return response;
-    }));
+    return this.http.post(callUrl, meal)
+      .pipe(catchError(this.errorService.handleError))
+      .pipe(map(response => {
+        const notification = new Notification(NotificationType.Success, 'Well done you have created a new meal', 'Meal Created');
+        this.notificationsService.newNotification(notification);
+        this.getMeals();
+        return response;
+      }));
   }
 
   deleteMeal(mealId: string) {
     const callUrl = `${this.apiUrl}${this.resource}`;
     return this.http.delete(`${callUrl}/${mealId}`)
+      .pipe(catchError(this.errorService.handleError))
       .pipe(map(response => {
+        const notification = new Notification(NotificationType.Success, 'Well done you have deleted a meal', 'Meal Deleted');
+        this.notificationsService.newNotification(notification);
         this.getMeals();
         return response;
       }));
@@ -68,10 +81,14 @@ export class MealsService {
 
   updateMeal(mealId: string, meal: MealClass) {
     const callUrl = `${this.apiUrl}${this.resource}/${mealId}`;
-    return this.http.put(callUrl, meal).pipe(map(response => {
-      this.getMeals();
-      return response;
-    }));
+    return this.http.put(callUrl, meal)
+      .pipe(catchError(this.errorService.handleError))
+      .pipe(map(response => {
+        const notification = new Notification(NotificationType.Success, 'Well done you have updated a meal', 'Meal Updated');
+        this.notificationsService.newNotification(notification);
+        this.getMeals();
+        return response;
+     }));
   }
 
   addFoodsToMeal(mealID: string, mealFoods: Array<MealFoodClass>) {
@@ -82,11 +99,16 @@ export class MealsService {
         qty: mealFood.qty
       };
     });
-    return this.http.post(callUrl, body);
+    return this.http.post(callUrl, body)
+      .pipe(catchError(this.errorService.handleError))
+      .pipe(map(() => {
+        const notification = new Notification(NotificationType.Success, 'Well done you have added a food to this  meal', 'Food Added');
+        this.notificationsService.newNotification(notification);
+      }));
   }
 
   getMealFoods(mealId: string) {
     const callUrl = `${this.apiUrl}${this.resource}/${mealId}/foods`;
-    return this.http.get(callUrl);
+    return this.http.get(callUrl).pipe(catchError(this.errorService.handleError));
   }
 }
