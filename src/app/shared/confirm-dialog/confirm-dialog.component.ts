@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {ModalConfig} from '../modal.config';
-import {ModalRefClass} from '../classes/modal-ref.class';
+import {ComponentConfig} from '../component.config';
+import {ComponentRefClass} from '../classes/component-ref.class';
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -14,7 +14,7 @@ export class ConfirmDialogComponent {
   @Input() confirmMethod: string;
   @Input() dismissMethod: string;
 
-  constructor(public config: ModalConfig, public modal: ModalRefClass) { }
+  constructor(public config: ComponentConfig, public modal: ComponentRefClass) { }
 
 
   accept(event: any) {

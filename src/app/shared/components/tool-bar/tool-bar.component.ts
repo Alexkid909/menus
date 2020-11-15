@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Input } from '@angular/core';
 import {ToolBarFunctionClass} from '../../classes/tool-bar-function.class';
+import { SortOrder, Order } from '../../classes/sort-order';
 
 @Component({
   selector: 'app-tool-bar',
@@ -13,5 +14,5 @@ export class ToolBarComponent {
   @Input() isResponsive = false;
   @Input() toolbarClasses: Array<string>;
 
-  constructor() { }
+  constructor() {}
 }

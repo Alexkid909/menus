@@ -8,8 +8,8 @@ import {
   ComponentFactoryResolver,
   ChangeDetectorRef, OnInit
 } from '@angular/core';
-import {ModalInsertionDirective} from '../../directives/modal-insertion.directive';
-import {ModalRefClass} from '../../classes/modal-ref.class';
+import {ComponentInsertionDirective} from '../../directives/component-insertion.directive';
+import {ComponentRefClass} from '../../classes/component-ref.class';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
@@ -37,13 +37,13 @@ export class ModalComponent implements AfterViewInit, OnDestroy, OnInit {
   componentRef: ComponentRef<any>;
   childComponentType: Type<any>;
 
-  @ViewChild(ModalInsertionDirective) insertionPoint: ModalInsertionDirective;
+  @ViewChild(ComponentInsertionDirective) insertionPoint: ComponentInsertionDirective;
   isVisible = true;
 
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private cd: ChangeDetectorRef,
-              public modal: ModalRefClass
+              public modal: ComponentRefClass
   ) {
     this.modal.onClose.subscribe(() => {
       this.isVisible = false;

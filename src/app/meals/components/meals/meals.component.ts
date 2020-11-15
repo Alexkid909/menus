@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MealsService} from '../../meals.service';
 import {FormGroup, Validators} from '@angular/forms';
 import {FormFieldClass} from '../../../shared/interfaces/form-field.class';
@@ -7,17 +7,19 @@ import {FormActionClass} from '../../../shared/classes/form-action.class';
 import {FormFieldType} from '../../../shared/enums/form-field-type.enum';
 import {CrudStateEnum} from '../../../shared/enums/crud-state.enum';
 import {ToolBarFunctionClass} from '../../../shared/classes/tool-bar-function.class';
-import {SideBarService} from '../../../shared/side-bar.service';
-import {ModalService} from '../../../shared/modal.service';
+import {ComponentService} from '../../../shared/component.service';
 import {ConfirmDialogComponent} from '../../../shared/confirm-dialog/confirm-dialog.component';
-import {ModalConfig} from '../../../shared/modal.config';
 import {MealInterface} from '../../../shared/interfaces/meal.interface';
+import {Order, SortOrder} from '../../../shared/classes/sort-order';
+import {SortService} from '../../../shared/sort.service';
 import {MealClass} from '../../classes/meal.class';
 import {MealFoodClass} from '../../classes/meal-food.class';
 import {FormService} from '../../../form.service';
-import {SideBarRefClass} from '../../../shared/classes/side-bar-ref.class';
-import {SideBarConfig} from '../../../shared/side-bar.config';
+import {ComponentConfig} from '../../../shared/component.config';
 import {MealsDialogComponent} from '../meals-dialog/meals-dialog.component';
+import {ComponentRefClass} from '../../../shared/classes/component-ref.class';
+import {SideBarComponent} from '../../../shared/components/side-bar/side-bar.component';
+import {ModalComponent} from '../../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-meals',
@@ -25,7 +27,7 @@ import {MealsDialogComponent} from '../meals-dialog/meals-dialog.component';
   styleUrls: ['./meals.component.scss']
 })
 
-export class MealsComponent implements OnInit {
+export class MealsComponent implements OnInit, OnDestroy {
 
   userMeals: Array<MealInterface> = [];
   sideBarTitle: string;
@@ -40,16 +42,20 @@ export class MealsComponent implements OnInit {
   deleteButtonFunction: ToolBarFunctionClass;
   currentMealId: string;
   addedMealFoods: Array<MealFoodClass> = [];
-  sideBarConfig: SideBarConfig;
-  sideBar: SideBarRefClass;
+  sideBarConfig: ComponentConfig;
+  sideBar: ComponentRefClass;
   loading: boolean;
+  sortKeys: Array<SortOrder> = [];
+  currentSortOrder: SortOrder;
 
-  constructor(public modal: ModalService,
+  constructor(public componentService: ComponentService,
               private mealsService: MealsService,
-              private sideBarService: SideBarService,
-              private formService: FormService) {
+              private formService: FormService,
+              private sortService: SortService) {
     this.saveMeal = this.saveMeal.bind(this);
     this.loading = true;
+    this.sortKeys.push(new SortOrder('name', 'Name - A to Z', Order.Asc));
+    this.sortKeys.push(new SortOrder('name', 'Name - Z to A', Order.Des));
   }
 
   ngOnInit() {
@@ -58,7 +64,15 @@ export class MealsComponent implements OnInit {
       this.loading = !meals;
     });
 
+    this.sortService.setSortOrders(this.sortKeys);
+    console.log('this.sortKeys', this.sortKeys);
+
     this.crudState = CrudStateEnum.create;
+
+    this.sortService.selectedSortOrderBehaviourSubject.subscribe((sortOrder: SortOrder) => {
+      this.currentSortOrder = sortOrder;
+      this.mealsService.sortMeals(this.currentSortOrder);
+    });
 
     this.mealFormFields = [
       new FormFieldClass('mealName', FormFieldType.text, '', Validators.required, null, 'form-input-meal-name'),
@@ -92,6 +106,10 @@ export class MealsComponent implements OnInit {
       ], ['fas fa-trash-alt']);
 
     this.deleteButtonFunction.definition = this.deleteButtonFunction.definition.bind(this);
+  }
+
+  ngOnDestroy() {
+    this.sortService.setSortOrders([]);
   }
 
   updateSidebar(state: CrudStateEnum, meal?: MealInterface) {
@@ -131,18 +149,17 @@ export class MealsComponent implements OnInit {
     };
   }
 
-
   showCreate() {
     this.setCurrentMealId(null);
     this.updateSidebar(CrudStateEnum.create);
-    this.sideBar = this.sideBarService.open(MealsDialogComponent, this.sideBarConfig);
+    this.sideBar = this.componentService.open(SideBarComponent, MealsDialogComponent, this.sideBarConfig);
   }
 
   showEdit(meal: MealInterface | null) {
     this.setCurrentMealId(meal._id);
     this.updateSidebar(CrudStateEnum.edit, meal);
     this.addedMealFoods = [];
-    this.sideBar = this.sideBarService.open(MealsDialogComponent, this.sideBarConfig);
+    this.sideBar = this.componentService.open(SideBarComponent, MealsDialogComponent, this.sideBarConfig);
   }
 
   setCurrentMealId(id: string | null) {
@@ -205,7 +222,7 @@ export class MealsComponent implements OnInit {
 
   initiateDelete(event: Event, meal: MealInterface) {
     event.stopPropagation();
-    const config: ModalConfig = {
+    const modalConfig: ComponentConfig = {
       data: {
         title: `Delete ${meal.name}?`,
         message: `Are you sure you want to delete ${meal.name}?`,
@@ -213,7 +230,7 @@ export class MealsComponent implements OnInit {
         confirmationData: meal._id
       }
     };
-    this.modal.open(ConfirmDialogComponent, config);
+    this.componentService.open(ModalComponent, ConfirmDialogComponent, modalConfig);
   }
 
   deleteMeal(mealId: string) {

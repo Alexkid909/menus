@@ -17,8 +17,8 @@ import {
   animate,
   transition,
 } from '@angular/animations';
-import {SideBarRefClass} from '../../classes/side-bar-ref.class';
-import {SideBarInsertionDirective} from '../../directives/side-bar-insertion.directive';
+import {ComponentRefClass} from '../../classes/component-ref.class';
+import {ComponentInsertionDirective} from '../../directives/component-insertion.directive';
 
 @Component({
   selector: 'app-side-bar',
@@ -44,11 +44,11 @@ export class SideBarComponent implements AfterViewInit, OnDestroy, OnInit {
   @Output() onSideBarClose: EventEmitter<boolean> = new EventEmitter(false);
   isOpen = true;
 
-  @ViewChild(SideBarInsertionDirective) insertionPoint: SideBarInsertionDirective;
+  @ViewChild(ComponentInsertionDirective) insertionPoint: ComponentInsertionDirective;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private cd: ChangeDetectorRef,
-              public sideBar: SideBarRefClass) {
+              public sideBar: ComponentRefClass) {
 
   }
 

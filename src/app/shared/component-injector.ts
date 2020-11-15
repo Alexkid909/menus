@@ -1,6 +1,6 @@
 import { Injector, Type, InjectionToken, InjectFlags } from '@angular/core';
 
-export class ModalInjector implements Injector {
+export class ComponentInjector implements Injector {
   constructor(
     private _parentInjector: Injector,
     private _additionalTokens: WeakMap<any, any>
