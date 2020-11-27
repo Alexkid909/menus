@@ -19,6 +19,7 @@ import {
 } from '@angular/animations';
 import {ComponentRefClass} from '../../classes/component-ref.class';
 import {ComponentInsertionDirective} from '../../directives/component-insertion.directive';
+import {ComponentService} from '../../component.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -48,9 +49,9 @@ export class SideBarComponent implements AfterViewInit, OnDestroy, OnInit {
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private cd: ChangeDetectorRef,
-              public sideBar: ComponentRefClass) {
-
-  }
+              public sideBar: ComponentRefClass,
+              public componentService: ComponentService
+  ) {}
 
   ngOnInit(): void {
     this.sideBar.onClose.subscribe((event: any) => {
@@ -59,7 +60,7 @@ export class SideBarComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.loadChildComponent(this.childComponentType);
+    this.componentService.loadChildComponent(this.childComponentType, this.insertionPoint);
     this.cd.detectChanges();
     this.isOpen = true;
   }
@@ -78,14 +79,5 @@ export class SideBarComponent implements AfterViewInit, OnDestroy, OnInit {
 
   onSideBarClicked(event: MouseEvent) {
     event.stopPropagation();
-  }
-
-  loadChildComponent(componentType: Type<any>) {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentType);
-
-    const viewContainerRef = this.insertionPoint.viewContainerRef;
-    viewContainerRef.clear();
-
-    this.componentRef = viewContainerRef.createComponent(componentFactory);
   }
 }

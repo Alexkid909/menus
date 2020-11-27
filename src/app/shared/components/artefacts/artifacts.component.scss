@@ -105,7 +105,7 @@ $diameter: 2rem;
   }
 
   ::ng-deep {
-    .tool-bar-container {
+    .tool-bar-functions-container {
       &.toolbar-artifact {
         background-color: transparent;
       }
@@ -186,7 +186,7 @@ $diameter: 2rem;
 
     ::ng-deep {
 
-      .tool-bar-container {
+      .tool-bar-functions-container {
         &.toolbar-artifacts {
           background-color: transparent;
           position: fixed;

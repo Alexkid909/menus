@@ -11,6 +11,7 @@ import {
 import {ComponentConfig} from './component.config';
 import {ComponentInjector} from './component-injector';
 import {ComponentRefClass} from './classes/component-ref.class';
+import {ComponentInsertionDirective} from './directives/component-insertion.directive';
 
 @Injectable({
   providedIn: 'root'
@@ -61,5 +62,14 @@ export class ComponentService {
     this.componentRef.instance.childComponentType = childComponentType;
 
     return componentRef;
+  }
+
+  public loadChildComponent(componentType: Type<any>, insertionPoint: ComponentInsertionDirective) {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentType);
+
+    const viewContainerRef = insertionPoint.viewContainerRef;
+    viewContainerRef.clear();
+
+    this.componentRef = viewContainerRef.createComponent(componentFactory);
   }
 }

@@ -11,6 +11,7 @@ import {
 import {ComponentInsertionDirective} from '../../directives/component-insertion.directive';
 import {ComponentRefClass} from '../../classes/component-ref.class';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {ComponentService} from '../../component.service';
 
 @Component({
   selector: 'app-modal',
@@ -43,7 +44,8 @@ export class ModalComponent implements AfterViewInit, OnDestroy, OnInit {
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private cd: ChangeDetectorRef,
-              public modal: ComponentRefClass
+              public modal: ComponentRefClass,
+              private componentService: ComponentService
   ) {
     this.modal.onClose.subscribe(() => {
       this.isVisible = false;
@@ -60,7 +62,7 @@ export class ModalComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.loadChildComponent(this.childComponentType);
+    this.componentService.loadChildComponent(this.childComponentType, this.insertionPoint);
     this.cd.detectChanges();
   }
 

@@ -6,7 +6,7 @@
 //@import '@fortawesome/fontawesome-free/scss/variables';
 //@import '@fortawesome/fontawesome-free/scss/mixins';
 
-.tool-bar-container {
+.tool-bar-functions-container {
   background-color: transparentize($paleGray, 0.1);
   padding: .75rem .5rem;
 
@@ -29,7 +29,7 @@
 
 
 @include media-breakpoint-down(md) {
-  .tool-bar-container {
+  .tool-bar-functions-container {
     &.tool-bar-responsive {
       .tool-bar-item {
         margin: .5rem;
