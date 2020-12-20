@@ -17,9 +17,9 @@ import {
   animate,
   transition,
 } from '@angular/animations';
-import {ComponentRefClass} from '../../classes/component-ref.class';
 import {ComponentInsertionDirective} from '../../directives/component-insertion.directive';
 import {ComponentService} from '../../component.service';
+import {ModalRefClass} from '../../classes/modal-ref.class';
 
 @Component({
   selector: 'app-side-bar',
@@ -44,12 +44,13 @@ export class SideBarComponent implements AfterViewInit, OnDestroy, OnInit {
   @Input() title: string;
   @Output() onSideBarClose: EventEmitter<boolean> = new EventEmitter(false);
   isOpen = true;
+  childComponentRef: ComponentRef<any>;
 
   @ViewChild(ComponentInsertionDirective) insertionPoint: ComponentInsertionDirective;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private cd: ChangeDetectorRef,
-              public sideBar: ComponentRefClass,
+              public sideBar: ModalRefClass,
               public componentService: ComponentService
   ) {}
 
@@ -60,7 +61,7 @@ export class SideBarComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.componentService.loadChildComponent(this.childComponentType, this.insertionPoint);
+    this.childComponentRef = this.componentService.loadChildComponent(this.childComponentType, this.insertionPoint);
     this.cd.detectChanges();
     this.isOpen = true;
   }

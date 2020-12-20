@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ComponentConfig} from '../../component.config';
-import {ComponentRefClass} from '../../classes/component-ref.class';
+import {ModalRefClass} from '../../classes/modal-ref.class';
 
 
 @Component({
@@ -10,8 +10,7 @@ import {ComponentRefClass} from '../../classes/component-ref.class';
 })
 export class SideBarDialogComponent implements OnInit {
 
-  constructor(public config: ComponentConfig, public sideBar: ComponentRefClass) { }
-
+  constructor(public config: ComponentConfig, public sideBar: ModalRefClass) { }
 
   ngOnInit() {
   }

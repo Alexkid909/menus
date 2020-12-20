@@ -4,13 +4,11 @@ import {
   ApplicationRef,
   Injector,
   EmbeddedViewRef,
-  ComponentRef, Type
+  ComponentRef, Type, ViewContainerRef
 } from '@angular/core';
 
-// import {ModalComponent} from './components/modal/modal.component';
 import {ComponentConfig} from './component.config';
 import {ComponentInjector} from './component-injector';
-import {ComponentRefClass} from './classes/component-ref.class';
 import {ComponentInsertionDirective} from './directives/component-insertion.directive';
 
 @Injectable({
@@ -19,36 +17,47 @@ import {ComponentInsertionDirective} from './directives/component-insertion.dire
 
 export class ComponentService {
   componentRef: ComponentRef<any>;
+  childComponentRef: ComponentRef<any>;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private appRef: ApplicationRef,
               private injector: Injector
   ) {}
 
-  appendModalComponentToBody(config: ComponentConfig, componentClass: any) {
+  appendComponentToTarget(
+    ComponentClass: any,
+    ComponentRefClass: any,
+    componentConfig: ComponentConfig,
+    targetComponentRef?: ViewContainerRef
+  ) {
     const map = new WeakMap();
-    map.set(ComponentConfig, config);
+    map.set(ComponentConfig, componentConfig);
 
-    const modalRef = new ComponentRefClass();
-    map.set(ComponentRefClass, modalRef);
+    const componentRefClass = new ComponentRefClass();
 
-    const sub = modalRef.afterClosed.subscribe(() => {
+    map.set(ComponentRefClass, componentRefClass);
+
+    const sub = componentRefClass.afterClosed.subscribe(() => {
       this.removeModalComponentFromBody();
       sub.unsubscribe();
     });
 
 
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentClass);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ComponentClass);
     const componentRef = componentFactory.create(new ComponentInjector(this.injector, map));
     const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
 
-    this.appRef.attachView(componentRef.hostView);
+    if (targetComponentRef) {
+      targetComponentRef.insert(componentRef.hostView);
+    } else {
+      this.appRef.attachView(componentRef.hostView);
+    }
 
     document.body.appendChild(domElem);
 
     this.componentRef = componentRef;
 
-    return modalRef;
+    return componentRefClass;
   }
 
   private removeModalComponentFromBody() {
@@ -56,10 +65,10 @@ export class ComponentService {
     this.componentRef.destroy();
   }
 
-  public open(componentType: Type<any>, childComponentType: Type<any>, config: ComponentConfig) {
-    const componentRef = this.appendModalComponentToBody(config, componentType);
+  public addNewComponent(ComponentClass: Type<any>, ComponentRefClass: Type<any>, ChildComponentClass: Type<any>, config: ComponentConfig) {
+    const componentRef = this.appendComponentToTarget(ComponentClass, ComponentRefClass, config);
 
-    this.componentRef.instance.childComponentType = childComponentType;
+    this.componentRef.instance.childComponentType = ChildComponentClass;
 
     return componentRef;
   }
@@ -70,6 +79,7 @@ export class ComponentService {
     const viewContainerRef = insertionPoint.viewContainerRef;
     viewContainerRef.clear();
 
-    this.componentRef = viewContainerRef.createComponent(componentFactory);
+    this.childComponentRef = viewContainerRef.createComponent(componentFactory);
+    return this.childComponentRef;
   }
 }

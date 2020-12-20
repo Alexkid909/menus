@@ -9,13 +9,13 @@ import {CrudStateEnum} from '../../../shared/enums/crud-state.enum';
 import {ToolBarFunctionClass} from '../../../shared/classes/tool-bar-function.class';
 import {TenantInterface} from '../../../shared/interfaces/tenant.interface';
 import {TenantClass} from '../../classes/tenant.interface';
-import {ComponentService} from '../../../shared/component.service';
 import {ConfirmDialogComponent} from '../../../shared/confirm-dialog/confirm-dialog.component';
 import {ComponentConfig} from '../../../shared/component.config';
-import {SideBarDialogComponent} from '../../../shared/components/side-bar-dialog/side-bar-dialog.component';
-import {ComponentRefClass} from '../../../shared/classes/component-ref.class';
-import {SideBarComponent} from '../../../shared/components/side-bar/side-bar.component';
+import {ModalRefClass} from '../../../shared/classes/modal-ref.class';
 import {ModalComponent} from '../../../shared/components/modal/modal.component';
+import {SideBarService} from '../../../shared/side-bar.service';
+import {ModalService} from '../../../shared/modal.service';
+import {SideBarDialogComponent} from '../../../shared/components/side-bar-dialog/side-bar-dialog.component';
 
 @Component({
   selector: 'app-tenants',
@@ -36,12 +36,12 @@ export class TenantsComponent implements OnInit {
   deleteButtonFunction: ToolBarFunctionClass;
   currentTenantId: string;
   sideBarConfig: ComponentConfig;
-  sideBar: ComponentRefClass;
   loading: boolean;
 
 
   constructor(private tenantsService: TenantsService,
-              private componentService: ComponentService) {
+              private sideBarService: SideBarService,
+              private modalService: ModalService) {
     this.saveTenant = this.saveTenant.bind(this);
   }
 
@@ -119,13 +119,13 @@ export class TenantsComponent implements OnInit {
 
   showCreate() {
     this.updateSidebar(CrudStateEnum.create);
-    this.sideBar = this.componentService.open(SideBarComponent, SideBarDialogComponent, this.sideBarConfig);
+    this.sideBarService.showSideBar(SideBarDialogComponent, this.sideBarConfig);
   }
 
   showEdit(tenant) {
     this.updateSidebar(CrudStateEnum.edit, tenant);
     this.currentTenantId = tenant._id;
-    this.sideBar = this.componentService.open(SideBarComponent, SideBarDialogComponent, this.sideBarConfig);
+    this.sideBarService.showSideBar(SideBarDialogComponent, this.sideBarConfig);
   }
 
   setCrudState(state: CrudStateEnum) {
@@ -163,7 +163,7 @@ export class TenantsComponent implements OnInit {
     return this.tenantsService.createTenant(tenant).subscribe(() => {
       this.tenantFormInProgress = false;
       this.tenantFormSuccessful = true;
-      this.sideBar.close();
+      this.sideBarService.closeSideBar();
     }, (errorResponse: any) => {
       this.tenantFormErrors = errorResponse.error.messages;
       this.tenantFormInProgress = false;
@@ -177,7 +177,7 @@ export class TenantsComponent implements OnInit {
     return this.tenantsService.updateTenant(tenantId, updatedTenant).subscribe(() => {
       this.tenantFormInProgress = false;
       this.tenantFormSuccessful = true;
-      this.sideBar.close();
+      this.sideBarService.closeSideBar();
     }, (errorResponse: any) => {
       this.tenantFormErrors = errorResponse.error.messages;
       this.tenantFormInProgress = false;
@@ -195,7 +195,7 @@ export class TenantsComponent implements OnInit {
         confirmationData: tenant._id
       }
     };
-    this.componentService.open(ModalComponent, ConfirmDialogComponent, config);
+    this.modalService.showNewModal(ModalComponent, ModalRefClass, ConfirmDialogComponent, config);
   }
 
   deleteTenant(tenantId: string) {

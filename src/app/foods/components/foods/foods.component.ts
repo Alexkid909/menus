@@ -13,9 +13,9 @@ import {ComponentConfig} from '../../../shared/component.config';
 import { FoodInterface } from '../../../shared/interfaces/food.interface';
 import {FoodClass} from '../../classes/food.class';
 import {SideBarDialogComponent} from '../../../shared/components/side-bar-dialog/side-bar-dialog.component';
-import {ComponentRefClass} from '../../../shared/classes/component-ref.class';
-import {SideBarComponent} from '../../../shared/components/side-bar/side-bar.component';
+import {ModalRefClass} from '../../../shared/classes/modal-ref.class';
 import {ModalComponent} from '../../../shared/components/modal/modal.component';
+import {SideBarService} from '../../../shared/side-bar.service';
 
 @Component({
   selector: 'app-foods',
@@ -37,12 +37,13 @@ export class FoodsComponent implements OnInit {
   deleteButtonFunction: ToolBarFunctionClass;
   currentFoodId: string;
   sideBarConfig: ComponentConfig;
-  sideBar: ComponentRefClass;
+  sideBar: ModalRefClass;
   loading: boolean;
 
 
   constructor(public componentService: ComponentService,
-              private foodsService: FoodsService) {
+              private foodsService: FoodsService,
+              private sideBarService: SideBarService) {
     this.saveFood = this.saveFood.bind(this);
     this.loading = true;
   }
@@ -127,13 +128,13 @@ export class FoodsComponent implements OnInit {
 
   showCreate() {
     this.updateSidebar(CrudStateEnum.create);
-    this.sideBar = this.componentService.open(SideBarComponent, SideBarDialogComponent, this.sideBarConfig);
+    this.sideBarService.showSideBar(SideBarDialogComponent, this.sideBarConfig);
   }
 
   showEdit(food) {
     this.updateSidebar(CrudStateEnum.edit, food);
     this.currentFoodId = food._id;
-    this.sideBar = this.componentService.open(SideBarComponent, SideBarDialogComponent, this.sideBarConfig);
+    this.sideBarService.showSideBar(SideBarDialogComponent, this.sideBarConfig);
   }
 
   setCrudState(state: CrudStateEnum) {
@@ -203,7 +204,7 @@ export class FoodsComponent implements OnInit {
         confirmationData: food._id
       }
     };
-    this.componentService.open(ModalComponent, ConfirmDialogComponent, config);
+    this.componentService.addNewComponent(ModalComponent, ModalRefClass, ConfirmDialogComponent, config);
   }
 
   deleteFood(foodId: string) {

@@ -9,7 +9,7 @@ import {
   ChangeDetectorRef, OnInit
 } from '@angular/core';
 import {ComponentInsertionDirective} from '../../directives/component-insertion.directive';
-import {ComponentRefClass} from '../../classes/component-ref.class';
+import {ModalRefClass} from '../../classes/modal-ref.class';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ComponentService} from '../../component.service';
 
@@ -44,7 +44,7 @@ export class ModalComponent implements AfterViewInit, OnDestroy, OnInit {
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private cd: ChangeDetectorRef,
-              public modal: ComponentRefClass,
+              public modal: ModalRefClass,
               private componentService: ComponentService
   ) {
     this.modal.onClose.subscribe(() => {
