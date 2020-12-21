@@ -12,9 +12,15 @@ export class SideBarService {
 
   constructor(private modalService: ModalService) { }
 
-  showSideBar(ChildComponent, sideBarConfig) {
+  showSideBar(ChildComponent, sideBarConfig, targetComponentRef?) {
     const show = () => {
-      this.sideBar = this.modalService.showNewModal(SideBarComponent, ModalRefClass, ChildComponent, sideBarConfig);
+      this.sideBar = this.modalService.showNewModal(
+        SideBarComponent,
+        ModalRefClass,
+        ChildComponent,
+        sideBarConfig,
+        targetComponentRef
+      );
     };
 
     if (!this.sideBar || this.sideBar.isClosed) {

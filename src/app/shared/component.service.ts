@@ -16,8 +16,9 @@ import {ComponentInsertionDirective} from './directives/component-insertion.dire
 })
 
 export class ComponentService {
-  componentRef: ComponentRef<any>;
+  component: ComponentRef<any>;
   childComponentRef: ComponentRef<any>;
+  targetViewContainerRef: ViewContainerRef;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private appRef: ApplicationRef,
@@ -26,51 +27,61 @@ export class ComponentService {
 
   appendComponentToTarget(
     ComponentClass: any,
-    ComponentRefClass: any,
+    componentRef: any,
     componentConfig: ComponentConfig,
-    targetComponentRef?: ViewContainerRef
   ) {
     const map = new WeakMap();
     map.set(ComponentConfig, componentConfig);
 
-    const componentRefClass = new ComponentRefClass();
-
-    map.set(ComponentRefClass, componentRefClass);
-
-    const sub = componentRefClass.afterClosed.subscribe(() => {
-      this.removeModalComponentFromBody();
-      sub.unsubscribe();
-    });
-
+    map.set(componentRef.constructor, componentRef);
 
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ComponentClass);
-    const componentRef = componentFactory.create(new ComponentInjector(this.injector, map));
-    const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+    const component = componentFactory.create(new ComponentInjector(this.injector, map));
+    const domElem = (component.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+    let targetEl;
 
-    if (targetComponentRef) {
-      targetComponentRef.insert(componentRef.hostView);
+
+    if (this.targetViewContainerRef) {
+      this.targetViewContainerRef.insert(component.hostView);
+      targetEl = this.targetViewContainerRef.element.nativeElement;
     } else {
-      this.appRef.attachView(componentRef.hostView);
+      this.appRef.attachView(component.hostView);
+      targetEl = document.body;
     }
 
-    document.body.appendChild(domElem);
+    targetEl.appendChild(domElem);
 
-    this.componentRef = componentRef;
-
-    return componentRefClass;
-  }
-
-  private removeModalComponentFromBody() {
-    this.appRef.detachView(this.componentRef.hostView);
-    this.componentRef.destroy();
-  }
-
-  public addNewComponent(ComponentClass: Type<any>, ComponentRefClass: Type<any>, ChildComponentClass: Type<any>, config: ComponentConfig) {
-    const componentRef = this.appendComponentToTarget(ComponentClass, ComponentRefClass, config);
-
-    this.componentRef.instance.childComponentType = ChildComponentClass;
+    this.component = component;
 
     return componentRef;
+  }
+
+  public removeModalComponentFromBody() {
+    if (this.targetViewContainerRef) {
+      this.targetViewContainerRef.detach(0);
+    } else {
+      this.appRef.detachView(this.component.hostView);
+    }
+    this.component.destroy();
+  }
+
+  private setTargetViewContainerRef(viewContainerRef) {
+      this.targetViewContainerRef = viewContainerRef;
+  }
+
+  public addNewComponent(
+    ComponentClass: Type<any>,
+    componentRef: Type<any>,
+    ChildComponentClass: Type<any>,
+    config: ComponentConfig,
+    targetComponentRef?: ViewContainerRef
+  ) {
+    if (targetComponentRef) { this.setTargetViewContainerRef(targetComponentRef); }
+    const component = this.appendComponentToTarget(ComponentClass, componentRef, config);
+
+    this.component.instance.childComponentType = ChildComponentClass;
+
+    return component;
   }
 
   public loadChildComponent(componentType: Type<any>, insertionPoint: ComponentInsertionDirective) {

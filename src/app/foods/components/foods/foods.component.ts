@@ -7,7 +7,6 @@ import {FormActionClass} from '../../../shared/classes/form-action.class';
 import {FormFieldType} from '../../../shared/enums/form-field-type.enum';
 import {CrudStateEnum} from '../../../shared/enums/crud-state.enum';
 import {ToolBarFunctionClass} from '../../../shared/classes/tool-bar-function.class';
-import {ComponentService} from '../../../shared/component.service';
 import {ConfirmDialogComponent} from '../../../shared/confirm-dialog/confirm-dialog.component';
 import {ComponentConfig} from '../../../shared/component.config';
 import { FoodInterface } from '../../../shared/interfaces/food.interface';
@@ -16,6 +15,7 @@ import {SideBarDialogComponent} from '../../../shared/components/side-bar-dialog
 import {ModalRefClass} from '../../../shared/classes/modal-ref.class';
 import {ModalComponent} from '../../../shared/components/modal/modal.component';
 import {SideBarService} from '../../../shared/side-bar.service';
+import {ModalService} from '../../../shared/modal.service';
 
 @Component({
   selector: 'app-foods',
@@ -41,7 +41,7 @@ export class FoodsComponent implements OnInit {
   loading: boolean;
 
 
-  constructor(public componentService: ComponentService,
+  constructor(public modalService: ModalService,
               private foodsService: FoodsService,
               private sideBarService: SideBarService) {
     this.saveFood = this.saveFood.bind(this);
@@ -204,7 +204,7 @@ export class FoodsComponent implements OnInit {
         confirmationData: food._id
       }
     };
-    this.componentService.addNewComponent(ModalComponent, ModalRefClass, ConfirmDialogComponent, config);
+    this.modalService.showNewModal(ModalComponent, ModalRefClass, ConfirmDialogComponent, config);
   }
 
   deleteFood(foodId: string) {

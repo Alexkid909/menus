@@ -7,7 +7,6 @@ import {FormActionClass} from '../../../shared/classes/form-action.class';
 import {FormFieldType} from '../../../shared/enums/form-field-type.enum';
 import {CrudStateEnum} from '../../../shared/enums/crud-state.enum';
 import {ToolBarFunctionClass} from '../../../shared/classes/tool-bar-function.class';
-import {ComponentService} from '../../../shared/component.service';
 import {ConfirmDialogComponent} from '../../../shared/confirm-dialog/confirm-dialog.component';
 import {MealInterface} from '../../../shared/interfaces/meal.interface';
 import {Order, SortOrder} from '../../../shared/classes/sort-order';
@@ -20,6 +19,7 @@ import {MealsDialogComponent} from '../meals-dialog/meals-dialog.component';
 import {ModalRefClass} from '../../../shared/classes/modal-ref.class';
 import {ModalComponent} from '../../../shared/components/modal/modal.component';
 import {SideBarService} from '../../../shared/side-bar.service';
+import {ModalService} from '../../../shared/modal.service';
 
 @Component({
   selector: 'app-meals',
@@ -48,7 +48,7 @@ export class MealsComponent implements OnInit, OnDestroy {
   sortKeys: Array<SortOrder> = [];
   currentSortOrder: SortOrder;
 
-  constructor(public componentService: ComponentService,
+  constructor(public modalService: ModalService,
               private mealsService: MealsService,
               private formService: FormService,
               private sideBarService: SideBarService,
@@ -223,7 +223,7 @@ export class MealsComponent implements OnInit, OnDestroy {
 
   initiateDelete(event: Event, meal: MealInterface) {
     event.stopPropagation();
-    const modalConfig: ComponentConfig = {
+    const config: ComponentConfig = {
       data: {
         title: `Delete ${meal.name}?`,
         message: `Are you sure you want to delete ${meal.name}?`,
@@ -231,7 +231,7 @@ export class MealsComponent implements OnInit, OnDestroy {
         confirmationData: meal._id
       }
     };
-    this.componentService.addNewComponent(ModalComponent, ModalRefClass, ConfirmDialogComponent, modalConfig);
+    this.modalService.showNewModal(ModalComponent, ModalRefClass, ConfirmDialogComponent, config);
   }
 
   deleteMeal(mealId: string) {
