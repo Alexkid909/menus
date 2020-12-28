@@ -1,6 +1,6 @@
 export enum Order {
-  Asc = -1,
-  Des = 1,
+  Asc = 1,
+  Des = -1,
 }
 
 export class SortOrder {

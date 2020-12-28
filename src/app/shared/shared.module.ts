@@ -53,7 +53,8 @@ import { SortComponent } from './components/sort/sort.component';
     ArtifactsComponent,
     SearchComponent,
     ArtifactSubItemComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    SortComponent,
   ],
   providers: [
     ComponentService,

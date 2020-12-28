@@ -6,12 +6,6 @@
 //@import '@fortawesome/fontawesome-free/scss/variables';
 //@import '@fortawesome/fontawesome-free/scss/mixins';
 
-.tool-bar-functions-container {
-  background-color: transparentize($paleGray, 0.1);
-  padding: .75rem .5rem;
-
-}
-
 .tool-bar-list {
   margin-bottom: 0;
   padding: 0;
@@ -46,4 +40,27 @@
       }
     }
   }
+
+  .tool-bar-sort-container {
+    padding: 0.75rem;
+    background-color: black;
+  }
 }
+
+@include media-breakpoint-up(md) {
+  .tool-bar-container {
+    display: flex;
+    align-content: stretch;
+    background-color: transparentize($paleGray, 0.1);
+    padding: .75rem .5rem;
+    > div {
+      flex-basis: 50%;
+    }
+  }
+
+  .tool-bar-sort-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+

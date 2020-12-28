@@ -25,10 +25,11 @@ export class ComponentService {
               private injector: Injector
   ) {}
 
-  appendComponentToTarget(
+  public appendComponentToTarget(
     ComponentClass: any,
     componentRef: any,
     componentConfig: ComponentConfig,
+    viewContainerRef?: ViewContainerRef
   ) {
     const map = new WeakMap();
     map.set(ComponentConfig, componentConfig);
@@ -41,7 +42,8 @@ export class ComponentService {
     let targetEl;
 
 
-    if (this.targetViewContainerRef) {
+    if (viewContainerRef) {
+      this.targetViewContainerRef = viewContainerRef;
       this.targetViewContainerRef.insert(component.hostView);
       targetEl = this.targetViewContainerRef.element.nativeElement;
     } else {
@@ -65,20 +67,14 @@ export class ComponentService {
     this.component.destroy();
   }
 
-  private setTargetViewContainerRef(viewContainerRef) {
-      this.targetViewContainerRef = viewContainerRef;
-  }
-
   public addNewComponent(
     ComponentClass: Type<any>,
-    componentRef: Type<any>,
+    componentRef: any,
     ChildComponentClass: Type<any>,
     config: ComponentConfig,
-    targetComponentRef?: ViewContainerRef
+    targetComponentRef?: ViewContainerRef,
   ) {
-    if (targetComponentRef) { this.setTargetViewContainerRef(targetComponentRef); }
-    const component = this.appendComponentToTarget(ComponentClass, componentRef, config);
-
+    const component = this.appendComponentToTarget(ComponentClass, componentRef, config, targetComponentRef);
     this.component.instance.childComponentType = ChildComponentClass;
 
     return component;

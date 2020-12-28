@@ -204,7 +204,7 @@ export class FoodsComponent implements OnInit {
         confirmationData: food._id
       }
     };
-    this.modalService.showNewModal(ModalComponent, ModalRefClass, ConfirmDialogComponent, config);
+    this.modalService.showNewModal(ModalComponent, ConfirmDialogComponent, config);
   }
 
   deleteFood(foodId: string) {

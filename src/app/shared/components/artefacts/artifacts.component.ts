@@ -32,6 +32,7 @@ export class ArtifactsComponent implements OnInit, OnChanges {
   @Output() artifactClicked: EventEmitter<any> = new EventEmitter<any>();
   @Input() loading: boolean;
   @Input() sortKeys: Array<SortOrder>;
+  @Input() showToolbar = true;
   loaderTimeout: any;
 
   constructor(private spinner: NgxSpinnerService) {}
@@ -41,10 +42,12 @@ export class ArtifactsComponent implements OnInit, OnChanges {
       if (this.loading) {
         this.loaderTimeout = setTimeout(() => {
           this.spinner.show();
-        }, 200);
+        }, 150);
       } else {
         clearTimeout(this.loaderTimeout);
-        this.spinner.hide();
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 100);
       }
     }
     console.log('this.sortKeys', this.sortKeys);

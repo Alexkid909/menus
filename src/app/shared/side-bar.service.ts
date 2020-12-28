@@ -16,7 +16,6 @@ export class SideBarService {
     const show = () => {
       this.sideBar = this.modalService.showNewModal(
         SideBarComponent,
-        ModalRefClass,
         ChildComponent,
         sideBarConfig,
         targetComponentRef

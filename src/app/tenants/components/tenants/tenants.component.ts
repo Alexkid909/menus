@@ -195,7 +195,7 @@ export class TenantsComponent implements OnInit {
         confirmationData: tenant._id
       }
     };
-    this.modalService.showNewModal(ModalComponent, ModalRefClass, ConfirmDialogComponent, config);
+    this.modalService.showNewModal(ModalComponent, ConfirmDialogComponent, config);
   }
 
   deleteTenant(tenantId: string) {
