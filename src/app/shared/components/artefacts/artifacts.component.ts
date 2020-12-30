@@ -5,6 +5,7 @@ import {FormFieldGroupClass} from '../../classes/form-field-group.class';
 import {FormActionClass} from '../../classes/form-action.class';
 import { ToolBarFunctionClass} from '../../classes/tool-bar-function.class';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {SortOrder} from '../../classes/sort-order';
 
 @Component({
   selector: 'app-artifacts',
@@ -30,6 +31,8 @@ export class ArtifactsComponent implements OnInit, OnChanges {
   @Input() currentArtifactId: string;
   @Output() artifactClicked: EventEmitter<any> = new EventEmitter<any>();
   @Input() loading: boolean;
+  @Input() sortKeys: Array<SortOrder>;
+  @Input() showToolbar = true;
   loaderTimeout: any;
 
   constructor(private spinner: NgxSpinnerService) {}
@@ -39,10 +42,12 @@ export class ArtifactsComponent implements OnInit, OnChanges {
       if (this.loading) {
         this.loaderTimeout = setTimeout(() => {
           this.spinner.show();
-        }, 200);
+        }, 150);
       } else {
         clearTimeout(this.loaderTimeout);
-        this.spinner.hide();
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 100);
       }
     }
   }

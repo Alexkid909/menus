@@ -44,7 +44,7 @@
   flex-wrap: wrap;
 
   ::ng-deep {
-    .tool-bar-container {
+    .tool-bar-functions-container {
       &.toolbar-tenant {
         background-color: transparent;
       }
@@ -131,7 +131,7 @@
 
     ::ng-deep {
 
-      .tool-bar-container {
+      .tool-bar-functions-container {
         &.toolbar-tenants {
           background-color: transparent;
         }

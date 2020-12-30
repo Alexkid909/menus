@@ -1,0 +1,8 @@
+<div class="component component-sort" *ngIf="sortOrders.length > 1">
+  <form [formGroup]="sortForm">
+    <select formControlName="sortOrder" class="custom-select">
+      <option [ngValue]="null" disabled>Please select a sort order</option>
+      <option *ngFor="let key of sortOrders" [ngValue]="key">{{key.label}}</option>
+    </select>
+  </form>
+</div>

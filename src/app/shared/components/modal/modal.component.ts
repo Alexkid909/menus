@@ -8,9 +8,10 @@ import {
   ComponentFactoryResolver,
   ChangeDetectorRef, OnInit
 } from '@angular/core';
-import {ModalInsertionDirective} from '../../directives/modal-insertion.directive';
+import {ComponentInsertionDirective} from '../../directives/component-insertion.directive';
 import {ModalRefClass} from '../../classes/modal-ref.class';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {ComponentService} from '../../component.service';
 
 @Component({
   selector: 'app-modal',
@@ -37,13 +38,14 @@ export class ModalComponent implements AfterViewInit, OnDestroy, OnInit {
   componentRef: ComponentRef<any>;
   childComponentType: Type<any>;
 
-  @ViewChild(ModalInsertionDirective) insertionPoint: ModalInsertionDirective;
+  @ViewChild(ComponentInsertionDirective) insertionPoint: ComponentInsertionDirective;
   isVisible = true;
 
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private cd: ChangeDetectorRef,
-              public modal: ModalRefClass
+              public modal: ModalRefClass,
+              private componentService: ComponentService
   ) {
     this.modal.onClose.subscribe(() => {
       this.isVisible = false;
@@ -60,7 +62,7 @@ export class ModalComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.loadChildComponent(this.childComponentType);
+    this.componentService.loadChildComponent(this.childComponentType, this.insertionPoint);
     this.cd.detectChanges();
   }
 
@@ -76,15 +78,6 @@ export class ModalComponent implements AfterViewInit, OnDestroy, OnInit {
 
   onModalClicked(event: MouseEvent) {
     event.stopPropagation();
-  }
-
-  loadChildComponent(componentType: Type<any>) {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentType);
-
-    const viewContainerRef = this.insertionPoint.viewContainerRef;
-    viewContainerRef.clear();
-
-    this.componentRef = viewContainerRef.createComponent(componentFactory);
   }
 
 }

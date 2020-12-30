@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import { BehaviorSubject} from 'rxjs';
 import { MealClass } from './classes/meal.class';
@@ -11,6 +11,7 @@ import {NotificationsService} from '../shared/notifications.service';
 import {ErrorService} from '../shared/error.service';
 import {Notification} from '../shared/classes/notification';
 import {NotificationType} from '../shared/interfaces/notification';
+import {SortOrder} from '../shared/classes/sort-order';
 
 @Injectable()
 export class MealsService {
@@ -21,6 +22,7 @@ export class MealsService {
   mealsBehaviorSubject: BehaviorSubject<MealInterface[]>;
   meal: MealInterface;
   mealSubject: BehaviorSubject<MealInterface>;
+  sortOrder: SortOrder;
 
 
   constructor(private http: HttpClient,
@@ -37,7 +39,14 @@ export class MealsService {
   }
 
   private getMeals() {
-    this.http.get(`${this.apiUrl}${this.resource}`).subscribe((response: any) => {
+    let params = new HttpParams();
+
+    if (this.sortOrder) {
+      params = params
+        .set('sortKey', this.sortOrder.key)
+        .set('sortOrder', this.sortOrder.order.toString());
+    }
+    this.http.get(`${this.apiUrl}${this.resource}`, { params }).subscribe((response: any) => {
       this.meals = response.data;
       this.broadcastMeals();
     });
@@ -110,5 +119,10 @@ export class MealsService {
   getMealFoods(mealId: string) {
     const callUrl = `${this.apiUrl}${this.resource}/${mealId}/foods`;
     return this.http.get(callUrl).pipe(catchError(this.errorService.handleError));
+  }
+
+  sortMeals(sortOrder: SortOrder) {
+    this.sortOrder = sortOrder;
+    this.getMeals();
   }
 }

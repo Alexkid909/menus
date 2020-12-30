@@ -1,8 +1,21 @@
 <app-artifacts
   [artifactName]="'food'"
-  [toolbarFunctions]="toolbarFunctions"
   [artifacts]="userFoods"
   [deleteButtonFunction]="deleteButtonFunction"
   (artifactClicked)="showEdit($event)"
   [loading]="loading"
-></app-artifacts>
+  [showToolbar]="false"
+>
+  <app-tool-bar
+    zone-header
+    [toolbarClasses]="'toolbar-artifacts toolbar-food'"
+    [isResponsive]="true"
+    [tools]="toolbarFunctions"
+  >
+    <app-sort
+      zone-sort-container
+      [sortOrders]="sortKeys"
+      (sortSelected)="sortFoods($event)" >
+    </app-sort>
+  </app-tool-bar>
+</app-artifacts>

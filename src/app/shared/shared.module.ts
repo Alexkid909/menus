@@ -6,9 +6,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { ToolBarComponent } from './components/tool-bar/tool-bar.component';
 import { ArtifactsComponent} from './components/artefacts/artifacts.component';
-import {SideBarService} from './side-bar.service';
 import { ModalComponent } from './components/modal/modal.component';
-import {ModalService} from './modal.service';
+import { ComponentService } from './component.service';
+import {ComponentInsertionDirective} from './directives/component-insertion.directive';
 import { ModalInsertionDirective } from './directives/modal-insertion.directive';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { SearchComponent } from './components/search/search.component';
@@ -19,6 +19,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { NotificationsService } from './notifications.service';
 import { NotificationComponent } from './components/notification/notification.component';
+import { SortComponent } from './components/sort/sort.component';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { NotificationComponent } from './components/notification/notification.co
     ToolBarComponent,
     ArtifactsComponent,
     ModalComponent,
+    SortComponent,
     ModalInsertionDirective,
     ConfirmDialogComponent,
     SearchComponent,
@@ -42,6 +44,7 @@ import { NotificationComponent } from './components/notification/notification.co
     SideBarDialogComponent,
     NotificationsComponent,
     NotificationComponent,
+    ComponentInsertionDirective,
   ],
   exports: [
     ButtonComponent,
@@ -50,12 +53,12 @@ import { NotificationComponent } from './components/notification/notification.co
     ArtifactsComponent,
     SearchComponent,
     ArtifactSubItemComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    SortComponent,
   ],
   providers: [
-    SideBarService,
-    ModalService,
-    NotificationsService
+    ComponentService,
+    NotificationsService,
   ],
   entryComponents: [
     ModalComponent,

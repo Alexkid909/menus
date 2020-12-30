@@ -17,8 +17,9 @@ import {
   animate,
   transition,
 } from '@angular/animations';
-import {SideBarRefClass} from '../../classes/side-bar-ref.class';
-import {SideBarInsertionDirective} from '../../directives/side-bar-insertion.directive';
+import {ComponentInsertionDirective} from '../../directives/component-insertion.directive';
+import {ComponentService} from '../../component.service';
+import {ModalRefClass} from '../../classes/modal-ref.class';
 
 @Component({
   selector: 'app-side-bar',
@@ -43,14 +44,15 @@ export class SideBarComponent implements AfterViewInit, OnDestroy, OnInit {
   @Input() title: string;
   @Output() onSideBarClose: EventEmitter<boolean> = new EventEmitter(false);
   isOpen = true;
+  childComponentRef: ComponentRef<any>;
 
-  @ViewChild(SideBarInsertionDirective) insertionPoint: SideBarInsertionDirective;
+  @ViewChild(ComponentInsertionDirective) insertionPoint: ComponentInsertionDirective;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private cd: ChangeDetectorRef,
-              public sideBar: SideBarRefClass) {
-
-  }
+              public sideBar: ModalRefClass,
+              public componentService: ComponentService
+  ) {}
 
   ngOnInit(): void {
     this.sideBar.onClose.subscribe((event: any) => {
@@ -59,7 +61,7 @@ export class SideBarComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.loadChildComponent(this.childComponentType);
+    this.childComponentRef = this.componentService.loadChildComponent(this.childComponentType, this.insertionPoint);
     this.cd.detectChanges();
     this.isOpen = true;
   }
@@ -78,14 +80,5 @@ export class SideBarComponent implements AfterViewInit, OnDestroy, OnInit {
 
   onSideBarClicked(event: MouseEvent) {
     event.stopPropagation();
-  }
-
-  loadChildComponent(componentType: Type<any>) {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentType);
-
-    const viewContainerRef = this.insertionPoint.viewContainerRef;
-    viewContainerRef.clear();
-
-    this.componentRef = viewContainerRef.createComponent(componentFactory);
   }
 }
