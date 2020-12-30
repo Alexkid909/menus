@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Notification as NotificationInterface, NotificationType} from './interfaces/notification';
-import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import {Notification} from './classes/notification';
 
 

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs/internal/Observable';
+import {Observable} from 'rxjs';
 import {RegistrationClass} from './classes/registration.class';
-import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
+import {BehaviorSubject} from 'rxjs';
 import { environment } from 'environments/environment';
 
 @Injectable({

@@ -4,7 +4,7 @@ import { FormFieldClass } from '../../interfaces/form-field.class';
 import { FormFieldGroupClass } from '../../classes/form-field-group.class';
 import { FormActionClass } from '../../classes/form-action.class';
 import {FormValues} from '../../classes/form-values.class';
-import {Observable} from 'rxjs/internal/Observable';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-form',

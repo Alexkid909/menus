@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
+import {BehaviorSubject} from 'rxjs';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {TenantClass} from './classes/tenant.interface';
 import {TenantInterface} from '../shared/interfaces/tenant.interface';
-import {combineLatest} from 'rxjs/internal/observable/combineLatest';
-import {Observable} from 'rxjs/internal/Observable';
+import {combineLatest} from 'rxjs';
+import {Observable} from 'rxjs';
 import {AuthService} from '../auth/auth.service';
 import {environment} from '../../environments/environment';
 import {NotificationsService} from '../shared/notifications.service';

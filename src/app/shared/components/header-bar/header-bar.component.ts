@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, HostBinding, OnInit, ViewChild} fr
 import {TenantsService} from '../../../tenants/tenants.service';
 import { TenantInterface } from '../../interfaces/tenant.interface';
 
-import {Observable} from 'rxjs/internal/Observable';
+import {Observable} from 'rxjs';
 import {AuthService} from '../../../auth/auth.service';
 import {SearchComponent} from '../search/search.component';
 

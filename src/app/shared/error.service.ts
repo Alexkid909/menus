@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
-import {throwError} from 'rxjs/internal/observable/throwError';
 import {NotificationsService} from './notifications.service';
-import {NotificationType} from './interfaces/notification';
-import {Notification} from './classes/notification';
-import {catchError} from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Injectable({

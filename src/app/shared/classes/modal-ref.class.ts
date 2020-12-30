@@ -1,5 +1,5 @@
-import {Subject} from 'rxjs/internal/Subject';
-import {Observable} from 'rxjs/internal/Observable';
+import {Subject} from 'rxjs';
+import {Observable} from 'rxjs';
 
 export class ModalRefClass {
   private readonly _afterClosed = new Subject<any>();

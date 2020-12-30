@@ -2,15 +2,14 @@ import {Component, EventEmitter, Output, Input, OnInit, AfterViewInit, ViewChild
 import {FormFieldClass} from '../../../shared/interfaces/form-field.class';
 import {FormFieldGroupClass} from '../../../shared/classes/form-field-group.class';
 import {FormActionClass} from '../../../shared/classes/form-action.class';
-import {Observable} from 'rxjs/internal/Observable';
+import {Observable} from 'rxjs';
 import {FoodInterface} from '../../../shared/interfaces/food.interface';
 import {FoodsService} from '../../../foods/foods.service';
 import {FormFieldType} from '../../../shared/enums/form-field-type.enum';
 import {FormGroup} from '@angular/forms';
 import {FormService} from '../../../form.service';
 import {MealFoodClass} from '../../classes/meal-food.class';
-import {ComponentService} from '../../../shared/component.service';
-import {Subject} from 'rxjs/internal/Subject';
+import {Subject} from 'rxjs';
 import {FormComponent} from '../../../shared/components/form/form.component';
 import {FormValues} from '../../../shared/classes/form-values.class';
 

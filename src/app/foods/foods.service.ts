@@ -5,7 +5,7 @@ import { BehaviorSubject} from 'rxjs';
 import { FoodClass } from './classes/food.class';
 import { FoodInterface } from '../shared/interfaces/food.interface';
 import {TenantsService} from '../tenants/tenants.service';
-import {Observable} from 'rxjs/internal/Observable';
+import {Observable} from 'rxjs';
 import { environment} from '../../environments/environment';
 import {NotificationsService} from '../shared/notifications.service';
 import {ErrorService} from '../shared/error.service';
