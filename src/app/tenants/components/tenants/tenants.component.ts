@@ -11,11 +11,11 @@ import {TenantInterface} from '../../../shared/interfaces/tenant.interface';
 import {TenantClass} from '../../classes/tenant.interface';
 import {ConfirmDialogComponent} from '../../../shared/confirm-dialog/confirm-dialog.component';
 import {ComponentConfig} from '../../../shared/component.config';
-import {ModalRefClass} from '../../../shared/classes/modal-ref.class';
 import {ModalComponent} from '../../../shared/components/modal/modal.component';
 import {SideBarService} from '../../../shared/side-bar.service';
 import {ModalService} from '../../../shared/modal.service';
 import {SideBarDialogComponent} from '../../../shared/components/side-bar-dialog/side-bar-dialog.component';
+import {Order, SortOrder} from '../../../shared/classes/sort-order';
 
 @Component({
   selector: 'app-tenants',
@@ -37,12 +37,13 @@ export class TenantsComponent implements OnInit {
   currentTenantId: string;
   sideBarConfig: ComponentConfig;
   loading: boolean;
-
+  sortKeys: Array<SortOrder> = [];
 
   constructor(private tenantsService: TenantsService,
               private sideBarService: SideBarService,
               private modalService: ModalService) {
     this.saveTenant = this.saveTenant.bind(this);
+    this.setSortKeys();
   }
 
   ngOnInit() {
@@ -203,5 +204,17 @@ export class TenantsComponent implements OnInit {
     }, (errorResponse: any) => {
       // @TODO Implement error handling.
     });
+  }
+
+  setSortKeys() {
+    this.sortKeys.push(
+      new SortOrder('name', 'Name - A to Z', Order.Asc),
+      new SortOrder('name', 'Name - Z to A', Order.Des)
+    );
+  }
+
+  sortTenants(sortOrder: SortOrder) {
+    this.loading = true;
+    this.tenantsService.sortTenants(sortOrder);
   }
 }

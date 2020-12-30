@@ -13,7 +13,7 @@ export class ToolBarComponent {
 
   @Input() tools: Array<ToolBarFunctionClass>;
   @Input() isResponsive = false;
-  @Input() toolbarClasses: Array<string>;
+  @Input() toolbarClasses: string;
   childComponentType: Type<any>;
 
   @ViewChild(ComponentInsertionDirective) insertionPoint: ComponentInsertionDirective;

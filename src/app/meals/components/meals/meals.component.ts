@@ -239,8 +239,7 @@ export class MealsComponent implements OnInit {
     );
   }
 
-  sortMeals(sortOrder) {
-    this.loading = true;
+  sortMeals(sortOrder: SortOrder) {
     this.mealsService.sortMeals(sortOrder);
   }
 }

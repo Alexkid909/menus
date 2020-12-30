@@ -50,7 +50,6 @@ export class ArtifactsComponent implements OnInit, OnChanges {
         }, 100);
       }
     }
-    console.log('this.sortKeys', this.sortKeys);
   }
 
   ngOnInit() {

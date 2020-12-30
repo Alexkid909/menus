@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {TenantClass} from './classes/tenant.interface';
 import {TenantInterface} from '../shared/interfaces/tenant.interface';
@@ -12,6 +12,7 @@ import {NotificationsService} from '../shared/notifications.service';
 import {Notification} from '../shared/classes/notification';
 import {NotificationType} from '../shared/interfaces/notification';
 import {ErrorService} from '../shared/error.service';
+import {SortOrder} from '../shared/classes/sort-order';
 
 @Injectable()
 
@@ -24,6 +25,7 @@ export class TenantsService {
   currentTenantBehaviourSubject: BehaviorSubject<TenantInterface> = new BehaviorSubject(null);
   tenants: Array<TenantInterface> = [];
   tenantsBehaviorSubject: BehaviorSubject<Array<TenantInterface>> = new BehaviorSubject([]);
+  sortOrder: SortOrder;
 
   constructor(private http: HttpClient,
               private authService: AuthService,
@@ -86,7 +88,15 @@ export class TenantsService {
   }
 
   private getUserTenants() {
-    this.http.get(`${this.apiUrl}/user/tenants`).subscribe((response: any) => {
+    let params = new HttpParams();
+
+    if (this.sortOrder) {
+      params = params
+        .set('sortKey', this.sortOrder.key)
+        .set('sortOrder', this.sortOrder.order.toString());
+    }
+
+    this.http.get(`${this.apiUrl}/user/tenants`, { params }).subscribe((response: any) => {
       this.tenants = response.data;
       this.broadcastUserTenants();
     });
@@ -120,5 +130,10 @@ export class TenantsService {
         const notification = new Notification(NotificationType.Success, 'Well done you have deleted the tenant', 'Tenant Deleted');
         this.notificationsService.newNotification(notification);
       }));
+  }
+
+  sortTenants(sortOrder: SortOrder) {
+    this.sortOrder = sortOrder;
+    this.getUserTenants();
   }
 }

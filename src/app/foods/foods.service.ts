@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import { BehaviorSubject} from 'rxjs';
 import { FoodClass } from './classes/food.class';
@@ -11,6 +11,7 @@ import {NotificationsService} from '../shared/notifications.service';
 import {ErrorService} from '../shared/error.service';
 import {Notification} from '../shared/classes/notification';
 import {NotificationType} from '../shared/interfaces/notification';
+import {SortOrder} from '../shared/classes/sort-order';
 
 @Injectable()
 export class FoodsService {
@@ -21,14 +22,7 @@ export class FoodsService {
   foodsBehaviorSubject: BehaviorSubject<FoodInterface[]>;
   food: FoodInterface;
   foodSubject: BehaviorSubject<FoodInterface>;
-
-
-  private getFoods() {
-      this.http.get(`${this.apiUrl}${this.resource}`).subscribe((response: any) => {
-        this.foods = response.data;
-        this.broadcastFoods();
-      });
-  }
+  sortOrder: SortOrder;
 
   constructor(private http: HttpClient,
               private tenantsService: TenantsService,
@@ -40,6 +34,22 @@ export class FoodsService {
     this.apiUrl = environment.apiUrl;
     this.tenantsService.currentTenantIDBehaviourSubject.subscribe((id: string) => {
       if (id) { this.getFoods(); }
+    });
+  }
+
+
+  private getFoods() {
+    let params = new HttpParams();
+
+    if (this.sortOrder) {
+      params = params
+        .set('sortKey', this.sortOrder.key)
+        .set('sortOrder', this.sortOrder.order.toString());
+    }
+
+    this.http.get(`${this.apiUrl}${this.resource}`, { params }).subscribe((response: any) => {
+      this.foods = response.data;
+      this.broadcastFoods();
     });
   }
 
@@ -99,5 +109,10 @@ export class FoodsService {
           this.getFoods();
           return response;
         }));
+  }
+
+  sortFoods(sortOrder: SortOrder) {
+    this.sortOrder = sortOrder;
+    this.getFoods();
   }
 }

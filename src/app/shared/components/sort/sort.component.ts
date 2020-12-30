@@ -14,7 +14,7 @@ export class SortComponent implements OnInit {
 
   sortForm: FormGroup;
   @Input() sortOrders: Array<SortOrder> = [];
-  @Output() sortSelected: EventEmitter<Event> = new EventEmitter<Event>();
+  @Output() sortSelected: EventEmitter<SortOrder> = new EventEmitter<SortOrder>();
 
   ngOnInit(): void {
     this.sortForm = this.fb.group({
@@ -23,7 +23,7 @@ export class SortComponent implements OnInit {
 
     this.sortForm.valueChanges.subscribe((changes) => {
       if (changes.hasOwnProperty('sortOrder') && changes.sortOrder) {
-        this.sortSelected.emit(changes.sortOrder);
+        this.sortSelected.emit(changes.sortOrder as SortOrder);
       }
       console.log('sort form', changes);
     });

@@ -22,7 +22,7 @@ export class MealsService {
   mealsBehaviorSubject: BehaviorSubject<MealInterface[]>;
   meal: MealInterface;
   mealSubject: BehaviorSubject<MealInterface>;
-  mealsSortOrder: SortOrder;
+  sortOrder: SortOrder;
 
 
   constructor(private http: HttpClient,
@@ -41,10 +41,10 @@ export class MealsService {
   private getMeals() {
     let params = new HttpParams();
 
-    if (this.mealsSortOrder) {
+    if (this.sortOrder) {
       params = params
-        .set('sortKey', this.mealsSortOrder.key)
-        .set('sortOrder', this.mealsSortOrder.order.toString());
+        .set('sortKey', this.sortOrder.key)
+        .set('sortOrder', this.sortOrder.order.toString());
     }
     this.http.get(`${this.apiUrl}${this.resource}`, { params }).subscribe((response: any) => {
       this.meals = response.data;
@@ -122,7 +122,7 @@ export class MealsService {
   }
 
   sortMeals(sortOrder: SortOrder) {
-    this.mealsSortOrder = sortOrder;
+    this.sortOrder = sortOrder;
     this.getMeals();
   }
 }

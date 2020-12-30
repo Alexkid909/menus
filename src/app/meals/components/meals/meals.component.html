@@ -1,11 +1,21 @@
 <app-artifacts
-    [artifactName]="'meal'"
-    [toolbarFunctions]="toolbarFunctions"
-    [artifacts]="userMeals"
-    [deleteButtonFunction]="deleteButtonFunction"
-    [currentArtifactId]="currentMealId"
-    (artifactClicked)="showEdit($event)"
-    [loading]="loading"
-    [sortKeys]="sortKeys"
+  [artifactName]="'meal'"
+  [artifacts]="userMeals"
+  [deleteButtonFunction]="deleteButtonFunction"
+  [currentArtifactId]="currentMealId"
+  (artifactClicked)="showEdit($event)"
+  [loading]="loading"
+  [showToolbar]="false"
+>
+  <app-tool-bar
+    zone-header
+    [toolbarClasses]="'toolbar-artifacts toolbar-meal'"
+    [isResponsive]="true"
+    [tools]="toolbarFunctions"
   >
+    <app-sort
+      zone-sort-container
+      [sortOrders]="sortKeys"
+      (sortSelected)="sortMeals($event)" ></app-sort>
+  </app-tool-bar>
 </app-artifacts>

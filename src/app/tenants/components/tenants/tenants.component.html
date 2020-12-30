@@ -4,4 +4,18 @@
   [artifacts]="userTenants"
   [deleteButtonFunction]="deleteButtonFunction"
   (artifactClicked)="showEdit($event)"
-></app-artifacts>
+  [showToolbar]="false"
+>
+  <app-tool-bar
+    zone-header
+    [toolbarClasses]="'toolbar-artifacts toolbar-tenant'"
+    [isResponsive]="true"
+    [tools]="toolbarFunctions"
+  >
+    <app-sort
+      zone-sort-container
+      [sortOrders]="sortKeys"
+      (sortSelected)="sortTenants($event)" >
+    </app-sort>
+  </app-tool-bar>
+</app-artifacts>

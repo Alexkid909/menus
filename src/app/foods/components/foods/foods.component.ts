@@ -16,6 +16,7 @@ import {ModalRefClass} from '../../../shared/classes/modal-ref.class';
 import {ModalComponent} from '../../../shared/components/modal/modal.component';
 import {SideBarService} from '../../../shared/side-bar.service';
 import {ModalService} from '../../../shared/modal.service';
+import {Order, SortOrder} from '../../../shared/classes/sort-order';
 
 @Component({
   selector: 'app-foods',
@@ -39,13 +40,14 @@ export class FoodsComponent implements OnInit {
   sideBarConfig: ComponentConfig;
   sideBar: ModalRefClass;
   loading: boolean;
-
+  sortKeys: Array<SortOrder> = [];
 
   constructor(public modalService: ModalService,
               private foodsService: FoodsService,
               private sideBarService: SideBarService) {
     this.saveFood = this.saveFood.bind(this);
     this.loading = true;
+    this.setSortKeys();
   }
 
   ngOnInit() {
@@ -214,4 +216,15 @@ export class FoodsComponent implements OnInit {
     });
   }
 
+  setSortKeys() {
+    this.sortKeys.push(
+      new SortOrder('name', 'Name - A to Z', Order.Asc),
+      new SortOrder('name', 'Name - Z to A', Order.Des)
+    );
+  }
+
+  sortFoods(sortOrder: SortOrder) {
+    this.loading = true;
+    this.foodsService.sortFoods(sortOrder);
+  }
 }
