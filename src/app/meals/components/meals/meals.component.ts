@@ -235,7 +235,9 @@ export class MealsComponent implements OnInit {
   setSortKeys() {
     this.sortKeys.push(
       new SortOrder('name', 'Name - A to Z', Order.Asc),
-      new SortOrder('name', 'Name - Z to A', Order.Des)
+      new SortOrder('name', 'Name - Z to A', Order.Des),
+      new SortOrder('foodsQty', 'Foods - Lowest', Order.Asc),
+      new SortOrder('foodsQty', 'Foods - Highest', Order.Des)
     );
   }
 
