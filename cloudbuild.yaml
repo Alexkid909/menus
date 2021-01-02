@@ -5,5 +5,21 @@ steps:
       - "--tag=gcr.io/menus-fe/menus-fe"
       - "--file=./Dockerfile.prod"
       - .
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - push
+      - "gcr.io/menus-fe/menus-fe"
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'menus-fe-service'
+      - '--image'
+      - "gcr.io/menus-fe/menus-fe"
+      - '--region'
+      - 'europe-west4'
+      - '--platform'
+      - 'managed'
 images:
   - "gcr.io/menus-fe/menus-fe"
