@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
     ];
 
     this.loginFormActions = [
-      new FormActionClass('Login', this.login, { buttonClasses: 'btn-wide' })
+      new FormActionClass('Login', this.login, { buttonClasses: 'btn-wide btn-primary' })
     ];
   }
 
