@@ -62,14 +62,6 @@ body {
     }
   }
 
-  .btn {
-    border-radius: 0;
-  }
-
-  .btn-wide {
-    width: 100%;
-  }
-
   @include media-breakpoint-down(sm) {
     .form-container {
       background-color: rgba(0, 0, 0, 0.5);

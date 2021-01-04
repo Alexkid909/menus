@@ -68,7 +68,7 @@ export class RegisterComponent implements OnInit {
     ];
 
     this.registrationFormActions = [
-      new FormActionClass('Submit', this.register, { buttonClasses: 'btn-wide' })
+      new FormActionClass('Submit', this.register, { buttonClasses: 'btn-wide btn-primary' })
     ];
   }
 
