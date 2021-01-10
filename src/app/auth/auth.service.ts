@@ -17,6 +17,7 @@ export class AuthService {
   token: string;
   loggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   loggedIn = false;
+  private _passwordRegex: RegExp;
 
   constructor(private http: HttpClient) {
     this.apiUrl = environment.apiUrl;
@@ -25,6 +26,11 @@ export class AuthService {
     if (this.token) {
       this.updateLoggedInState(true);
     }
+    this._passwordRegex = new RegExp('^(?=.*[A-Za-z])(?=.*\\d)(?=.*[#£$-/:-?{-~!\"^_`\\[\\]])[A-Za-z\\d#£$-/:-?{-~!\"^_`\\[\\]]{8,}$');
+  }
+
+  public get passwordRegex() {
+    return this._passwordRegex;
   }
 
   private getToken() {
