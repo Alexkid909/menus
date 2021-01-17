@@ -12,7 +12,7 @@
       </app-button>
     </div>
   </div>
-  <div *ngIf="currentTenant" class="header-section header-section-tenant-name">
+  <div *ngIf="isAuthed && currentTenant" class="header-section header-section-tenant-name">
     <p class="tenant-name">{{currentTenant.name}}</p>
   </div>
 </div>
