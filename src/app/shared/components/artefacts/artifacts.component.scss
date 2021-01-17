@@ -123,13 +123,11 @@ $diameter: 2rem;
         height: $diameter;
         width: $diameter;
         border-radius: 100%;
-        border: 0;
         transition: color 300ms ease-in;
 
         &:hover {
           background-color: transparent;
           color: $green;
-          border: 0;
         }
       }
     }

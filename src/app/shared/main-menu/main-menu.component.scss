@@ -1,0 +1,101 @@
+$searchBorderRadius: 12px;
+
+.tenant-search-container {
+  ::ng-deep {
+    .search-container {
+
+      &.active {
+        .search-input {
+          background-color: white;
+        }
+      }
+
+      .search-icon-container {
+        pointer-events: none;
+        color: white;
+      }
+    }
+  }
+}
+
+.tenant-search-container {
+  width: 100%;
+  //display: flex;
+  //justify-content: flex-end;
+  //position: relative;
+
+  .tenants-search {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+
+
+.tenant-search-container {
+  border-radius: $searchBorderRadius;
+  ::ng-deep {
+    .search-container {
+      border-radius: $searchBorderRadius;
+
+      &.active {
+        box-shadow: 0 0 10px 2px lightgrey;
+
+        &.has-results {
+          .search-input {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+          }
+        }
+
+        .search-input {
+          text-align: left;
+        }
+      }
+
+      .search-input {
+        border: none;
+        outline: none;
+        display: inline-block;
+        font-size: 1.1em;
+        border-radius: $searchBorderRadius;
+
+        &:not(:focus) {
+            background-color: transparent;
+            &::placeholder {
+              color: white;
+            }
+        };
+      }
+
+      .search-label {
+        width: 100%;
+      }
+
+      .search-results {
+        border-bottom-left-radius: $searchBorderRadius;
+        border-bottom-right-radius: $searchBorderRadius;
+        padding: 1px 0 0.25em;
+        font-size: 0.9em;
+        color: #6d6d6d;
+        font-weight: 500;
+
+        .result-part {
+          margin: 0 0.25em;
+        }
+
+        .result-icon {
+          font-size: 0.9em;
+        }
+      }
+
+      .search-result-wrapper {
+        border-radius: 10px;
+        background-color: #eaeaea;
+        margin: .25em .5em;
+        padding: .25em .5em;
+      }
+    }
+  }
+}
+

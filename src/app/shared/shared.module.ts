@@ -20,6 +20,7 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { NotificationsService } from './notifications.service';
 import { NotificationComponent } from './components/notification/notification.component';
 import { SortComponent } from './components/sort/sort.component';
+import { MainMenuComponent } from './main-menu/main-menu.component';
 
 @NgModule({
   imports: [
@@ -45,6 +46,7 @@ import { SortComponent } from './components/sort/sort.component';
     NotificationsComponent,
     NotificationComponent,
     ComponentInsertionDirective,
+    MainMenuComponent,
   ],
   exports: [
     ButtonComponent,
