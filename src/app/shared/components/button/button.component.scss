@@ -99,10 +99,12 @@
 
 .btn-icon {
   color: white;
+  border: 0;
 
   &:hover {
     background-color: transparent;
     color: lighten($dominant, 10%);
+    border: 0;
   }
 }
 
