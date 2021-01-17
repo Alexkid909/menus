@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
   loginFormActions: Array<FormActionClass>;
 
   constructor(private authService: AuthService, private router: Router) {
-    this.passwordRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
     this.login = this.login.bind(this);
 
   }
@@ -35,7 +34,7 @@ export class LoginComponent implements OnInit {
       new FormFieldClass('password', FormFieldType.password, '', [
         Validators.required,
         Validators.minLength(8),
-        Validators.pattern(this.passwordRegex)
+        Validators.pattern(this.authService.passwordRegex)
       ])
     ];
 

@@ -22,7 +22,6 @@ import { FormFieldType} from '../../../shared/enums/form-field-type.enum';
 
 export class RegisterComponent implements OnInit {
 
-  passwordRegex: RegExp;
   registrationFormFieldsModel: Array<FormFieldGroupClass>;
   registrationInProgress = false;
   registrationErrors: Array<string> = [];
@@ -51,12 +50,12 @@ export class RegisterComponent implements OnInit {
     this.passwordFields = [
       new FormFieldClass('password', FormFieldType.password, '', [
         Validators.required,
-        Validators.pattern(this.passwordRegex),
+        Validators.pattern(this.authService.passwordRegex),
         Validators.minLength(8),
       ]),
       new FormFieldClass('passwordConfirm', FormFieldType.password, '', [
         Validators.required,
-        Validators.pattern(this.passwordRegex),
+        Validators.pattern(this.authService.passwordRegex),
         Validators.minLength(8),
       ])
     ];

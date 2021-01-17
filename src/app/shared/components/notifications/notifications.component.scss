@@ -1,10 +1,22 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins/breakpoints";
+
 .notifications-container {
   position: fixed;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
-  width: 40vw;
+  width: 100%;
+
+  @include media-breakpoint-up(lg) {
+    width: 40vw;
+  }
+}
+
+.notifications-list {
+  padding: 0;
 }
 
 .notification-container {
